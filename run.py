@@ -63,11 +63,11 @@ class Mortgage:
     """
     mortgage_no = 0
 
-    def __init__(self, principal, apr, length_of_mortgage):
+    def __init__(self):
         #instance attribute
-        self.principal = principal
-        self.apr = apr
-        self.length_of_mortgage = length_of_mortgage
+        self.principal = int(input('Enter the principal or loan amount:'))
+        self.apr = float(input('Enter the Annual Percentage rate (eg. 4.3):'))
+        self.length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30):'))
         Mortgage.mortgage_no += 1
         self.mortgage_no = Mortgage.mortgage_no
 
@@ -75,14 +75,14 @@ class Mortgage:
         """
         Method to return employee details as a string 
         """
-        return f"Principal: ${self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%\n"
+        return f"Principal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
         """
         Calculates monthly payment
         """
-        monthly_payment = ((self.apr / 100 / 12) * self.principal) / (1 - ((1 + (self.apr / 100 / 12)) ^ (-length_of_mortgage * 12)))
-        return f"Monthly payment = {monthly_payment}"
+        monthly_payment = ((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12))))
+        return f"Monthly payment = €{round(monthly_payment, 2)}"
 
 
 
@@ -93,6 +93,9 @@ def compare_mortgages():
 print("Welcome to my Mortgage Comparison Tool")
 compare_mortgages()
 
-mortgage = Mortgage(300000, 4.5, 30)
-print(mortgage.details())
+mortgage1 = Mortgage()
+
+print(mortgage1.details())
+print(mortgage1.calculate_monthly_payment())
+
 
