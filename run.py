@@ -63,11 +63,11 @@ class Mortgage:
     """
     mortgage_no = 0
 
-    def __init__(self):
+    def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
-        self.principal = int(input('Enter the principal or loan amount:'))
-        self.apr = float(input('Enter the Annual Percentage rate (eg. 4.3):'))
-        self.length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30):'))
+        self.principal = principal
+        self.apr = apr
+        self.length_of_mortgage = length_of_mortgage
         Mortgage.mortgage_no += 1
         self.mortgage_no = Mortgage.mortgage_no
 
@@ -75,7 +75,7 @@ class Mortgage:
         """
         Method to return employee details as a string 
         """
-        return f"Principal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
+        return f"MORTGAGE {self.mortgage_no}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
         """
@@ -83,19 +83,39 @@ class Mortgage:
         """
         monthly_payment = ((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12))))
         return f"Monthly payment = €{round(monthly_payment, 2)}"
+    
+    def calculate_lifetime_interest(self):
+        pass
+
+    def calculate_amoritization(self):
+        pass
 
 
+
+def input_validator():
+    pass
 
 
 def compare_mortgages():
     print("inside the compare_mortgages function")
 
 print("Welcome to my Mortgage Comparison Tool")
-compare_mortgages()
+#compare_mortgages()
 
-mortgage1 = Mortgage()
+def create_mortgage():
+    principal = int(input('Enter the principal or loan amount: '))
+    #if not int(principal):
+        #print("That is not a whole number. Please enter a whole number.")   
+    apr = float(input('Enter the Annual Percentage rate (eg. 4.3): '))
+    length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
+    mortgage1 = Mortgage(principal, apr, length_of_mortgage)
+    print(mortgage1.details())
+    print(mortgage1.calculate_monthly_payment())    
 
-print(mortgage1.details())
-print(mortgage1.calculate_monthly_payment())
+
+create_mortgage()
+
+
+
 
 
