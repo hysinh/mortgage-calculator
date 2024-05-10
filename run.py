@@ -92,8 +92,12 @@ class Mortgage:
 
 
 
-def input_validator():
-    pass
+def input_validator(input):
+    while True:
+        try:
+            return int(input)
+        except ValueError:
+            print("Not a valid number. Please enter a whole number.")
 
 
 def compare_mortgages():
