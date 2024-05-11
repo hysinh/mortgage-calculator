@@ -61,21 +61,21 @@ class Mortgage:
     """
     Base Class for Mortgages
     """
-    mortgage_no = 0
+    mortgage_ID = 0
 
     def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
         self.principal = principal
         self.apr = apr
         self.length_of_mortgage = length_of_mortgage
-        Mortgage.mortgage_no += 1
-        self.mortgage_no = Mortgage.mortgage_no
+        Mortgage.mortgage_ID += 1
+        self.mortgage_ID = Mortgage.mortgage_ID
 
     def details(self):
         """
         Method to return employee details as a string 
         """
-        return f"MORTGAGE {self.mortgage_no}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
+        return f"MORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
         """
@@ -107,11 +107,54 @@ print("Welcome to my Mortgage Comparison Tool")
 #compare_mortgages()
 
 def create_mortgage():
-    principal = int(input('Enter the principal or loan amount: '))
+    """
+    Creates each Class Instance of a Mortgage - requires user input
+    for the Principal amount, APR amount, and Length of Mortgage for
+    caculations.
+    """
+    while True:
+        try:
+            principal = int(input('Enter the principal or loan amount: '))
+            print(principal)
+        except ValueError:
+            print("That is not a whole number. Please enter a valid number.")
+            continue
+        if principal < 1:
+            print("Please enter a valid number greater than 0.")
+            continue
+        
+        try: 
+            apr = float(input('Enter the Annual Percentage rate (eg. 4.3): '))
+            print(apr)
+        except ValueError:
+            print("That is not a valid entry. Please enter a valid percentage.")
+            continue
+        if apr > 100 or apr < 0:
+            print("That is not a valid percentage. Please enter a number between 0 - 100.")
+            continue
+
+        try:
+            length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
+            print(length_of_mortgage)
+        except ValueError:
+            print("That is not a valid number. Please enter a number.")
+            continue
+        if length_of_mortgage < 1:
+            print("That is not a valid entry. Please enter a whole number greater than 0.")
+            continue
+        
+        mortgage1 = Mortgage(principal, apr, length_of_mortgage)
+        print(mortgage1.details())
+        print(mortgage1.calculate_monthly_payment()) 
+
+        break
+
+
+
     #if not int(principal):
         #print("That is not a whole number. Please enter a whole number.")   
-    apr = float(input('Enter the Annual Percentage rate (eg. 4.3): '))
-    length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
+    
+    
     mortgage1 = Mortgage(principal, apr, length_of_mortgage)
     print(mortgage1.details())
     print(mortgage1.calculate_monthly_payment())    
