@@ -6,8 +6,9 @@ import sys
 from colorama import init
 init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
 from termcolor import cprint 
-from pyfiglet import figlet_format
-
+import pyfiglet
+from tabulate import tabulate
+import os
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,6 +22,49 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 
+
+
+def welcome_screen():
+    """
+    ASCII PIXEL ART CODE
+    """
+    logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
+    print(logo_text)
+    #cprint(figlet_format('mortgage tool', font='doom'),
+    #    'yellow', 'on_blue', attrs=['bold'])
+    print("Welcome to my Mortgage Comparison Tool")
+    is_valid = False
+    while is_valid != True:
+        try:
+            proceed = input("Would you like to use the mortgage calculator? y/n \n").lower()
+            if proceed == "y":
+                is_valid = True
+            elif proceed == "n":
+                is_valid - True
+                exit()
+            else:
+                print("Please enter Y or N to proceed.")
+        except ValueError:
+            print("That is not a valid reponse. Please enter Y or N.")
+    
+
+
+def clear():
+    """
+    Function to clear terminal through the game.
+    """
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+def menu_screen():
+    clear()
+    print("\n\n")
+    print("** Mortgage Calculator Tool **\n\n")
+    print("You have the following options:\n ")
+    table = [["Option",1,"Add a mortgage"],["Option",2,"View a mortgage"],
+             ["Option",3,"View an amoritization schedule"],["Option",4,"Exit Program"]]
+    print(tabulate(table))
+    
 
 
 def input_principal():
@@ -130,6 +174,9 @@ def create_mortgage():
     print(mortgage1.details())
     print(mortgage1.calculate_monthly_payment()) 
 
+    return principal, apr, length_of_mortgage, mortgage1
+    
+
     new_mortgage = input("Type y/n if you would like to add another mortgage: ").lower()
     if new_mortgage == "y":
         principal2 = input_principal()
@@ -143,27 +190,21 @@ def create_mortgage():
 
 
 
-def welcome_screen():
-    """
-    ASCII PIXEL ART CODE
-    """
-
-    cprint(figlet_format('mortgage tool', font='doom'),
-        'yellow', 'on_blue', attrs=['bold'])
-    print("Welcome to my Mortgage Comparison Tool")
 
 
 def run_mortgage_tool():
-    welcome_screen()
     selection = int(input("Please type in the number of you menu selection: "))
     if selection == 1:
-        create_mortgage()
-    else:
+        mortgage = create_mortgage()
+        print(mortgage)
+        print(f"in the run mortgage tool: {principal}")
+    elif selection == 2:
         print("Thanks for using our tool.")
     
 
 if __name__ == '__main__':
     welcome_screen()
+    menu_screen()
     run_mortgage_tool()
     
 
