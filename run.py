@@ -15,47 +15,60 @@ SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 
 
-"""
-Mortgage Calculator / Comparison Tool:
-Enter your mortgage(loan) amount, the APR (Annual Percentage Rate), and the length of
-the loan to compare monthly payments and how much interest you pay over the lifetime of 
-the loan.
 
-# Principal = int(loan/mortgage amount)
-# APR = float(Annual percentage rate as a percentage - 4.5%)
-# loan_length = int(length of the loan in years - eg 15, 20, 30 , etc)
+def input_principal():
+    """
+    Checks Validation for principal input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            principal = int(input('Enter the principal or loan amount: '))
+            if principal > 0:
+                is_valid = True
+            else:
+                print("Principal must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a whole number. Please enter a valid number.")
+        
+    return principal
 
-Users can input up to 4 sets of loan data.
 
-# add new mortgage (creates a new class instance)
-# delete/remove mortgage 
-# save mortgage(s) (writes to my google sheet - removes class references)
-# load mortgages (retrieve from google sheets - adds classes references)
-# set active mortgage
-# list mortgage
-# everything is an Class instance operated on that mortgage
+def input_apr():
+    """
+    Checks Validation for APR input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            apr = float(input('Enter the Annual Percentage rate or APR (eg. 4.3): '))
+            if apr > 0 and apr < 100:
+                is_valid = True
+            else:
+                print("APR must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a number. Please enter a valid number.")
+        
+    return apr
 
-Program calculates:
-1. Monthly_loan_payment = float(number with two decimal placements)
-2. total_interest = float(total interest paid over the lifetime of the loan)
-3. Difference in interest between different loans
 
-# interest paid (# of months into mortgage)
-# How much interest / principal paid in year (input year eg 12)
-# amortization schedule
-# if i pay XX, how much does it shorten the mortgage
+def input_loan_length():
+    """
+    Checks Validation for Mortgage Length input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
+            if length_of_mortgage > 0:
+                is_valid = True
+            else:
+                print("Your loan length must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a number. Please enter a valid number.")
+        
+    return length_of_mortgage
 
-Program displays a table:
-1. Principal Amount
-2. APR
-3. loan_length
-4. Monthly_loan_payment
-5. total_interest paid over the course of the loan
-6. how much money you save in interest with each reduction in total loan_length
-
-Program requests if the user would like to run the program again to create new inputs and comparisons.
-
-"""
 
 class Mortgage:
     """
@@ -92,14 +105,6 @@ class Mortgage:
 
 
 
-def input_validator(input):
-    while True:
-        try:
-            return int(input)
-        except ValueError:
-            print("Not a valid number. Please enter a whole number.")
-
-
 def compare_mortgages():
     print("inside the compare_mortgages function")
 
@@ -112,52 +117,14 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     caculations.
     """
-    while True:
-        try:
-            principal = int(input('Enter the principal or loan amount: '))
-            print(principal)
-        except ValueError:
-            print("That is not a whole number. Please enter a valid number.")
-            continue
-        if principal < 1:
-            print("Please enter a valid number greater than 0.")
-            continue
-        
-        try: 
-            apr = float(input('Enter the Annual Percentage rate (eg. 4.3): '))
-            print(apr)
-        except ValueError:
-            print("That is not a valid entry. Please enter a valid percentage.")
-            continue
-        if apr > 100 or apr < 0:
-            print("That is not a valid percentage. Please enter a number between 0 - 100.")
-            continue
+    principal = input_principal()
+    apr = input_apr()
+    length_of_mortgage = input_loan_length()
 
-        try:
-            length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
-            print(length_of_mortgage)
-        except ValueError:
-            print("That is not a valid number. Please enter a number.")
-            continue
-        if length_of_mortgage < 1:
-            print("That is not a valid entry. Please enter a whole number greater than 0.")
-            continue
-        
-        mortgage1 = Mortgage(principal, apr, length_of_mortgage)
-        print(mortgage1.details())
-        print(mortgage1.calculate_monthly_payment()) 
-
-        break
-
-
-
-    #if not int(principal):
-        #print("That is not a whole number. Please enter a whole number.")   
-    
-    
     mortgage1 = Mortgage(principal, apr, length_of_mortgage)
     print(mortgage1.details())
-    print(mortgage1.calculate_monthly_payment())    
+    print(mortgage1.calculate_monthly_payment()) 
+
 
 
 create_mortgage()
