@@ -115,8 +115,6 @@ class Mortgage:
 def compare_mortgages():
     print("inside the compare_mortgages function")
 
-print("Welcome to my Mortgage Comparison Tool")
-#compare_mortgages()
 
 def create_mortgage():
     """
@@ -132,34 +130,60 @@ def create_mortgage():
     print(mortgage1.details())
     print(mortgage1.calculate_monthly_payment()) 
 
+    new_mortgage = input("Type y/n if you would like to add another mortgage: ").lower()
+    if new_mortgage == "y":
+        principal2 = input_principal()
+        apr2 = input_apr()
+        length_of_mortgage2 = input_loan_length()
+        mortgage2 = Mortgage(principal2, apr2, length_of_mortgage2)
+        print(mortgage2.details())
+        print(mortgage2.calculate_monthly_payment())
+    else:
+        print("Thanks for using the calculator")
 
 
-create_mortgage()
 
-"""
-ASCII PIXEL ART CODE
-"""
+def welcome_screen():
+    """
+    ASCII PIXEL ART CODE
+    """
 
-cprint(figlet_format('mortgage tool', font='starwars'),
-       'yellow', 'on_blue', attrs=['bold'])
+    cprint(figlet_format('mortgage tool', font='doom'),
+        'yellow', 'on_blue', attrs=['bold'])
+    print("Welcome to my Mortgage Comparison Tool")
+
+
+def run_mortgage_tool():
+    welcome_screen()
+    selection = int(input("Please type in the number of you menu selection: "))
+    if selection == 1:
+        create_mortgage()
+    else:
+        print("Thanks for using our tool.")
+    
+
+if __name__ == '__main__':
+    welcome_screen()
+    run_mortgage_tool()
+    
 
 
 
-ShowText = 'Python PIL'
+# ShowText = 'Python PIL'
 
-font = ImageFont.truetype('arialbd.ttf', 15) #load the font
-size = font.getsize(ShowText)  #calc the size of text in pixels
-image = Image.new('1', size, 1)  #create a b/w image
-draw = ImageDraw.Draw(image)
-draw.text((0, 0), ShowText, font=font) #render the text to the bitmap
-for rownum in range(size[1]): 
-#scan the bitmap:
-# print ' ' for black pixel and 
-# print '#' for white one
-    line = []
-    for colnum in range(size[0]):
-        if image.getpixel((colnum, rownum)): line.append(' '),
-        else: line.append('#'),
-    print(''.join(line))
+# font = ImageFont.truetype('arialbd.ttf', 15) #load the font
+# size = font.getsize(ShowText)  #calc the size of text in pixels
+# image = Image.new('1', size, 1)  #create a b/w image
+# draw = ImageDraw.Draw(image)
+# draw.text((0, 0), ShowText, font=font) #render the text to the bitmap
+# for rownum in range(size[1]): 
+# #scan the bitmap:
+# # print ' ' for black pixel and 
+# # print '#' for white one
+#     line = []
+#     for colnum in range(size[0]):
+#         if image.getpixel((colnum, rownum)): line.append(' '),
+#         else: line.append('#'),
+#     print(''.join(line))
 
 
