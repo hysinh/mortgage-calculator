@@ -22,12 +22,42 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 
+mort_dict = {
+  1 : {
+    "principal" : 350000,
+    "apr" : 4.3,
+    "length_of_mortgage": 30,
+    "monthly_payment": 1539.21,
+    "lifetime_interest": 456345
+  },
+  2 : {
+    "principal" : 350000,
+    "apr" : 4.3,
+    "length_of_mortgage": 30,
+    "monthly_payment": 1539.21,
+    "lifetime_interest": 456345
+  },
+  3 : {
+    "principal" : 350000,
+    "apr" : 4.3,
+    "length_of_mortgage": 30,
+    "monthly_payment": 1539.21,
+    "lifetime_interest": 456345
+  }
+}
+
+def clear():
+    """
+    Function to clear terminal through the game.
+    """
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 def welcome_screen():
     """
     ASCII PIXEL ART CODE
     """
+    clear()
     logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
     print(logo_text)
     #cprint(figlet_format('mortgage tool', font='doom'),
@@ -40,7 +70,8 @@ def welcome_screen():
             if proceed == "y":
                 is_valid = True
             elif proceed == "n":
-                is_valid - True
+                is_valid = True
+                print("*** Thanks for visiting! ***")
                 exit()
             else:
                 print("Please enter Y or N to proceed.")
@@ -49,11 +80,7 @@ def welcome_screen():
     
 
 
-def clear():
-    """
-    Function to clear terminal through the game.
-    """
-    os.system("cls" if os.name == "nt" else "clear")
+
 
 
 def menu_screen():
@@ -139,7 +166,7 @@ class Mortgage:
         """
         Method to return employee details as a string 
         """
-        return f"MORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
+        return f"\n\nMORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
         """
@@ -166,6 +193,7 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     caculations.
     """
+    print("\n")
     principal = input_principal()
     apr = input_apr()
     length_of_mortgage = input_loan_length()
@@ -173,8 +201,9 @@ def create_mortgage():
     mortgage1 = Mortgage(principal, apr, length_of_mortgage)
     print(mortgage1.details())
     print(mortgage1.calculate_monthly_payment()) 
+    print(f"mortgage_id: {mortgage1.mortgage_ID}")
 
-    return principal, apr, length_of_mortgage, mortgage1
+    return mortgage1
     
 
     new_mortgage = input("Type y/n if you would like to add another mortgage: ").lower()
@@ -193,14 +222,26 @@ def create_mortgage():
 
 
 def run_mortgage_tool():
-    selection = int(input("Please type in the number of you menu selection: "))
-    if selection == 1:
-        mortgage = create_mortgage()
-        print(mortgage)
-        print(f"in the run mortgage tool: {principal}")
-    elif selection == 2:
-        print("Thanks for using our tool.")
-    
+    is_valid = False
+    while is_valid != True:
+        try:
+            selection = int(input("Please type in the number of your menu selection: "))
+            if selection == 1:
+                create_mortgage()
+                #is_valid = True
+            elif selection == 2:
+                print("Option 2: View a particular mortgage.")
+                is_valid = True
+            elif selection == 3:
+                print("Option 3: View an amorization schedule.")
+                is_valid = True
+            elif selection == 4:
+                print("Option 4: Exit the program.")
+                is_valid = True
+            else:
+                print("That is a not a valid option. Please type in a number between 1 - 4.")
+        except ValueError:
+            print("That is not a valid input. Please type in a number betwee 1 - 14.")    
 
 if __name__ == '__main__':
     welcome_screen()
