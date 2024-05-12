@@ -71,7 +71,7 @@ def menu_screen():
 
 def small_menu():
     """
-    Compressed Menu that displays at the top of the page
+    Compressed Menu that in a single line 
     """
     print("** Mortgage Calculator Tool MENU OPTIONS **")
     print("1. Add Mortgage | 2. View Mortgage | 3. View Amorization Schedule | 4. Exit Program")
@@ -84,7 +84,7 @@ def input_principal():
     is_valid = False
     while is_valid != True:
         try:
-            principal = int(input('Enter the principal or loan amount in Euro: '))
+            principal = int(input('Enter the principal or loan amount in Euro: \n'))
             if principal > 0:
                 is_valid = True
             else:
@@ -102,7 +102,7 @@ def input_apr():
     is_valid = False
     while is_valid != True:
         try:
-            apr = float(input('Enter the Annual Percentage rate or APR (e.g. 4.3): '))
+            apr = float(input('Enter the Annual Percentage rate or APR (e.g. 4.3): \n'))
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
@@ -120,7 +120,7 @@ def input_loan_length():
     is_valid = False
     while is_valid != True:
         try:
-            length_of_mortgage = int(input('Enter the length of the mortgage in years (e.g. 30): '))
+            length_of_mortgage = int(input('Enter the length of the mortgage in years (e.g. 30): \n'))
             if length_of_mortgage > 0:
                 is_valid = True
             else:
@@ -194,7 +194,7 @@ def create_mortgage():
     print("Creating mortgage...\n")
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
-    print("You entered the following mortgage details:")
+    print("You created a Mortgage with the following details:")
     print(mortgage.details())
     #print(mortgage.calculate_monthly_payment()) 
     #print(f"mortgage_id: {mortgage.mortgage_ID}")
@@ -203,7 +203,9 @@ def create_mortgage():
 
     return mortgage
     
-def option_two():
+def view_mortgage():
+    clear()
+    small_menu()
     print("You have entered the following mortgages:")
     for x in mortgage_dict:
         print(f"Mortgage: {x}")
@@ -218,25 +220,29 @@ def option_two():
                     print(mortgage_dict[x].calculate_monthly_payment())
                     is_valid = True
                 else:
-                    print("Sorry. That is not an available mortgage. Please choose one from the list above.")
-                    is_valid = True
+                    continue
+                    #print("Sorry. That is not an available mortgage. Please choose one from the list above.")
+                    #is_valid = True
         except ValueError:
             print("Please enter a correct number")
+        
 
 
 def run_mortgage_tool():
     is_valid = False
     while is_valid != True:
         try:
-            selection = int(input("Please type in the number of your menu selection: "))
+            selection = int(input("Enter a menu selection: \n"))
             if selection == 1:
                 create_mortgage()
                 #is_valid = True
             elif selection == 2:
-                option_two()
+                view_mortgage()
+                print("\n")
+
                 #print(mortgage_dict[1].calculate_monthly_payment())
                 #print("Option 2: View a particular mortgage.")
-                is_valid = True
+                #is_valid = True
             elif selection == 3:
                 print("Option 3: View an amorization schedule.")
                 is_valid = True
