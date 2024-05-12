@@ -22,29 +22,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 
-mort_dict = {
-  1 : {
-    "principal" : 350000,
-    "apr" : 4.3,
-    "length_of_mortgage": 30,
-    "monthly_payment": 1539.21,
-    "lifetime_interest": 456345
-  },
-  2 : {
-    "principal" : 350000,
-    "apr" : 4.3,
-    "length_of_mortgage": 30,
-    "monthly_payment": 1539.21,
-    "lifetime_interest": 456345
-  },
-  3 : {
-    "principal" : 350000,
-    "apr" : 4.3,
-    "length_of_mortgage": 30,
-    "monthly_payment": 1539.21,
-    "lifetime_interest": 456345
-  }
-}
+mort_dict = {}
 
 def clear():
     """
@@ -207,10 +185,12 @@ def create_mortgage():
     length_of_mortgage = input_loan_length()
 
     mortgage = Mortgage(principal, apr, length_of_mortgage)
+    mort_dict[mortgage.mortgage_ID] = mortgage
     print(mortgage.details())
     print(mortgage.calculate_monthly_payment()) 
     print(f"mortgage_id: {mortgage.mortgage_ID}")
-    print(mortgage.append_dict())
+    #print(mortgage.append_dict())
+    print(len(mort_dict))
     print(f"\n")
 
     return mortgage
@@ -226,8 +206,9 @@ def run_mortgage_tool():
                 create_mortgage()
                 #is_valid = True
             elif selection == 2:
-                print("Option 2: View a particular mortgage.")
-                is_valid = True
+                print(mort_dict[1].calculate_monthly_payment())
+                #print("Option 2: View a particular mortgage.")
+                #4is_valid = True
             elif selection == 3:
                 print("Option 3: View an amorization schedule.")
                 is_valid = True
@@ -243,7 +224,7 @@ if __name__ == '__main__':
     welcome_screen()
     menu_screen()
     run_mortgage_tool()
-    print(f"Mort_dict: {mort_dict}")
+    #print(f"Mort_dict: {mort_dict}")
     
 
 
