@@ -64,8 +64,8 @@ def menu_screen():
     print("\n\n")
     print("** Mortgage Calculator Tool **\n")
     print("You have the following options:\n ")
-    table = [["Option",1,"Add a mortgage"],["Option",2,"View a mortgage"],
-             ["Option",3,"View an amoritization schedule"],["Option",4,"Exit Program"]]
+    table = [["Option",1,"Add a mortgage"],["Option",2,"View a Mortgage"],
+             ["Option",3,"Display Mortgage Comparison"],["Option",4,"Exit Program"]]
     print(tabulate(table))
     
 
@@ -74,7 +74,7 @@ def small_menu():
     Compressed Menu that in a single line 
     """
     print("** Mortgage Calculator Tool MENU OPTIONS **")
-    print("1. Add Mortgage | 2. View Mortgage | 3. View Amorization Schedule | 4. Exit Program")
+    print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison | 4. Exit Program")
 
 
 def input_principal():
@@ -174,9 +174,6 @@ class Mortgage:
         pass
 
 
-def compare_mortgages():
-    print("inside the compare_mortgages function")
-
 
 def create_mortgage():
     """
@@ -204,12 +201,15 @@ def create_mortgage():
     return mortgage
     
 def view_mortgage():
+    """
+    Allows user to view individual Mortgage details one at a time
+    """
     clear()
     small_menu()
     print("You have entered the following mortgages:")
     for x in mortgage_dict:
         print(f"Mortgage: {x}")
-        #print(f"Mortgage: {mortgage_dict[x]}")
+
     is_valid = False
     while is_valid != True:
         try:
@@ -228,6 +228,29 @@ def view_mortgage():
         
 
 
+def compare_mortgages():
+    """
+    Creates a table to compare mortgages
+    """
+    clear()
+    small_menu()
+    print("\nMortgage Comparison:\n")
+    table = [
+        ["Description","Principal","APR %","Loan Length","Monthly Payment", "Total Interest", "Savings"],
+        ["Mortgage 1",350000,4.3,19,2253.35, 453256.96],
+        ["Mortgage 2",350000,4.3,24,2253.35, 560256.96],
+        ["Mortgage 3",350000,4.3,30,2253.35, 673256.96]
+    ]
+
+    print("Calculating comparison table...\n")
+    print(tabulate(table))
+    #mortgage_table = []
+    for x in mortgage_dict:
+        print(mortgage_dict[x].details())
+        print(mortgage_dict[x].calculate_monthly_payment())
+
+
+
 def run_mortgage_tool():
     is_valid = False
     while is_valid != True:
@@ -239,13 +262,12 @@ def run_mortgage_tool():
             elif selection == 2:
                 view_mortgage()
                 print("\n")
-
                 #print(mortgage_dict[1].calculate_monthly_payment())
                 #print("Option 2: View a particular mortgage.")
                 #is_valid = True
             elif selection == 3:
-                print("Option 3: View an amorization schedule.")
-                is_valid = True
+                compare_mortgages()
+                #is_valid = True
             elif selection == 4:
                 print("Option 4: Exit the program.")
                 is_valid = True
