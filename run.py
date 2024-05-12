@@ -80,13 +80,13 @@ def welcome_screen():
     
 
 
-
-
-
 def menu_screen():
+    """
+    Menu Screen with options displayed in a table
+    """
     clear()
     print("\n\n")
-    print("** Mortgage Calculator Tool **\n\n")
+    print("** Mortgage Calculator Tool **\n")
     print("You have the following options:\n ")
     table = [["Option",1,"Add a mortgage"],["Option",2,"View a mortgage"],
              ["Option",3,"View an amoritization schedule"],["Option",4,"Exit Program"]]
@@ -154,6 +154,8 @@ class Mortgage:
     """
     mortgage_ID = 0
 
+    dict = {}
+
     def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
         self.principal = principal
@@ -161,12 +163,13 @@ class Mortgage:
         self.length_of_mortgage = length_of_mortgage
         Mortgage.mortgage_ID += 1
         self.mortgage_ID = Mortgage.mortgage_ID
+        self.dict = Mortgage.dict
 
     def details(self):
         """
         Method to return employee details as a string 
         """
-        return f"\n\nMORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
+        return f"\nMORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
         """
@@ -175,12 +178,17 @@ class Mortgage:
         monthly_payment = ((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12))))
         return f"Monthly payment = €{round(monthly_payment, 2)}"
     
+    def append_dict(self):
+        self.dict.update([(self.mortgage_ID, {"principal": self.principal, "apr": self.apr, "length_of_mortgage": self.length_of_mortgage})])
+        #self.dict.update([(self.mortgage_ID, {self.principal), ("apr", self.apr), ("length_of_mortgage", self.length_of_mortgage})])
+        mort_dict.update(self.dict)
+        return f"Mortgage dict: {self.dict}"
+    
     def calculate_lifetime_interest(self):
         pass
 
     def calculate_amoritization(self):
         pass
-
 
 
 def compare_mortgages():
@@ -198,27 +206,15 @@ def create_mortgage():
     apr = input_apr()
     length_of_mortgage = input_loan_length()
 
-    mortgage1 = Mortgage(principal, apr, length_of_mortgage)
-    print(mortgage1.details())
-    print(mortgage1.calculate_monthly_payment()) 
-    print(f"mortgage_id: {mortgage1.mortgage_ID}")
+    mortgage = Mortgage(principal, apr, length_of_mortgage)
+    print(mortgage.details())
+    print(mortgage.calculate_monthly_payment()) 
+    print(f"mortgage_id: {mortgage.mortgage_ID}")
+    print(mortgage.append_dict())
+    print(f"\n")
 
-    return mortgage1
+    return mortgage
     
-
-    new_mortgage = input("Type y/n if you would like to add another mortgage: ").lower()
-    if new_mortgage == "y":
-        principal2 = input_principal()
-        apr2 = input_apr()
-        length_of_mortgage2 = input_loan_length()
-        mortgage2 = Mortgage(principal2, apr2, length_of_mortgage2)
-        print(mortgage2.details())
-        print(mortgage2.calculate_monthly_payment())
-    else:
-        print("Thanks for using the calculator")
-
-
-
 
 
 def run_mortgage_tool():
@@ -247,6 +243,7 @@ if __name__ == '__main__':
     welcome_screen()
     menu_screen()
     run_mortgage_tool()
+    print(f"Mort_dict: {mort_dict}")
     
 
 
