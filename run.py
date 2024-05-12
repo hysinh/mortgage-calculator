@@ -22,7 +22,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 
-mort_dict = {}
+mortgage_dict = {}
 
 def clear():
     """
@@ -38,13 +38,11 @@ def welcome_screen():
     clear()
     logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
     print(logo_text)
-    #cprint(figlet_format('mortgage tool', font='doom'),
-    #    'yellow', 'on_blue', attrs=['bold'])
     print("Welcome to my Mortgage Comparison Tool")
     is_valid = False
     while is_valid != True:
         try:
-            proceed = input("Would you like to use the mortgage calculator? y/n \n").lower()
+            proceed = input("Would you like to use the mortgage calculator? Y or N \n").lower()
             if proceed == "y":
                 is_valid = True
             elif proceed == "n":
@@ -71,6 +69,13 @@ def menu_screen():
     print(tabulate(table))
     
 
+def small_menu():
+    """
+    Compressed Menu that displays at the top of the page
+    """
+    print("** Mortgage Calculator Tool MENU OPTIONS **")
+    print("1. Add Mortgage | 2. View Mortgage | 3. View Amorization Schedule | 4. Exit Program")
+
 
 def input_principal():
     """
@@ -79,7 +84,7 @@ def input_principal():
     is_valid = False
     while is_valid != True:
         try:
-            principal = int(input('Enter the principal or loan amount: '))
+            principal = int(input('Enter the principal or loan amount in Euro: '))
             if principal > 0:
                 is_valid = True
             else:
@@ -97,7 +102,7 @@ def input_apr():
     is_valid = False
     while is_valid != True:
         try:
-            apr = float(input('Enter the Annual Percentage rate or APR (eg. 4.3): '))
+            apr = float(input('Enter the Annual Percentage rate or APR (e.g. 4.3): '))
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
@@ -115,7 +120,7 @@ def input_loan_length():
     is_valid = False
     while is_valid != True:
         try:
-            length_of_mortgage = int(input('Enter the length of the mortgage in years (eg 30): '))
+            length_of_mortgage = int(input('Enter the length of the mortgage in years (e.g. 30): '))
             if length_of_mortgage > 0:
                 is_valid = True
             else:
@@ -130,7 +135,7 @@ class Mortgage:
     """
     Base Class for Mortgages
     """
-    mortgage_ID = 0
+    mortgage_ID = 200
 
     dict = {}
 
@@ -159,7 +164,7 @@ class Mortgage:
     def append_dict(self):
         self.dict.update([(self.mortgage_ID, {"principal": self.principal, "apr": self.apr, "length_of_mortgage": self.length_of_mortgage})])
         #self.dict.update([(self.mortgage_ID, {self.principal), ("apr", self.apr), ("length_of_mortgage", self.length_of_mortgage})])
-        mort_dict.update(self.dict)
+        mortgage_dict.update(self.dict)
         return f"Mortgage dict: {self.dict}"
     
     def calculate_lifetime_interest(self):
@@ -179,22 +184,44 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     caculations.
     """
-    print("\n")
+    clear()
+    small_menu()
+    print("\nEnter Your Mortgage details in below:\n")
     principal = input_principal()
     apr = input_apr()
     length_of_mortgage = input_loan_length()
 
+    print("Creating mortgage...\n")
     mortgage = Mortgage(principal, apr, length_of_mortgage)
-    mort_dict[mortgage.mortgage_ID] = mortgage
+    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    print("You entered the following mortgage details:")
     print(mortgage.details())
-    print(mortgage.calculate_monthly_payment()) 
-    print(f"mortgage_id: {mortgage.mortgage_ID}")
-    #print(mortgage.append_dict())
-    print(len(mort_dict))
+    #print(mortgage.calculate_monthly_payment()) 
+    #print(f"mortgage_id: {mortgage.mortgage_ID}")
+    #print(len(mort_dict))
     print(f"\n")
 
     return mortgage
     
+def option_two():
+    print("You have entered the following mortgages:")
+    for x in mortgage_dict:
+        print(f"Mortgage: {x}")
+        #print(f"Mortgage: {mortgage_dict[x]}")
+    is_valid = False
+    while is_valid != True:
+        try:
+            selection = int(input("Enter the number of the mortgage that you'd like to view: \n"))
+            for x in mortgage_dict:
+                if selection == x:
+                    print(mortgage_dict[x].details())
+                    print(mortgage_dict[x].calculate_monthly_payment())
+                    is_valid = True
+                else:
+                    print("Sorry. That is not an available mortgage. Please choose one from the list above.")
+                    is_valid = True
+        except ValueError:
+            print("Please enter a correct number")
 
 
 def run_mortgage_tool():
@@ -206,9 +233,10 @@ def run_mortgage_tool():
                 create_mortgage()
                 #is_valid = True
             elif selection == 2:
-                print(mort_dict[1].calculate_monthly_payment())
+                option_two()
+                #print(mortgage_dict[1].calculate_monthly_payment())
                 #print("Option 2: View a particular mortgage.")
-                #4is_valid = True
+                is_valid = True
             elif selection == 3:
                 print("Option 3: View an amorization schedule.")
                 is_valid = True
