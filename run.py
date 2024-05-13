@@ -103,6 +103,24 @@ def input_principal():
     return principal
 
 
+def input_extra_principal():
+    """
+    Checks Validation for extra principal input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            principal = int(input('Enter amount of principal you wish to pay each month: \n'))
+            if principal > 0:
+                is_valid = True
+            else:
+                print("Principal must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a whole number. Please enter a valid number.")
+        
+    return principal
+
+
 def input_apr():
     """
     Checks Validation for APR input
@@ -139,13 +157,30 @@ def input_loan_length():
     return length_of_mortgage
 
 
+def input_remaining_loan_length():
+    """
+    Checks Validation for Mortgage Length input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            length_of_mortgage = int(input('Enter the remaining length of the mortgage in years (e.g. 30): \n'))
+            if length_of_mortgage > 0:
+                is_valid = True
+            else:
+                print("Your loan length must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a number. Please enter a valid number.")
+        
+    return length_of_mortgage
+
+
 class Mortgage:
     """
     Base Class for Mortgages
     """
     mortgage_ID = 200
-
-    dict = {}
+    start_date = 0
 
     def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
@@ -154,7 +189,6 @@ class Mortgage:
         self.length_of_mortgage = length_of_mortgage
         Mortgage.mortgage_ID += 1
         self.mortgage_ID = Mortgage.mortgage_ID
-        self.dict = Mortgage.dict
 
     def details(self):
         """
@@ -169,10 +203,6 @@ class Mortgage:
         monthly_payment = round(((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12)))), 2)
         return monthly_payment
     
-    def append_dict(self):
-        self.dict.update([(self.mortgage_ID, {"principal": self.principal, "apr": self.apr, "length_of_mortgage": self.length_of_mortgage})])
-        mortgage_dict.update(self.dict)
-    
     def calculate_lifetime_interest(self):
         total_interest = round((self.length_of_mortgage * 12 * self.calculate_monthly_payment()) - self.principal, 2)
         return total_interest
@@ -184,9 +214,6 @@ class Mortgage:
     def calculate_amoritization(self):
         pass
 
-
-# mixin ExtraPrincipal:
-#     pass
 
 
 def create_mortgage():
@@ -286,37 +313,45 @@ def extra_monthly_principal():
             else:
                 for x in mortgage_dict:
                     if selection == x:
-                        extra_principal = int(input("Enter the amount of extra principal you want to pay each month: \n"))
-                        new_payment = extra_principal + mortgage_dict[x].calculate_monthly_payment()
-                        print("New Principal payment", new_payment)
-                        print(mortgage_dict[x].details())
-                        print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
-                        print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()}")
-                        continue
+                        print("Test this function")
+                        extra_principal = input_extra_principal()
+                        print(extra_principal)
+                        # new_length_of_mortgage = input_remaining_loan_length()
+                        
+                        # mortgage = Mortgage(new_principal, mortgage_dict[x].apr, new_length_of_mortgage)
+                        # mortgage_dict[mortgage.mortgage_ID] = mortgage
+                        # print("Created a new mortgage instance")
+                        # # #extra_principal = int(input("Enter the amount of extra principal you want to pay each month: \n"))
+                        # new_payment = extra_principal + mortgage_dict[x].calculate_monthly_payment()
+                        # print("New monthly payment:", new_payment)
+                        # print(mortgage.details())
+                        # print(f"Your New Monthly payment = €{mortgage.calculate_monthly_payment()}")
+                        # print(f"Updated Cost of this loan = €{mortgage.calculate_lifetime_interest()}")
+                        is_valid = True
                     else:
-                        continue
+                        is_valid = True
                         #print("Sorry. That is not an available mortgage. Please choose one from the list above.")
                         #is_valid = True
         except ValueError:
             print("Please enter a correct number")
 
 
-    is_valid = False
-    while is_valid != True:
-        try:
-            selection = int(input("Enter the amount of extra principal you want to pay each month: \n"))
-            for x in mortgage_dict:
-                if selection == x:
-                    new_payment = round(((mortgage_dict[x].apr / 100 / 12) * mortgage_dict[x].principal) / (1 - (math.pow((1 + (mortgage_dict[x].apr / 100 / 12)), (-mortgage_dict[x].length_of_mortgage * 12)))), 2)
-                    print(f"New Payment Amount: {new_payment}")
-                    print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
-                    print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()})")
-                    is_valid = True
-                else:
-                    continue
-                    #is_valid = True
-        except ValueError:
-            print("Please enter a whole number.")
+    # is_valid = False
+    # while is_valid != True:
+    #     try:
+    #         selection = int(input("Enter the amount of extra principal you want to pay each month: \n"))
+    #         for x in mortgage_dict:
+    #             if selection == x:
+    #                 new_payment = round(((mortgage_dict[x].apr / 100 / 12) * mortgage_dict[x].principal) / (1 - (math.pow((1 + (mortgage_dict[x].apr / 100 / 12)), (-mortgage_dict[x].length_of_mortgage * 12)))), 2)
+    #                 print(f"New Payment Amount: {new_payment}")
+    #                 print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
+    #                 print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()})")
+    #                 is_valid = True
+    #             else:
+    #                 continue
+    #                 #is_valid = True
+    #     except ValueError:
+    #         print("Please enter a whole number.")
 
     print("\n*******************************************************\n")
 
