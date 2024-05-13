@@ -279,6 +279,31 @@ def extra_monthly_principal():
     is_valid = False
     while is_valid != True:
         try:
+            selection = int(input("Enter the number of the mortgage that you'd like to view \nor enter '0' to return to the main menu: \n"))
+            if selection == 0:
+                menu_screen()
+                is_valid = True
+            else:
+                for x in mortgage_dict:
+                    if selection == x:
+                        extra_principal = int(input("Enter the amount of extra principal you want to pay each month: \n"))
+                        new_payment = extra_principal + mortgage_dict[x].calculate_monthly_payment()
+                        print("New Principal payment", new_payment)
+                        print(mortgage_dict[x].details())
+                        print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
+                        print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()}")
+                        continue
+                    else:
+                        continue
+                        #print("Sorry. That is not an available mortgage. Please choose one from the list above.")
+                        #is_valid = True
+        except ValueError:
+            print("Please enter a correct number")
+
+
+    is_valid = False
+    while is_valid != True:
+        try:
             selection = int(input("Enter the amount of extra principal you want to pay each month: \n"))
             for x in mortgage_dict:
                 if selection == x:
