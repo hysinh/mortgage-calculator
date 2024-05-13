@@ -68,7 +68,8 @@ def menu_screen():
         ["Option",1,"Add a mortgage"],
         ["Option",2,"View a Mortgage"],
         ["Option",3,"Display Mortgage Comparison"],
-        ["Option",4,"Exit Program"],
+        ["Option",4,"Make Extra Payments"],
+        ["Option",5,"Exit Program"],
         ["Option",0,"Return to Main Menu"]]
     print(tabulate(table))
     print("\n")
@@ -80,7 +81,7 @@ def small_menu():
     """
     print("** Mortgage Calculator Tool MENU OPTIONS **")
     print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison")
-    print("4. Exit Program | 0. Return to Main Menu | ")
+    print("4. Make Extra Payments | 5. Exit Program | 0. Return to Main Menu | ")
     print("\n*******************************************************")
 
 
@@ -170,9 +171,7 @@ class Mortgage:
     
     def append_dict(self):
         self.dict.update([(self.mortgage_ID, {"principal": self.principal, "apr": self.apr, "length_of_mortgage": self.length_of_mortgage})])
-        #self.dict.update([(self.mortgage_ID, {self.principal), ("apr", self.apr), ("length_of_mortgage", self.length_of_mortgage})])
         mortgage_dict.update(self.dict)
-        return f"Mortgage dict: {self.dict}"
     
     def calculate_lifetime_interest(self):
         total_interest = round((self.length_of_mortgage * 12 * self.calculate_monthly_payment()) - self.principal, 2)
@@ -186,7 +185,8 @@ class Mortgage:
         pass
 
 
-
+# mixin ExtraPrincipal:
+#     pass
 
 
 def create_mortgage():
@@ -208,7 +208,6 @@ def create_mortgage():
     print(mortgage.details())
     print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
     #print(f"mortgage_id: {mortgage.mortgage_ID}")
-    #print(len(mort_dict))
     print("\n*******************************************************\n")
     return mortgage
     
@@ -272,7 +271,32 @@ def extra_monthly_principal():
     """
     clear()
     small_menu()
-    interest = (monthly+extra amount) * totalpayments - principal
+    print("You have entered the following mortgages:\n")
+    for x in mortgage_dict:
+        print(f"Mortgage: {x}")
+    
+    print("\n")
+    is_valid = False
+    while is_valid != True:
+        try:
+            selection = int(input("Enter the amount of extra principal you want to pay each month: \n"))
+            for x in mortgage_dict:
+                if selection == x:
+                    new_payment = round(((mortgage_dict[x].apr / 100 / 12) * mortgage_dict[x].principal) / (1 - (math.pow((1 + (mortgage_dict[x].apr / 100 / 12)), (-mortgage_dict[x].length_of_mortgage * 12)))), 2)
+                    print(f"New Payment Amount: {new_payment}")
+                    print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
+                    print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()})")
+                    is_valid = True
+                else:
+                    continue
+                    #is_valid = True
+        except ValueError:
+            print("Please enter a whole number.")
+
+    print("\n*******************************************************\n")
+
+
+    #interest = (monthly+extra amount) * totalpayments - principal
 
 
 def run_mortgage_tool():
@@ -293,8 +317,8 @@ def run_mortgage_tool():
                 compare_mortgages()
                 #is_valid = True
             elif selection == 4:
-                print("Option 4: Exit the program.")
-                is_valid = True
+                extra_monthly_principal()
+                #is_valid = True
             elif selection == 5:
                 print("Option 5: Exit the program.")
                 is_valid = True
