@@ -81,7 +81,7 @@ def small_menu():
     print("** Mortgage Calculator Tool MENU OPTIONS **")
     print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison")
     print("4. Exit Program | 0. Return to Main Menu | ")
-    print("\n *******************************************************")
+    print("\n*******************************************************")
 
 
 def input_principal():
@@ -175,12 +175,17 @@ class Mortgage:
         return f"Mortgage dict: {self.dict}"
     
     def calculate_lifetime_interest(self):
-        print("Calculating Interest")
-        total_interest = (self.length_of_mortgage * 12 * self.calculate_monthly_payment()) - self.principal
+        total_interest = round((self.length_of_mortgage * 12 * self.calculate_monthly_payment()) - self.principal, 2)
         return total_interest
 
+    def get_table_values(self):
+        row = [self.mortgage_ID, "€{:,.2f}".format(self.principal), self.apr, self.length_of_mortgage, "€{:,.2f}".format(self.calculate_monthly_payment()), "€{:,.2f}".format(self.calculate_lifetime_interest())]
+        return row
+    
     def calculate_amoritization(self):
         pass
+
+
 
 
 
@@ -197,16 +202,14 @@ def create_mortgage():
     apr = input_apr()
     length_of_mortgage = input_loan_length()
 
-    print("\nCreating mortgage...\n")
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
-    print("You created a Mortgage with the following details:")
+    print("\nYou created a Mortgage with the following details:")
     print(mortgage.details())
-    #print(mortgage.calculate_monthly_payment()) 
+    print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
     #print(f"mortgage_id: {mortgage.mortgage_ID}")
     #print(len(mort_dict))
-    print(f"\n")
-    print("\n ******************************************************* \n")
+    print("\n*******************************************************\n")
     return mortgage
     
 def view_mortgage():
@@ -241,7 +244,7 @@ def view_mortgage():
         except ValueError:
             print("Please enter a correct number")
 
-    print("\n ******************************************************* \n")
+    print("\n*******************************************************\n")
         
 
 
@@ -251,22 +254,25 @@ def compare_mortgages():
     """
     clear()
     small_menu()
-    table = [
-        ["Description","Principal\nin EURO","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"],
-        ["Mortgage 1",350000,4.3,19,2253.35, 453256.96],
-        ["Mortgage 2",350000,4.3,24,2253.35, 560256.96],
-        ["Mortgage 3",'${:,.2f}'.format(350000),4.3,30,2253.35, 673256.96]
-    ]
+    mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
 
     print("\nMORTGAGE COMPARISON TABLE\n")
-    print(tabulate(table, tablefmt="simple"))
-    #mortgage_table = []
     for x in mortgage_dict:
-        print(mortgage_dict[x].details())
-        print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
+        #print(mortgage_dict[x].details())
+        #print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
+        mortgage_table.append(mortgage_dict[x].get_table_values())
 
-    print("\n ******************************************************* \n")
+    print(tabulate(mortgage_table, tablefmt="simple"))
+    print("\n******************************************************* \n")
     
+
+def extra_monthly_principal():
+    """
+    Calculates new payment and total interest with extra monthly principal payments
+    """
+    clear()
+    small_menu()
+    interest = (monthly+extra amount) * totalpayments - principal
 
 
 def run_mortgage_tool():
@@ -288,6 +294,9 @@ def run_mortgage_tool():
                 #is_valid = True
             elif selection == 4:
                 print("Option 4: Exit the program.")
+                is_valid = True
+            elif selection == 5:
+                print("Option 5: Exit the program.")
                 is_valid = True
             elif selection == 0:
                 menu_screen()
