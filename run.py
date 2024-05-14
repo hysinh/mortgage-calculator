@@ -490,13 +490,13 @@ def generate_amortization_schedule(PV,n,r):
                 'Interest' : interest_payment,
                 'Balance' : balance     
             })
-    return pd.DataFrame(schedule)   
+    return pd.DataFrame(schedule)  
 
 
 if __name__ == '__main__':
-    PV=5000 #starting principal
-    n=5 # in years
-    r=0.07 # interest rate
+    PV=5000
+    n=5
+    r=0.07
     amortization_schedule = generate_amortization_schedule(PV,n,r)
 
     print(amortization_schedule)
