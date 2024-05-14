@@ -69,8 +69,9 @@ def menu_screen():
         ["Option",1,"Add a mortgage"],
         ["Option",2,"View a Mortgage"],
         ["Option",3,"Display Mortgage Comparison"],
-        ["Option",4,"Make Overpayments"],
-        ["Option",5,"Exit Program"],
+        ["Option",4,"Calculate Overpayments"],
+        ["Option",5,"View Amortization Schedules"],
+        ["Option",6,"Exit Program"],
         ["Option",0,"Return to Main Menu"]]
     print(tabulate(table))
     print("\n")
@@ -82,82 +83,35 @@ def small_menu():
     """
     print("** Mortgage Calculator Tool MENU OPTIONS **")
     print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison")
-    print("4. Make Overpayments | 5. Exit Program | 0. Return to Main Menu | ")
+    print("4. Calculate Overpayments | 5. View Amortization Schedules | 0. Return to Main Menu | ")
+    print("6. Exit Program | 0. Return to Main Menu | ")
     print("\n*******************************************************")
 
 
-def input_principal():
-    """
-    Checks Validation for principal input
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            principal = int(input('Enter the principal or loan amount in Euro: \n'))
-            if principal > 0:
-                is_valid = True
-            else:
-                print("Principal must be greater than 0. Please enter a valid number.")
-        except ValueError:
-            print("That is not a whole number. Please enter a valid number.")
-        
-    return principal
 
-
-def input_remaing_principal():
+def validate_value(prompt_text):
     """
-    Checks Validation for Remaining Principal input
+    Prompts user for input and validates that input is an integer greater
+    than 0.
     """
     is_valid = False
     while is_valid != True:
         try:
-            principal = int(input('Enter the remaining principal left on your loan in Euro: \n'))
-            if principal > 0:
+            value = int(input(prompt_text))
+            if value > 0:
                 is_valid = True
             else:
-                print("Principal must be greater than 0. Please enter a valid number.")
+                print("Value must be greater than 0. Please enter a valid number.")
         except ValueError:
             print("That is not a whole number. Please enter a valid number.")
         
-    return principal
+    return value
 
 
-def input_extra_principal():
+def validate_apr():
     """
-    Checks Validation for extra principal input
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            principal = int(input('Enter amount of extra principal you wish to pay each month: \n'))
-            if principal > 0:
-                is_valid = True
-            else:
-                print("Extra principal payments must be greater than 0. Please enter a valid number.")
-        except ValueError:
-            print("That is not a whole number. Please enter a valid number.")
-        
-    return principal
-
-
-def input_lump_payment():
-    is_valid = False
-    while is_valid != True:
-        try:
-            principal = int(input('How much of a lump payment do you want to make? \n'))
-            if principal > 0:
-                is_valid = True
-            else:
-                print("Payment must be greater than 0. Please enter a valid number.")
-        except ValueError:
-            print("That is not a whole number. Please enter a valid number.")
-        
-    return principal
-
-
-def input_apr():
-    """
-    Checks Validation for APR input
+    Prompts user for input and validates that the input is a float
+    with a value between 0 and 100.
     """
     is_valid = False
     while is_valid != True:
@@ -172,41 +126,6 @@ def input_apr():
         
     return apr
 
-
-def input_loan_length():
-    """
-    Checks Validation for Mortgage Length input
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            length_of_mortgage = int(input('Enter the length of the mortgage in years (e.g. 30): \n'))
-            if length_of_mortgage > 0:
-                is_valid = True
-            else:
-                print("Your loan length must be greater than 0. Please enter a valid number.")
-        except ValueError:
-            print("That is not a number. Please enter a valid number.")
-        
-    return length_of_mortgage
-
-
-def input_remaining_loan_length():
-    """
-    Checks Validation for Mortgage Length input
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            length_of_mortgage = int(input('How many years are left on your mortgage?  (e.g. 30) \n'))
-            if length_of_mortgage > 0:
-                is_valid = True
-            else:
-                print("Your loan length must be greater than 0. Please enter a valid number.")
-        except ValueError:
-            print("That is not a number. Please enter a valid number.")
-        
-    return length_of_mortgage
 
 
 class Mortgage:
@@ -251,22 +170,27 @@ class Mortgage:
     def calculate_revised_interest(self):
         pass
     
-    # def calculate_amortization_schedule(self):
-    #     monthly_payment = Mortgage.calculate_monthly_payment()
-    #     schedule = []
-    #     balance = PV
-    #     for Year in range(1,n):
-    #         interest_payment = balance * r
-    #         principal_payment = yearly_payment - interest_payment
-    #         balance = principal_payment
-    #         schedule.append({
-    #                 'Year' : n,
-    #                 'Payment' : yearly_payment,
-    #                 'Principal' : principal_payment,
-    #                 'Interest' : interest_payment,
-    #                 'Balance' : balance     
-    #             })
-    #     return pd.DataFrame(schedule)  
+    def calculate_amortization_schedule(self):
+        schedule = []
+        balance = self.principal
+        rate = self.apr/100/12
+        total_payments = self.length_of_mortgage*12
+        monthly_payment = self.calculate_monthly_payment()
+        for Month in range(1, total_payments):
+            interest_payment = balance * rate
+            principal_payment = monthly_payment - interest_payment
+            balance -= principal_payment
+            total_payments -= 1
+            schedule.append({
+                    'Month #' : Month,
+                    'Payments Left' : total_payments,
+                    'Payment' : "€{:,.2f}".format(monthly_payment),
+                    'Principal' : "€{:,.2f}".format(principal_payment),
+                    'Interest' : "€{:,.2f}".format(interest_payment),
+                    'Balance' : "€{:,.2f}".format(balance)     
+                })
+
+        return pd.DataFrame(schedule) 
 
 
 def create_mortgage():
@@ -278,9 +202,9 @@ def create_mortgage():
     clear()
     small_menu()
     print("\nEnter Your Mortgage details in below:\n")
-    principal = input_principal()
-    apr = input_apr()
-    length_of_mortgage = input_loan_length()
+    principal = validate_value('Enter the principal or loan amount in Euro: \n')
+    apr = validate_apr()
+    length_of_mortgage = validate_value("Enter the length of the mortgage in years (e.g. 30): \n")
 
     # Creates a Mortgage Class Instance
     mortgage = Mortgage(principal, apr, length_of_mortgage)
@@ -299,10 +223,13 @@ def view_mortgage():
     """
     clear()
     small_menu()
+
+    # Prints a column of the available Mortgage Class Instances
     print("You have entered the following mortgages:\n")
     for x in mortgage_dict:
         print(f"Mortgage: {x}")
 
+    # Prompts user to select a mortgage to view or user can select to return to main menu
     print("\n")
     is_valid = False
     while is_valid != True:
@@ -315,23 +242,21 @@ def view_mortgage():
                 for x in mortgage_dict:
                     if selection == x:
                         print(mortgage_dict[x].details())
-                        print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
-                        print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()})")
+                        print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
+                        print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
                         is_valid = True
                     else:
                         continue
-                        #print("Sorry. That is not an available mortgage. Please choose one from the list above.")
-                        #is_valid = True
         except ValueError:
-            print("Please enter a correct number")
+            print("Please enter a valid number")
 
-    print("\n*******************************************************\n")
+    print("\n*******************************************************")
         
 
 
 def compare_mortgages():
     """
-    Creates a table to compare all mortgages entered
+    Displays a comparison table of all the mortgages entered by the user
     """
     clear()
     small_menu()
@@ -354,11 +279,11 @@ def extra_monthly_principal():
     small_menu()
     print("Calculate Mortgage Overpayments:\n")
 
-    principal = input_remaing_principal()
+    principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
     apr = input_apr()
-    remaining_length_of_mortgage = input_remaining_loan_length()
+    remaining_length_of_mortgage = validate_value('How many years are left on your mortgage?  (e.g. 30) \n')
 
-    extra_principal = input_extra_principal()
+    extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
@@ -384,24 +309,24 @@ def lump_payment():
     small_menu()
     print("Calculate Mortgage Overpayments:\n")
 
-    principal = input_remaing_principal()
-    apr = input_apr()
-    remaining_length_of_mortgage = input_remaining_loan_length()
+    principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
+    apr = validate_apr()
+    remaining_length_of_mortgage = validate_value("Enter the remaining length of your mortgage in years: \n")
 
-    lump_payment = input_lump_payment()
+    lump_payment = validate_value('How much of a lump payment do you want to make? \n')
     
     # Creates Mortgage Instance with Current Mortgage inputs
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
     
     # Prints Current Mortgage Details
-    print("\nCurrent Mortgage: ")
+    print("\nCurrent Mortgage: ----------------------------------------")
     print(mortgage.details())
     print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     print("The current cost of the remainder of this mortgage is: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
     
     # Prints Updated Mortgage Details after Lump Payment applied
-    print("\nUpdated Mortgage:")
+    print("\nUpdated Mortgage: ----------------------------------------")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
     mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage
     print(new_mortgage.details())
@@ -428,7 +353,8 @@ def overpayments():
             if selection == 0:
                 menu_screen()
             elif selection == 1:
-                extra_monthly_principal()
+                print("Make monthly overpayments")
+                #extra_monthly_principal()
                 is_valid = True
             elif selection == 2:
                 lump_payment()
@@ -437,6 +363,44 @@ def overpayments():
                print("That is not a valid option. Please choose one from the list above.")
         except ValueError:
             print("Please enter a valid mortgage number")
+
+
+
+def amortization():
+    """
+    Allows user to view an amoritization for individual Mortgage details one at a time
+    """
+    clear()
+    small_menu()
+    print("You have entered the following mortgages:\n")
+    for x in mortgage_dict:
+        print(f"Mortgage: {x}")
+
+    print("\n")
+    is_valid = False
+    while is_valid != True:
+        try:
+            selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
+            if selection == 0:
+                menu_screen()
+                is_valid = True
+            else:
+                for x in mortgage_dict:
+                    if selection == x:
+                        clear()
+                        menu_screen()
+                        print(f"AMORTIZATION SCHEDULE FOR:")
+                        schedule = mortgage_dict[x].calculate_amortization_schedule()
+                        print(mortgage_dict[x].details())
+                        print(schedule)
+                        print("\n")
+                        is_valid = True
+                    else:
+                        continue
+        except ValueError:
+            print("Please enter a correct number")
+
+    print("\n*******************************************************\n")
 
 
 def run_mortgage_tool():
@@ -458,7 +422,10 @@ def run_mortgage_tool():
             elif selection == 4:
                 overpayments()
             elif selection == 5:
-                print("Option 5: Exit the program.")
+                amortization()
+                #amortization_schedule = generate_amortization_schedule(PV,n,r)
+            elif selection == 6:
+                print("Option 6: Exit the program.")
                 is_valid = True
             elif selection == 0:
                 menu_screen()
@@ -469,40 +436,47 @@ def run_mortgage_tool():
 
 
 # Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
-def calculate_yearly_payments(PV,n,r):
-    output= (PV*r)/(((1/(1+r)**n))-1)  # formula calculated using sum of infinite GP series
-    return output
+def calculate_monthly_payments(PV,n,r):
+    monthly_payment = round(((r / 100 / 12) * PV) / (1 - (math.pow((1 + (r / 100 / 12)), (-n*12)))), 2)
+    return monthly_payment
+    #output= (PV*r)/(((1/(1+r)**n))-1)  # formula calculated using sum of infinite GP series
+    #return output
 
 
 # Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
 def generate_amortization_schedule(PV,n,r):
-    yearly_payment = calculate_yearly_payments(PV,n,r)
     schedule = []
     balance = PV
-    for Year in range(1,n):
-        interest_payment = balance * r
-        principal_payment = yearly_payment - interest_payment
-        balance = principal_payment
+    rate = r/100/12
+    total_payments = n*12
+    monthly_payment = calculate_monthly_payments(PV,n,r)
+    for Month in range(1,total_payments):
+        interest_payment = balance * rate
+        principal_payment = monthly_payment - interest_payment
+        balance -= principal_payment
+        total_payments -= 1
         schedule.append({
-                'Year' : n,
-                'Payment' : yearly_payment,
-                'Principal' : principal_payment,
-                'Interest' : interest_payment,
-                'Balance' : balance     
+                'Month #' : Month,
+                'Payments Left' : total_payments,
+                'Payment' : "€{:,.2f}".format(monthly_payment),
+                'Principal' : "€{:,.2f}".format(principal_payment),
+                'Interest' : "€{:,.2f}".format(interest_payment),
+                'Balance' : "€{:,.2f}".format(balance)     
             })
-    return pd.DataFrame(schedule)  
+
+    return pd.DataFrame(schedule) 
 
 
 if __name__ == '__main__':
-    PV=5000
-    n=5
-    r=0.07
-    amortization_schedule = generate_amortization_schedule(PV,n,r)
+    # PV=350000
+    # n=19
+    # r=4.3
+    # amortization_schedule = generate_amortization_schedule(PV,n,r)
 
-    print(amortization_schedule)
-    #welcome_screen()
-    #menu_screen()
-    #run_mortgage_tool()
+    # print(amortization_schedule)
+    welcome_screen()
+    menu_screen()
+    run_mortgage_tool()
     #print(f"Mort_dict: {mort_dict}")
     
 
