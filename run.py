@@ -9,6 +9,7 @@ from termcolor import cprint
 import pyfiglet
 from tabulate import tabulate
 import os
+import pandas as pd
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -250,9 +251,22 @@ class Mortgage:
     def calculate_revised_interest(self):
         pass
     
-    def calculate_amoritization(self):
-        pass
-
+    # def calculate_amortization_schedule(self):
+    #     monthly_payment = Mortgage.calculate_monthly_payment()
+    #     schedule = []
+    #     balance = PV
+    #     for Year in range(1,n):
+    #         interest_payment = balance * r
+    #         principal_payment = yearly_payment - interest_payment
+    #         balance = principal_payment
+    #         schedule.append({
+    #                 'Year' : n,
+    #                 'Payment' : yearly_payment,
+    #                 'Principal' : principal_payment,
+    #                 'Interest' : interest_payment,
+    #                 'Balance' : balance     
+    #             })
+    #     return pd.DataFrame(schedule)  
 
 
 def create_mortgage():
@@ -399,7 +413,7 @@ def lump_payment():
 
 
 
-def overpayment():
+def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
@@ -442,7 +456,7 @@ def run_mortgage_tool():
             elif selection == 3:
                 compare_mortgages()
             elif selection == 4:
-                overpayment()
+                overpayments()
             elif selection == 5:
                 print("Option 5: Exit the program.")
                 is_valid = True
@@ -453,10 +467,42 @@ def run_mortgage_tool():
         except ValueError:
             print("That is not a valid input. Please type in a number betwee 1 - 14.")    
 
+
+# Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
+def calculate_yearly_payments(PV,n,r):
+    output= (PV*r)/(((1/(1+r)**n))-1)  # formula calculated using sum of infinite GP series
+    return output
+
+
+# Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
+def generate_amortization_schedule(PV,n,r):
+    yearly_payment = calculate_yearly_payments(PV,n,r)
+    schedule = []
+    balance = PV
+    for Year in range(1,n):
+        interest_payment = balance * r
+        principal_payment = yearly_payment - interest_payment
+        balance = principal_payment
+        schedule.append({
+                'Year' : n,
+                'Payment' : yearly_payment,
+                'Principal' : principal_payment,
+                'Interest' : interest_payment,
+                'Balance' : balance     
+            })
+    return pd.DataFrame(schedule)   
+
+
 if __name__ == '__main__':
-    welcome_screen()
-    menu_screen()
-    run_mortgage_tool()
+    PV=5000 #starting principal
+    n=5 # in years
+    r=0.07 # interest rate
+    amortization_schedule = generate_amortization_schedule(PV,n,r)
+
+    print(amortization_schedule)
+    #welcome_screen()
+    #menu_screen()
+    #run_mortgage_tool()
     #print(f"Mort_dict: {mort_dict}")
     
 
