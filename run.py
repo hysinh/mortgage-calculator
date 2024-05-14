@@ -68,7 +68,7 @@ def menu_screen():
         ["Option",1,"Add a mortgage"],
         ["Option",2,"View a Mortgage"],
         ["Option",3,"Display Mortgage Comparison"],
-        ["Option",4,"Make Extra Payments"],
+        ["Option",4,"Make Overpayments"],
         ["Option",5,"Exit Program"],
         ["Option",0,"Return to Main Menu"]]
     print(tabulate(table))
@@ -81,7 +81,7 @@ def small_menu():
     """
     print("** Mortgage Calculator Tool MENU OPTIONS **")
     print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison")
-    print("4. Make Extra Payments | 5. Exit Program | 0. Return to Main Menu | ")
+    print("4. Make Overpayments | 5. Exit Program | 0. Return to Main Menu | ")
     print("\n*******************************************************")
 
 
@@ -103,6 +103,24 @@ def input_principal():
     return principal
 
 
+def input_remaing_principal():
+    """
+    Checks Validation for Remaining Principal input
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            principal = int(input('Enter the remaining principal left on your loan in Euro: \n'))
+            if principal > 0:
+                is_valid = True
+            else:
+                print("Principal must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a whole number. Please enter a valid number.")
+        
+    return principal
+
+
 def input_extra_principal():
     """
     Checks Validation for extra principal input
@@ -110,11 +128,26 @@ def input_extra_principal():
     is_valid = False
     while is_valid != True:
         try:
-            principal = int(input('Enter amount of principal you wish to pay each month: \n'))
+            principal = int(input('Enter amount of extra principal you wish to pay each month: \n'))
             if principal > 0:
                 is_valid = True
             else:
-                print("Principal must be greater than 0. Please enter a valid number.")
+                print("Extra principal payments must be greater than 0. Please enter a valid number.")
+        except ValueError:
+            print("That is not a whole number. Please enter a valid number.")
+        
+    return principal
+
+
+def input_lump_payment():
+    is_valid = False
+    while is_valid != True:
+        try:
+            principal = int(input('How much of a lump payment do you want to make? \n'))
+            if principal > 0:
+                is_valid = True
+            else:
+                print("Payment must be greater than 0. Please enter a valid number.")
         except ValueError:
             print("That is not a whole number. Please enter a valid number.")
         
@@ -164,7 +197,7 @@ def input_remaining_loan_length():
     is_valid = False
     while is_valid != True:
         try:
-            length_of_mortgage = int(input('Enter the remaining length of the mortgage in years (e.g. 30): \n'))
+            length_of_mortgage = int(input('How many years are left on your mortgage?  (e.g. 30) \n'))
             if length_of_mortgage > 0:
                 is_valid = True
             else:
@@ -180,7 +213,8 @@ class Mortgage:
     Base Class for Mortgages
     """
     mortgage_ID = 200
-    start_date = 0
+    start_year = 0 # start of mortgage
+    extra_monthly_principal = 0
 
     def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
@@ -189,6 +223,8 @@ class Mortgage:
         self.length_of_mortgage = length_of_mortgage
         Mortgage.mortgage_ID += 1
         self.mortgage_ID = Mortgage.mortgage_ID
+        self.start_year = Mortgage.start_year
+        self.extra_monthly_principal = Mortgage.extra_monthly_principal
 
     def details(self):
         """
@@ -210,6 +246,9 @@ class Mortgage:
     def get_table_values(self):
         row = [self.mortgage_ID, "€{:,.2f}".format(self.principal), self.apr, self.length_of_mortgage, "€{:,.2f}".format(self.calculate_monthly_payment()), "€{:,.2f}".format(self.calculate_lifetime_interest())]
         return row
+
+    def calculate_revised_interest(self):
+        pass
     
     def calculate_amoritization(self):
         pass
@@ -229,15 +268,17 @@ def create_mortgage():
     apr = input_apr()
     length_of_mortgage = input_loan_length()
 
+    # Creates a Mortgage Class Instance
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
+
     print("\nYou created a Mortgage with the following details:")
     print(mortgage.details())
     print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
-    #print(f"mortgage_id: {mortgage.mortgage_ID}")
+
     print("\n*******************************************************\n")
-    return mortgage
     
+
 def view_mortgage():
     """
     Allows user to view individual Mortgage details one at a time
@@ -276,7 +317,7 @@ def view_mortgage():
 
 def compare_mortgages():
     """
-    Creates a table to compare mortgages
+    Creates a table to compare all mortgages entered
     """
     clear()
     small_menu()
@@ -284,13 +325,12 @@ def compare_mortgages():
 
     print("\nMORTGAGE COMPARISON TABLE\n")
     for x in mortgage_dict:
-        #print(mortgage_dict[x].details())
-        #print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
         mortgage_table.append(mortgage_dict[x].get_table_values())
 
     print(tabulate(mortgage_table, tablefmt="simple"))
     print("\n******************************************************* \n")
     
+
 
 def extra_monthly_principal():
     """
@@ -298,60 +338,23 @@ def extra_monthly_principal():
     """
     clear()
     small_menu()
-    print("You have entered the following mortgages:\n")
-    for x in mortgage_dict:
-        print(f"Mortgage: {x}")
+    print("Calculate Mortgage Overpayments:\n")
+
+    principal = input_remaing_principal()
+    apr = input_apr()
+    remaining_length_of_mortgage = input_remaining_loan_length()
+
+    extra_principal = input_extra_principal()
     
-    print("\n")
-    is_valid = False
-    while is_valid != True:
-        try:
-            selection = int(input("Enter the number of the mortgage that you'd like to view \nor enter '0' to return to the main menu: \n"))
-            if selection == 0:
-                menu_screen()
-                is_valid = True
-            else:
-                for x in mortgage_dict:
-                    if selection == x:
-                        print("Test this function")
-                        extra_principal = input_extra_principal()
-                        print(extra_principal)
-                        # new_length_of_mortgage = input_remaining_loan_length()
-                        
-                        # mortgage = Mortgage(new_principal, mortgage_dict[x].apr, new_length_of_mortgage)
-                        # mortgage_dict[mortgage.mortgage_ID] = mortgage
-                        # print("Created a new mortgage instance")
-                        # # #extra_principal = int(input("Enter the amount of extra principal you want to pay each month: \n"))
-                        # new_payment = extra_principal + mortgage_dict[x].calculate_monthly_payment()
-                        # print("New monthly payment:", new_payment)
-                        # print(mortgage.details())
-                        # print(f"Your New Monthly payment = €{mortgage.calculate_monthly_payment()}")
-                        # print(f"Updated Cost of this loan = €{mortgage.calculate_lifetime_interest()}")
-                        is_valid = True
-                    else:
-                        is_valid = True
-                        #print("Sorry. That is not an available mortgage. Please choose one from the list above.")
-                        #is_valid = True
-        except ValueError:
-            print("Please enter a correct number")
+    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
+    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    print("\nCurrent Mortgage: ")
+    print(mortgage.details())
+    print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
+    
+    print("\nUpdated Mortgage:")
+    print(f"Extra principal: {extra_principal}")
 
-
-    # is_valid = False
-    # while is_valid != True:
-    #     try:
-    #         selection = int(input("Enter the amount of extra principal you want to pay each month: \n"))
-    #         for x in mortgage_dict:
-    #             if selection == x:
-    #                 new_payment = round(((mortgage_dict[x].apr / 100 / 12) * mortgage_dict[x].principal) / (1 - (math.pow((1 + (mortgage_dict[x].apr / 100 / 12)), (-mortgage_dict[x].length_of_mortgage * 12)))), 2)
-    #                 print(f"New Payment Amount: {new_payment}")
-    #                 print(f"Monthly payment = €{mortgage_dict[x].calculate_monthly_payment()}")
-    #                 print(f"Cost of this loan = €{mortgage_dict[x].calculate_lifetime_interest()})")
-    #                 is_valid = True
-    #             else:
-    #                 continue
-    #                 #is_valid = True
-    #     except ValueError:
-    #         print("Please enter a whole number.")
 
     print("\n*******************************************************\n")
 
@@ -359,7 +362,73 @@ def extra_monthly_principal():
     #interest = (monthly+extra amount) * totalpayments - principal
 
 
+def lump_payment():
+    """
+    Calculates new payment and total interest with an extra lump principal payments
+    """
+    clear()
+    small_menu()
+    print("Calculate Mortgage Overpayments:\n")
+
+    principal = input_remaing_principal()
+    apr = input_apr()
+    remaining_length_of_mortgage = input_remaining_loan_length()
+
+    lump_payment = input_lump_payment()
+    
+    # Creates Mortgage Instance with Current Mortgage inputs
+    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
+    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    
+    # Prints Current Mortgage Details
+    print("\nCurrent Mortgage: ")
+    print(mortgage.details())
+    print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
+    print("The current cost of the remainder of this mortgage is: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
+    
+    # Prints Updated Mortgage Details after Lump Payment applied
+    print("\nUpdated Mortgage:")
+    new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
+    mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage
+    print(new_mortgage.details())
+    print("Your new monthly payment is: €{:,.2f}".format(new_mortgage.calculate_monthly_payment()))
+    print("The updated cost of the remainder of this mortgage is: €{:,.2f}".format(new_mortgage.calculate_lifetime_interest()))
+    print(f"Extra principal: €{lump_payment}")
+
+    print("\n*******************************************************\n")
+
+
+
+def overpayment():
+    """
+    Gives User the selection of making monthly overpayments or a lump sum overpayment
+    """
+    clear()
+    small_menu()
+    print("Mortgage Overpayments:\n")
+
+    is_valid = False
+    while is_valid != True:
+        try:
+            selection = int(input("Enter 1 for monthly overpayments,  2 for a lump overpayment \nor enter '0' to exit this menu: \n"))
+            if selection == 0:
+                menu_screen()
+            elif selection == 1:
+                extra_monthly_principal()
+                is_valid = True
+            elif selection == 2:
+                lump_payment()
+                is_valid = True
+            else:
+               print("That is not a valid option. Please choose one from the list above.")
+        except ValueError:
+            print("Please enter a valid mortgage number")
+
+
 def run_mortgage_tool():
+    """
+    Allows the user to select from various menu options for the Mortgage Comparison Tool
+    """
     is_valid = False
     while is_valid != True:
         try:
@@ -370,15 +439,10 @@ def run_mortgage_tool():
             elif selection == 2:
                 view_mortgage()
                 print("\n")
-                #print(mortgage_dict[1].calculate_monthly_payment())
-                #print("Option 2: View a particular mortgage.")
-                #is_valid = True
             elif selection == 3:
                 compare_mortgages()
-                #is_valid = True
             elif selection == 4:
-                extra_monthly_principal()
-                #is_valid = True
+                overpayment()
             elif selection == 5:
                 print("Option 5: Exit the program.")
                 is_valid = True
@@ -397,22 +461,5 @@ if __name__ == '__main__':
     
 
 
-
-# ShowText = 'Python PIL'
-
-# font = ImageFont.truetype('arialbd.ttf', 15) #load the font
-# size = font.getsize(ShowText)  #calc the size of text in pixels
-# image = Image.new('1', size, 1)  #create a b/w image
-# draw = ImageDraw.Draw(image)
-# draw.text((0, 0), ShowText, font=font) #render the text to the bitmap
-# for rownum in range(size[1]): 
-# #scan the bitmap:
-# # print ' ' for black pixel and 
-# # print '#' for white one
-#     line = []
-#     for colnum in range(size[0]):
-#         if image.getpixel((colnum, rownum)): line.append(' '),
-#         else: line.append('#'),
-#     print(''.join(line))
 
 
