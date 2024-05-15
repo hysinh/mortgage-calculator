@@ -173,7 +173,7 @@ class Mortgage:
                     'Balance' : "€{:,.2f}".format(balance)     
                 })
 
-        return pd.DataFrame(schedule) 
+        return pd.DataFrame(schedule, index=None) 
 
 
 def create_mortgage():
@@ -370,7 +370,8 @@ def amortization():
                         print(f"AMORTIZATION SCHEDULE FOR:")
                         schedule = mortgage_dict[x].calculate_amortization_schedule()
                         print(mortgage_dict[x].details())
-                        print(schedule)
+                        print(schedule.to_string(index=False))
+                        #print(df.to_string(index=False))
                         print("\n")
                         is_valid = True
                     else:
