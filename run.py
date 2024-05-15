@@ -435,6 +435,45 @@ def overpayments():
 
 
 
+def amortization():
+    """
+    Allows user to view an amoritization for individual Mortgage details one at a time
+    """
+    menu_screen()
+    if len(mortgage_dict) == 0:
+        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
+    else:
+        cprint("You have entered the following mortgages:\n", "green")
+        for x in mortgage_dict:
+            print(f"Mortgage: {x}")
+        
+        print("\n")
+        is_valid = False
+        while is_valid != True:
+            try:
+                selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
+                if selection == 0:
+                    menu_screen()
+                    is_valid = True
+                else:
+                    for x in mortgage_dict:
+                        if selection == x:
+                            clear()
+                            menu_screen()
+                            cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
+                            schedule = mortgage_dict[x].calculate_amortization_schedule()
+                            print(mortgage_dict[x].details())
+                            print(schedule.to_string(index=False))
+                            print("\n")
+                            is_valid = True
+                        else:
+                            continue
+            except ValueError:
+                print("Please enter a correct number")
+
+            print("\n*******************************************************\n")
+
+    
 def print_mortgage_avg():
     """
     Prints the Mortgage data averages in a table
@@ -453,11 +492,6 @@ def print_mortgage_avg():
 
         print(tabulate(table))
         print("\n*******************************************************")
-    
-        
-
-        print("\n*******************************************************\n")
-
 
 
 def run_mortgage_tool():
@@ -470,7 +504,6 @@ def run_mortgage_tool():
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
                 create_mortgage()
-                #is_valid = True
             elif selection == 2:
                 view_mortgage()
                 print("\n")
@@ -480,10 +513,11 @@ def run_mortgage_tool():
                 overpayments()
             elif selection == 5:
                 amortization()
-                #amortization_schedule = generate_amortization_schedule(PV,n,r)
             elif selection == 6:
                 print("Option 6: Exit the program.")
                 is_valid = True
+            elif selection ==7:
+                print("Mortgage Metrics Table")
             elif selection == 0:
                 menu_screen()
             else:
@@ -491,37 +525,6 @@ def run_mortgage_tool():
         except ValueError:
             print("That is not a valid input. Please type in a number between 1 - 7 or 0.")    
 
-
-# Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
-def calculate_monthly_payments(PV,n,r):
-    monthly_payment = round(((r / 100 / 12) * PV) / (1 - (math.pow((1 + (r / 100 / 12)), (-n*12)))), 2)
-    return monthly_payment
-    #output= (PV*r)/(((1/(1+r)**n))-1)  # formula calculated using sum of infinite GP series
-    #return output
-
-
-# Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
-def generate_amortization_schedule(PV,n,r):
-    schedule = []
-    balance = PV
-    rate = r/100/12
-    total_payments = n*12
-    monthly_payment = calculate_monthly_payments(PV,n,r)
-    for Month in range(1,total_payments):
-        interest_payment = balance * rate
-        principal_payment = monthly_payment - interest_payment
-        balance -= principal_payment
-        total_payments -= 1
-        schedule.append({
-                'Month #' : Month,
-                'Payments Left' : total_payments,
-                'Payment' : "€{:,.2f}".format(monthly_payment),
-                'Principal' : "€{:,.2f}".format(principal_payment),
-                'Interest' : "€{:,.2f}".format(interest_payment),
-                'Balance' : "€{:,.2f}".format(balance)     
-            })
-
-    return pd.DataFrame(schedule) 
 
 
 if __name__ == '__main__':
