@@ -82,9 +82,9 @@ def validate_value(prompt_text):
             if value > 0:
                 is_valid = True
             else:
-                print("Value must be a whole number greater than 0. Please enter a valid number.")
+                cprint("Value must be a whole number greater than 0. Please enter a valid number.", "red")
         except ValueError:
-            print("That is not a number. Please enter a valid number.")
+            cprint("That is not a whole number. Please enter a valid number.", "red")
         
     return value
 
@@ -101,9 +101,9 @@ def validate_apr():
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
-                print("APR must be greater than 0 but less than 100. Please enter a valid number.")
+                cprint("APR must be greater than 0 but less than 100. Please enter a valid number.", "red")
         except ValueError:
-            print("That is not a number. Please enter a valid number.")
+            cprint("That is not a number. Please enter a valid number.", "red")
         
     return apr
 
@@ -214,7 +214,7 @@ def create_mortgage():
     caculations.
     """
     menu_screen()
-    print("\nEnter Your Mortgage details in below:\n")
+    cprint("\nEnter Your Mortgage details in below:\n", "green")
     principal = validate_value('Enter the principal or loan amount in Euro: \n')
     apr = validate_apr()
     length_of_mortgage = validate_value("Enter the length of the mortgage in years (e.g. 30): \n")
@@ -223,7 +223,7 @@ def create_mortgage():
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
 
-    print("\nYou created a Mortgage with the following details:")
+    cprint("\nYou created a Mortgage with the following details:", "yellow")
     print(mortgage.details())
     print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
 
@@ -238,9 +238,9 @@ def view_mortgage():
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
-        print("This feature requires you to add at least one mortgage. Add a mortgage to proceed.")
+        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
     else:
-        print("You have entered the following mortgages:\n")
+        cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
             print(f"Mortgage: {x}")
 
@@ -263,7 +263,7 @@ def view_mortgage():
                         else:
                             continue
             except ValueError:
-                print("Please enter a valid number")
+                cprint("Please enter a valid number", "red")
 
         
 
@@ -275,11 +275,11 @@ def compare_mortgages():
     menu_screen()
 
     if len(mortgage_dict) < 2:
-        print("This feature requires you to add at least two mortgage. Add mortgages to proceed.")
+        cprint("This feature requires you to add at least two mortgage. Add mortgages to proceed.", "red")
     else:
         mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
 
-        print("\nMORTGAGE COMPARISON TABLE\n")
+        cprint("\nMORTGAGE COMPARISON TABLE\n", "light_yellow")
         for x in mortgage_dict:
             mortgage_table.append(mortgage_dict[x].get_table_values())
 
@@ -294,7 +294,7 @@ def extra_monthly_principal():
     Calculates new payment and total interest with extra monthly principal payments
     """
     menu_screen()
-    print("Calculate Mortgage Overpayments:\n")
+    cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
 
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
     apr = validate_apr()
@@ -307,19 +307,19 @@ def extra_monthly_principal():
     mortgage.extra_monthly_principal = extra_principal
     updated_total_payments = mortgage.updated_total_payments
 
-    print("\nCurrent Mortgage: ")
+    cprint("\nCurrent Mortgage: ", "light_yellow")
     print(mortgage.details())
     print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     
     print("\n**********************************************\n")
-    print("UPDATED MORTGAGE AMORTIZATION SCHEDULE:")
+    cprint("UPDATED MORTGAGE AMORTIZATION SCHEDULE:", "light_yellow")
     
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal))
     #print(f"Updated Total payments: {updated_total_payments}")
     schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
     #print(mortgage_dict[mortgage.mortgage_ID].details())
     print(schedule.to_string(index=False))
-    print(schedule.loc[[122]])
+    #6print(schedule.loc[[122]])
 
 
     print("\n*******************************************************\n")
@@ -333,7 +333,7 @@ def lump_payment():
     Calculates new payment and total interest with an extra lump principal payments
     """
     menu_screen()
-    print("Calculate Mortgage Overpayments:\n")
+    cprint("Calculate Mortgage Overpayments:\n", "green")
 
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
     apr = validate_apr()
@@ -346,13 +346,13 @@ def lump_payment():
     mortgage_dict[mortgage.mortgage_ID] = mortgage
     
     # Prints Current Mortgage Details
-    print("\nCurrent Mortgage: ----------------------------------------")
+    cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
     print(mortgage.details())
     print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     print("The current cost of the remainder of this mortgage is: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
     
     # Prints Updated Mortgage Details after Lump Payment applied
-    print("\nUpdated Mortgage: ----------------------------------------")
+    cprint("\nUpdated Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
     mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage
     print(new_mortgage.details())
@@ -369,7 +369,7 @@ def overpayments():
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
     menu_screen()
-    print("Mortgage Overpayments:\n")
+    cprint("Mortgage Overpayments:\n", "green")
 
     is_valid = False
     while is_valid != True:
@@ -384,9 +384,9 @@ def overpayments():
                 lump_payment()
                 is_valid = True
             else:
-               print("That is not a valid option. Please choose one from the list above.")
+               cprint("That is not a valid option. Please choose one from the list above.", "red")
         except ValueError:
-            print("Please enter a valid mortgage number")
+            cprint("Please enter a valid mortgage number", "red")
 
 
 
@@ -395,35 +395,38 @@ def amortization():
     Allows user to view an amoritization for individual Mortgage details one at a time
     """
     menu_screen()
-    print("You have entered the following mortgages:\n")
-    for x in mortgage_dict:
-        print(f"Mortgage: {x}")
+    if len(mortgage_dict) == 0:
+        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
+    else:
+        cprint("You have entered the following mortgages:\n", "green")
+        for x in mortgage_dict:
+            print(f"Mortgage: {x}")
+    
+        print("\n")
+        is_valid = False
+        while is_valid != True:
+            try:
+                selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
+                if selection == 0:
+                    menu_screen()
+                    is_valid = True
+                else:
+                    for x in mortgage_dict:
+                        if selection == x:
+                            clear()
+                            menu_screen()
+                            cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
+                            schedule = mortgage_dict[x].calculate_amortization_schedule()
+                            print(mortgage_dict[x].details())
+                            print(schedule.to_string(index=False))
+                            print("\n")
+                            is_valid = True
+                        else:
+                            continue
+            except ValueError:
+                print("Please enter a correct number")
 
-    print("\n")
-    is_valid = False
-    while is_valid != True:
-        try:
-            selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
-            if selection == 0:
-                menu_screen()
-                is_valid = True
-            else:
-                for x in mortgage_dict:
-                    if selection == x:
-                        clear()
-                        menu_screen()
-                        print(f"AMORTIZATION SCHEDULE FOR:")
-                        schedule = mortgage_dict[x].calculate_amortization_schedule()
-                        print(mortgage_dict[x].details())
-                        print(schedule.to_string(index=False))
-                        print("\n")
-                        is_valid = True
-                    else:
-                        continue
-        except ValueError:
-            print("Please enter a correct number")
-
-    print("\n*******************************************************\n")
+        print("\n*******************************************************\n")
 
 
 def run_mortgage_tool():
@@ -453,9 +456,9 @@ def run_mortgage_tool():
             elif selection == 0:
                 menu_screen()
             else:
-                print("That is a not a valid option. Please type in a number between 1 - 4.")
+                print("That is a not a valid option. Please type in a number between 1 - 7 or 0.")
         except ValueError:
-            print("That is not a valid input. Please type in a number betwee 1 - 14.")    
+            print("That is not a valid input. Please type in a number between 1 - 7 or 0.")    
 
 
 # Code from https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
