@@ -459,7 +459,6 @@ def amortization():
                     for x in mortgage_dict:
                         if selection == x:
                             clear()
-                            menu_screen()
                             cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             print(mortgage_dict[x].details())
