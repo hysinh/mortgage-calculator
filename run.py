@@ -5,7 +5,7 @@ import math
 import sys
 from colorama import init
 init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
-from termcolor import cprint 
+from termcolor import cprint
 import pyfiglet
 from tabulate import tabulate
 import os
@@ -43,17 +43,13 @@ def welcome_screen():
     is_valid = False
     while is_valid != True:
         try:
-            proceed = input("Enter any key to proceed \n").lower()
+            proceed = input("Enter a key to proceed \n").lower()
             if proceed != "":
                 is_valid = True
-            # elif proceed == "n":
-            #     is_valid = True
-            #     print("*** Thanks for visiting! ***")
-            #     exit()
             else:
-                print("Please enter any letter to proceed.")
+                print("Please enter a key and hit enter to proceed.")
         except ValueError:
-            print("That is not a valid reponse. Please enter Y or N.")
+            print("That is not a valid reponse. Please enter any key and enter to proceed.")
     
 
 
@@ -62,31 +58,16 @@ def menu_screen():
     Menu Screen with options displayed in a table
     """
     clear()
-    print("\n")
     print("** Mortgage Calculator Tool **\n")
     print("You have the following options:\n ")
     table = [
-        ["Option",1,"Add a mortgage"],
-        ["Option",2,"View a Mortgage"],
-        ["Option",3,"Display Mortgage Comparison"],
-        ["Option",4,"Calculate Overpayments"],
-        ["Option",5,"View Amortization Schedules"],
-        ["Option",6,"Exit Program"],
-        ["Option",0,"Return to Main Menu"]]
+        [1,"Add a mortgage",5,"View Amortization Schedules"],
+        [2,"View a Mortgage",6,"Exit Program"],
+        [3,"Display Mortgage Comparison",7,"Mortgage Metrics"],
+        [4,"Calculate Overpayments", 0,"Return to Main Menu"],
+    ]
     print(tabulate(table))
-    print("\n")
-    
-
-def small_menu():
-    """
-    Compressed Menu that in a single line 
-    """
-    print("** Mortgage Calculator Tool MENU OPTIONS **")
-    print("1. Add Mortgage | 2. View a Mortgage | 3. Display Mortgage Comparison")
-    print("4. Calculate Overpayments | 5. View Amortization Schedules | 0. Return to Main Menu | ")
-    print("6. Exit Program | 0. Return to Main Menu | ")
     print("\n*******************************************************")
-
 
 
 def validate_value(prompt_text):
@@ -101,9 +82,9 @@ def validate_value(prompt_text):
             if value > 0:
                 is_valid = True
             else:
-                print("Value must be greater than 0. Please enter a valid number.")
+                print("Value must be a whole number greater than 0. Please enter a valid number.")
         except ValueError:
-            print("That is not a whole number. Please enter a valid number.")
+            print("That is not a number. Please enter a valid number.")
         
     return value
 
@@ -120,7 +101,7 @@ def validate_apr():
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
-                print("APR must be greater than 0. Please enter a valid number.")
+                print("APR must be greater than 0 but less than 100. Please enter a valid number.")
         except ValueError:
             print("That is not a number. Please enter a valid number.")
         
@@ -130,9 +111,9 @@ def validate_apr():
 
 class Mortgage:
     """
-    Base Class for Mortgages
+    Base Class for Mortgages - creates a mortgage class instance
     """
-    mortgage_ID = 200
+    mortgage_ID = 0
     start_year = 0 # start of mortgage
     extra_monthly_principal = 0
 
@@ -147,15 +128,9 @@ class Mortgage:
         self.extra_monthly_principal = Mortgage.extra_monthly_principal
 
     def details(self):
-        """
-        Method to return employee details as a string 
-        """
-        return f"\nMORTGAGE {self.mortgage_ID}:\nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years\nAnnual Percentage Rate: {self.apr}%"
+        return f"\nMORTGAGE {self.mortgage_ID}: \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
     
     def calculate_monthly_payment(self):
-        """
-        Calculates monthly payment
-        """
         monthly_payment = round(((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12)))), 2)
         return monthly_payment
     
@@ -164,7 +139,15 @@ class Mortgage:
         return total_interest
 
     def get_table_values(self):
-        row = [self.mortgage_ID, "€{:,.2f}".format(self.principal), self.apr, self.length_of_mortgage, "€{:,.2f}".format(self.calculate_monthly_payment()), "€{:,.2f}".format(self.calculate_lifetime_interest())]
+        # Creates mortgage values for comparison table
+        row = [self.mortgage_ID, 
+            "€{:,.2f}".format(self.principal), 
+            self.apr, 
+            self.length_of_mortgage, 
+            "€{:,.2f}".format(self.calculate_monthly_payment()), 
+            "€{:,.2f}".format(self.calculate_lifetime_interest())
+        ]
+        
         return row
 
     def calculate_revised_interest(self):
@@ -199,8 +182,7 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     caculations.
     """
-    clear()
-    small_menu()
+    menu_screen()
     print("\nEnter Your Mortgage details in below:\n")
     principal = validate_value('Enter the principal or loan amount in Euro: \n')
     apr = validate_apr()
@@ -221,36 +203,37 @@ def view_mortgage():
     """
     Allows user to view individual Mortgage details one at a time
     """
-    clear()
-    small_menu()
+    menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
-    print("You have entered the following mortgages:\n")
-    for x in mortgage_dict:
-        print(f"Mortgage: {x}")
+    if len(mortgage_dict) == 0:
+        print("This feature requires you to add at least one mortgage. Add a mortgage to proceed.")
+    else:
+        print("You have entered the following mortgages:\n")
+        for x in mortgage_dict:
+            print(f"Mortgage: {x}")
 
-    # Prompts user to select a mortgage to view or user can select to return to main menu
-    print("\n")
-    is_valid = False
-    while is_valid != True:
-        try:
-            selection = int(input("Enter the number of the mortgage that you'd like to view \nor enter '0' to return to the main menu: \n"))
-            if selection == 0:
-                menu_screen()
-                is_valid = True
-            else:
-                for x in mortgage_dict:
-                    if selection == x:
-                        print(mortgage_dict[x].details())
-                        print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
-                        print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
-                        is_valid = True
-                    else:
-                        continue
-        except ValueError:
-            print("Please enter a valid number")
+        # Prompts user to select a mortgage to view or user can select to return to main menu
+        print("\n")
+        is_valid = False
+        while is_valid != True:
+            try:
+                selection = int(input("Enter the number of the mortgage that you'd like to view \nor enter '0' to return to the main menu: \n"))
+                if selection == 0:
+                    menu_screen()
+                    is_valid = True
+                else:
+                    for x in mortgage_dict:
+                        if selection == x:
+                            print(mortgage_dict[x].details())
+                            print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
+                            print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
+                            is_valid = True
+                        else:
+                            continue
+            except ValueError:
+                print("Please enter a valid number")
 
-    print("\n*******************************************************")
         
 
 
@@ -258,8 +241,7 @@ def compare_mortgages():
     """
     Displays a comparison table of all the mortgages entered by the user
     """
-    clear()
-    small_menu()
+    menu_screen()
     mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
 
     print("\nMORTGAGE COMPARISON TABLE\n")
@@ -275,8 +257,7 @@ def extra_monthly_principal():
     """
     Calculates new payment and total interest with extra monthly principal payments
     """
-    clear()
-    small_menu()
+    menu_screen()
     print("Calculate Mortgage Overpayments:\n")
 
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
@@ -305,8 +286,7 @@ def lump_payment():
     """
     Calculates new payment and total interest with an extra lump principal payments
     """
-    clear()
-    small_menu()
+    menu_screen()
     print("Calculate Mortgage Overpayments:\n")
 
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
@@ -342,8 +322,7 @@ def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
-    clear()
-    small_menu()
+    menu_screen()
     print("Mortgage Overpayments:\n")
 
     is_valid = False
@@ -370,8 +349,7 @@ def amortization():
     """
     Allows user to view an amoritization for individual Mortgage details one at a time
     """
-    clear()
-    small_menu()
+    menu_screen()
     print("You have entered the following mortgages:\n")
     for x in mortgage_dict:
         print(f"Mortgage: {x}")
@@ -410,7 +388,7 @@ def run_mortgage_tool():
     is_valid = False
     while is_valid != True:
         try:
-            selection = int(input("Enter a menu selection: \n"))
+            selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
                 create_mortgage()
                 #is_valid = True
@@ -468,16 +446,9 @@ def generate_amortization_schedule(PV,n,r):
 
 
 if __name__ == '__main__':
-    # PV=350000
-    # n=19
-    # r=4.3
-    # amortization_schedule = generate_amortization_schedule(PV,n,r)
-
-    # print(amortization_schedule)
     welcome_screen()
     menu_screen()
     run_mortgage_tool()
-    #print(f"Mort_dict: {mort_dict}")
     
 
 
