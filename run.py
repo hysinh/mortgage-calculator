@@ -116,6 +116,7 @@ class Mortgage:
     mortgage_ID = 0
     start_year = 0 # start of mortgage
     extra_monthly_principal = 0
+    updated_total_payments = 0
 
     def __init__(self, principal, apr, length_of_mortgage):
         #instance attribute
@@ -126,6 +127,7 @@ class Mortgage:
         self.mortgage_ID = Mortgage.mortgage_ID
         self.start_year = Mortgage.start_year
         self.extra_monthly_principal = Mortgage.extra_monthly_principal
+        self.updated_total_payments = Mortgage.updated_total_payments
 
     def details(self):
         return f"\nMORTGAGE {self.mortgage_ID}: \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
@@ -150,8 +152,37 @@ class Mortgage:
         
         return row
 
-    def calculate_revised_interest(self):
+    def extra_principal_payments(self):
+        updated_schedule = []
+        balance = self.principal
+        rate = self.apr/100/12
+        total_payments = self.length_of_mortgage*12
+        monthly_payment = self.calculate_monthly_payment()
+        extra_monthly_principal = self.extra_monthly_principal
+        for Month in range(1, total_payments):
+            interest_payment = balance * rate
+            principal_payment = monthly_payment - interest_payment
+            new_principal_payment = principal_payment + extra_monthly_principal
+            balance -= new_principal_payment
+            total_payments -= 1
+            if balance > 0:
+                updated_schedule.append({
+                        'Month #' : Month,
+                        'Payments Left' : total_payments ,
+                        'Payment' : "€{:,.2f}".format(monthly_payment) ,
+                        'Principal' : "€{:,.2f}".format(principal_payment) ,
+                        'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal) ,
+                        'Interest' : "€{:,.2f}".format(interest_payment) ,
+                        'Balance' : "€{:,.2f}".format(balance)     
+                    })
+
+                
+
+        return pd.DataFrame(updated_schedule, index=None)
+
+    def calculate_updated_term_length(self):
         pass
+
     
     def calculate_amortization_schedule(self):
         schedule = []
@@ -242,13 +273,18 @@ def compare_mortgages():
     Displays a comparison table of all the mortgages entered by the user
     """
     menu_screen()
-    mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
 
-    print("\nMORTGAGE COMPARISON TABLE\n")
-    for x in mortgage_dict:
-        mortgage_table.append(mortgage_dict[x].get_table_values())
+    if len(mortgage_dict) < 2:
+        print("This feature requires you to add at least two mortgage. Add mortgages to proceed.")
+    else:
+        mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
 
-    print(tabulate(mortgage_table, tablefmt="simple"))
+        print("\nMORTGAGE COMPARISON TABLE\n")
+        for x in mortgage_dict:
+            mortgage_table.append(mortgage_dict[x].get_table_values())
+
+        print(tabulate(mortgage_table, tablefmt="simple"))
+
     print("\n******************************************************* \n")
     
 
@@ -261,19 +297,29 @@ def extra_monthly_principal():
     print("Calculate Mortgage Overpayments:\n")
 
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
-    apr = input_apr()
+    apr = validate_apr()
     remaining_length_of_mortgage = validate_value('How many years are left on your mortgage?  (e.g. 30) \n')
 
     extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
+    mortgage.extra_monthly_principal = extra_principal
+    updated_total_payments = mortgage.updated_total_payments
+
     print("\nCurrent Mortgage: ")
     print(mortgage.details())
     print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     
-    print("\nUpdated Mortgage:")
-    print(f"Extra principal: {extra_principal}")
+    print("\n**********************************************\n")
+    print("UPDATED MORTGAGE AMORTIZATION SCHEDULE:")
+    
+    print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal))
+    #print(f"Updated Total payments: {updated_total_payments}")
+    schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
+    #print(mortgage_dict[mortgage.mortgage_ID].details())
+    print(schedule.to_string(index=False))
+    print(schedule.loc[[122]])
 
 
     print("\n*******************************************************\n")
@@ -332,8 +378,7 @@ def overpayments():
             if selection == 0:
                 menu_screen()
             elif selection == 1:
-                print("Make monthly overpayments")
-                #extra_monthly_principal()
+                extra_monthly_principal()
                 is_valid = True
             elif selection == 2:
                 lump_payment()
@@ -371,7 +416,6 @@ def amortization():
                         schedule = mortgage_dict[x].calculate_amortization_schedule()
                         print(mortgage_dict[x].details())
                         print(schedule.to_string(index=False))
-                        #print(df.to_string(index=False))
                         print("\n")
                         is_valid = True
                     else:
