@@ -1,7 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import math
-#from PIL import Image, ImageFont, ImageDraw
 import sys
 from colorama import init
 init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
@@ -174,15 +173,10 @@ class Mortgage:
                         'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal) ,
                         'Interest' : "€{:,.2f}".format(interest_payment) ,
                         'Balance' : "€{:,.2f}".format(balance)     
-                    })
-
-                
+                })
 
         return pd.DataFrame(updated_schedule, index=None)
-
-    def calculate_updated_term_length(self):
-        pass
-
+    
     
     def calculate_amortization_schedule(self):
         schedule = []
@@ -196,25 +190,69 @@ class Mortgage:
             balance -= principal_payment
             total_payments -= 1
             schedule.append({
-                    'Month #' : Month,
-                    'Payments Left' : total_payments,
-                    'Payment' : "€{:,.2f}".format(monthly_payment),
-                    'Principal' : "€{:,.2f}".format(principal_payment),
-                    'Interest' : "€{:,.2f}".format(interest_payment),
-                    'Balance' : "€{:,.2f}".format(balance)     
+                    'Month #' :  Month,
+                    'Payments Left' :  total_payments,
+                    'Payment' : " €{:,.2f}".format(monthly_payment),
+                    'Principal' : " €{:,.2f}".format(principal_payment),
+                    'Interest' : " €{:,.2f}".format(interest_payment),
+                    'Balance' : " €{:,.2f}".format(balance)     
                 })
 
-        return pd.DataFrame(schedule, index=None) 
+        return pd.DataFrame(schedule, index=None)
+    
+
+    def create_mortgage_data(self):
+        monthly_payment = self.calculate_monthly_payment()
+        interest = self.calculate_lifetime_interest()
+        data = [
+            self.principal, 
+            self.apr, 
+            self.length_of_mortgage, 
+            monthly_payment, 
+            interest
+        ]
+        return data
+
+    def update_mortgage_data(self):
+        data = self.create_mortgage_data()
+        mortgage_worksheet = SHEET.worksheet("mortgage_data")
+        mortgage_worksheet.append_row(data)
+        #mortgage_data = SHEET.worksheet("mortgage_data").get_all_values()
+        #return mortgage_data
+
+    def calculate_mortgage_metrics(self):
+        """
+        Calculate the average principal, APR, loan length, monthly payment, and 
+        lifetime interest amount
+        """
+        mortgage_data = []
+        mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
+        for column in mortgage_worksheet:
+            avg = sum([int(y) for y in column])/(len(mortgage_worksheet))
+            avg = math.ceil(avg)
+            mortgage_data.append(avg)
+        return mortgage_data
+
+
+
+# def update_mortgage_data(Mortgage):
+#     data = Mortgage.create_mortgage_data()
+#     print(data)
+    #mortgage_worksheet = SHEET.worksheet("mortgage_data")
+    #mortgage_worksheet.append_row(data)
+    #print(mortgage_worksheet)
 
 
 def create_mortgage():
     """
     Creates each Class Instance of a Mortgage - requires user input
     for the Principal amount, APR amount, and Length of Mortgage for
-    caculations.
+    calculations.
     """
     menu_screen()
     cprint("\nEnter Your Mortgage details in below:\n", "green")
+
+    # Request input from the user
     principal = validate_value('Enter the principal or loan amount in Euro: \n')
     apr = validate_apr()
     length_of_mortgage = validate_value("Enter the length of the mortgage in years (e.g. 30): \n")
@@ -222,7 +260,10 @@ def create_mortgage():
     # Creates a Mortgage Class Instance
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
+    #mortgage.create_mortgage_data()
+    print(mortgage.update_mortgage_data())
 
+    # Prints the Mortgage details just entered
     cprint("\nYou created a Mortgage with the following details:", "yellow")
     print(mortgage.details())
     print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
@@ -261,6 +302,7 @@ def view_mortgage():
                             print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
                             is_valid = True
                         else:
+                            #cprint("That is not an available mortgage. Please enter a mortgage number from the list.", "red")
                             continue
             except ValueError:
                 cprint("Please enter a valid number", "red")
@@ -277,7 +319,7 @@ def compare_mortgages():
     if len(mortgage_dict) < 2:
         cprint("This feature requires you to add at least two mortgage. Add mortgages to proceed.", "red")
     else:
-        mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest", "Total\nSavings"]]
+        mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest"]]
 
         cprint("\nMORTGAGE COMPARISON TABLE\n", "light_yellow")
         for x in mortgage_dict:
@@ -296,7 +338,7 @@ def extra_monthly_principal():
     menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
 
-    principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
+    principal = validate_value('Enter the remaining principal left on your existing loan in Euro: \n')
     apr = validate_apr()
     remaining_length_of_mortgage = validate_value('How many years are left on your mortgage?  (e.g. 30) \n')
 
@@ -304,6 +346,7 @@ def extra_monthly_principal():
     
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
+    #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
     updated_total_payments = mortgage.updated_total_payments
 
@@ -351,10 +394,12 @@ def lump_payment():
     print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     print("The current cost of the remainder of this mortgage is: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
     
-    # Prints Updated Mortgage Details after Lump Payment applied
+    # Creates a new Mortgage Class Instance with the updated information and 
+    # Prints Updated Mortgaged details after Lump Payment applied
     cprint("\nUpdated Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
     mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage
+    #new_mortgage.update_mortgage_data()
     print(new_mortgage.details())
     print("Your new monthly payment is: €{:,.2f}".format(new_mortgage.calculate_monthly_payment()))
     print("The updated cost of the remainder of this mortgage is: €{:,.2f}".format(new_mortgage.calculate_lifetime_interest()))
@@ -390,43 +435,29 @@ def overpayments():
 
 
 
-def amortization():
+def print_mortgage_avg():
     """
-    Allows user to view an amoritization for individual Mortgage details one at a time
+    Prints the Mortgage data averages in a table
     """
     menu_screen()
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
     else:
-        cprint("You have entered the following mortgages:\n", "green")
-        for x in mortgage_dict:
-            print(f"Mortgage: {x}")
+        cprint("The Mortgage Averages collected:\n", "green")
+        table = [
+            ['Principal', 'APR', 'Loan Length', 'Monthly Payment', 'Total Interest'],
+            ['350000', '4.3', '19', '2249.22', '162822.16'],
+            ['350000', '4.3', '19', '2249.22', '162822.16'],
+            ['350000', '4.3', '19', '2249.22', '162822.16']
+            ]
+
+        print(tabulate(table))
+        print("\n*******************************************************")
     
-        print("\n")
-        is_valid = False
-        while is_valid != True:
-            try:
-                selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
-                if selection == 0:
-                    menu_screen()
-                    is_valid = True
-                else:
-                    for x in mortgage_dict:
-                        if selection == x:
-                            clear()
-                            menu_screen()
-                            cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
-                            schedule = mortgage_dict[x].calculate_amortization_schedule()
-                            print(mortgage_dict[x].details())
-                            print(schedule.to_string(index=False))
-                            print("\n")
-                            is_valid = True
-                        else:
-                            continue
-            except ValueError:
-                print("Please enter a correct number")
+        
 
         print("\n*******************************************************\n")
+
 
 
 def run_mortgage_tool():
