@@ -261,7 +261,7 @@ def create_mortgage():
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
     #mortgage.create_mortgage_data()
-    print(mortgage.update_mortgage_data())
+    print(mortgage.create_mortgage_data())
 
     # Prints the Mortgage details just entered
     cprint("\nYou created a Mortgage with the following details:", "yellow")
