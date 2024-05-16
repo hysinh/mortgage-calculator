@@ -313,7 +313,7 @@ def view_mortgage():
             except ValueError:
                 cprint("Please enter a valid number", "red")
 
-        print("\n*******************************************************\n")
+    print("\n*******************************************************\n")
 
 
 def compare_mortgages():
@@ -370,7 +370,6 @@ def extra_monthly_principal():
     #print(schedule.loc[[122]])
 
     print("\n*******************************************************\n")
-    #interest = (monthly+extra amount) * totalpayments - principal
 
 
 def lump_payment():
@@ -438,6 +437,8 @@ def overpayments():
             menu_screen()
             cprint("Please enter a valid mortgage number", "red")
 
+    print("\n*******************************************************")
+
 
 def amortization():
     """
@@ -474,7 +475,7 @@ def amortization():
             except ValueError:
                 print("Please enter a correct number")
 
-            print("\n*******************************************************\n")
+    print("\n*******************************************************\n")
 
     
 def print_mortgage_avg():
@@ -494,7 +495,8 @@ def print_mortgage_avg():
             ]
 
         print(tabulate(table))
-        print("\n*******************************************************")
+    
+    print("\n*******************************************************")
 
 
 def run_mortgage_tool():
