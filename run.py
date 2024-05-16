@@ -509,6 +509,7 @@ def run_mortgage_tool():
         try:
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
+                clear()
                 menu_screen()
                 create_mortgage()
             elif selection == 2:
