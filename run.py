@@ -501,7 +501,7 @@ def run_mortgage_tool():
     """
     Allows the user to select from various menu options for the Mortgage Comparison Tool
     """
-    menu_screen()
+    
     is_valid = False
     while is_valid != True:
         try:
