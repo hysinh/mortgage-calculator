@@ -70,7 +70,6 @@ def menu_screen():
     """
     Display Menu options
     """
-    clear()
     print(MENU_OPTIONS)
     # clear()
     # print("** Mortgage Calculator Tool **\n")
@@ -255,6 +254,7 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     calculations.
     """
+    clear()
     menu_screen()
     cprint("\nEnter Your Mortgage details in below:\n", "green")
 
@@ -281,11 +281,12 @@ def view_mortgage():
     """
     Allows user to view individual Mortgage details one at a time
     """
+    clear()
     menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
+        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
     else:
         cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
@@ -320,10 +321,11 @@ def compare_mortgages():
     """
     Displays a comparison table of all the mortgages entered by the user
     """
+    clear()
     menu_screen()
 
     if len(mortgage_dict) < 2:
-        cprint("This feature requires you to add at least two mortgage. Add mortgages to proceed.", "red")
+        cprint("This feature requires you to add at least two mortgage.\nAdd mortgages to proceed.", "red")
     else:
         mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest"]]
 
@@ -340,6 +342,7 @@ def extra_monthly_principal():
     """
     Calculates new payment and total interest with extra monthly principal payments
     """
+    clear()
     menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
 
@@ -376,6 +379,7 @@ def lump_payment():
     """
     Calculates new payment and total interest with an extra lump principal payments
     """
+    clear()
     menu_screen()
     cprint("Calculate Mortgage Overpayments:\n", "green")
 
@@ -413,6 +417,7 @@ def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
+    clear()
     menu_screen()
     cprint("Mortgage Overpayments:\n", "green")
 
@@ -421,32 +426,39 @@ def overpayments():
         try:
             selection = int(input("Enter 1 for monthly overpayments,  2 for a lump overpayment \nor enter '0' to exit this menu: \n"))
             if selection == 0:
+                clear()
                 menu_screen()
+                is_valid = True
             elif selection == 1:
+                clear()
                 menu_screen()
                 extra_monthly_principal()
                 is_valid = True
             elif selection == 2:
+                clear()
                 menu_screen()
                 lump_payment()
                 is_valid = True
             else:
+               clear()
                menu_screen()
                cprint("That is not a valid option. Please choose one from the list above.", "red")
         except ValueError:
+            clear()
             menu_screen()
             cprint("Please enter a valid mortgage number", "red")
 
-    print("\n*******************************************************")
+    #print("\n*******************************************************")
 
 
 def amortization():
     """
     Allows user to view an amoritization for individual Mortgage details one at a time
     """
+    clear()
     menu_screen()
     if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
+        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
     else:
         cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
@@ -458,6 +470,7 @@ def amortization():
             try:
                 selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
                 if selection == 0:
+                    clear()
                     menu_screen()
                     is_valid = True
                 else:
@@ -482,9 +495,10 @@ def print_mortgage_avg():
     """
     Prints the Mortgage data averages in a table
     """
+    clear()
     menu_screen()
     if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
+        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
     else:
         cprint("The Mortgage Averages collected:\n", "green")
         table = [
@@ -503,6 +517,7 @@ def run_mortgage_tool():
     """
     Allows the user to select from various menu options for the Mortgage Comparison Tool
     """
+    clear()
     menu_screen()
     is_valid = False
     while is_valid != True:
@@ -524,15 +539,17 @@ def run_mortgage_tool():
             elif selection ==7:
                 print("Mortgage Metrics Table")
             elif selection == 0:
+                clear()
                 menu_screen()
             else:
                 cprint("That is not a menu option. Type in a number between 1 - 7 or 0 for the main menu.", "red")
         except ValueError:
-            print("That is not a valid input. Please type in a number between 1 - 7 or 0.")
+            cprint("That is not a valid input. Please type in a number between 1 - 7 or 0.", "red")
 
 
 if __name__ == '__main__':
     welcome_screen()
+    clear()
     menu_screen()
     run_mortgage_tool()
     
