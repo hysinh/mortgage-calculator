@@ -255,7 +255,7 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     calculations.
     """
-    menu_screen()
+    #menu_screen()
     cprint("\nEnter Your Mortgage details in below:\n", "green")
 
     # Request input from the user
@@ -281,7 +281,7 @@ def view_mortgage():
     """
     Allows user to view individual Mortgage details one at a time
     """
-    menu_screen()
+    #menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
@@ -320,7 +320,7 @@ def compare_mortgages():
     """
     Displays a comparison table of all the mortgages entered by the user
     """
-    menu_screen()
+    #menu_screen()
 
     if len(mortgage_dict) < 2:
         cprint("This feature requires you to add at least two mortgage. Add mortgages to proceed.", "red")
@@ -413,7 +413,7 @@ def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
-    menu_screen()
+    #menu_screen()
     cprint("Mortgage Overpayments:\n", "green")
 
     is_valid = False
@@ -444,7 +444,7 @@ def amortization():
     """
     Allows user to view an amoritization for individual Mortgage details one at a time
     """
-    menu_screen()
+    #menu_screen()
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage. Add a mortgage to proceed.", "red")
     else:
@@ -509,20 +509,25 @@ def run_mortgage_tool():
         try:
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
-                clear()
+                menu_screen()
                 create_mortgage()
             elif selection == 2:
+                menu_screen()
                 view_mortgage()
             elif selection == 3:
+                menu_screen()
                 compare_mortgages()
             elif selection == 4:
+                menu_screen()
                 overpayments()
             elif selection == 5:
+                menu_screen()
                 amortization()
             elif selection == 6:
                 print("Option 6: Exit the program.")
                 is_valid = True
             elif selection ==7:
+                menu_screen()
                 print("Mortgage Metrics Table")
             elif selection == 0:
                 menu_screen()
