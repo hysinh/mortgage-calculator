@@ -507,22 +507,17 @@ def run_mortgage_tool():
     is_valid = False
     while is_valid != True:
         try:
+            menu_screen()
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
-                clear()
-                menu_screen()
                 create_mortgage()
             elif selection == 2:
-                menu_screen()
                 view_mortgage()
             elif selection == 3:
-                menu_screen()
                 compare_mortgages()
             elif selection == 4:
-                menu_screen()
                 overpayments()
             elif selection == 5:
-                menu_screen()
                 amortization()
             elif selection == 6:
                 print("Option 6: Exit the program.")
@@ -533,9 +528,9 @@ def run_mortgage_tool():
             elif selection == 0:
                 menu_screen()
             else:
-                print("That is a not a valid option. Please type in a number between 1 - 7 or 0.")
+                cprint("That is not a menu option. Type in a number between 1 - 7 or 0 for the main menu.", "red")
         except ValueError:
-            print("That is not a valid input. Please type in a number between 1 - 7 or 0.")    
+            print("That is not a valid input. Please type in a number between 1 - 7 or 0.")
 
 
 if __name__ == '__main__':
