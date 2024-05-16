@@ -24,6 +24,7 @@ SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 
 mortgage_dict = {}
 
+
 def clear():
     """
     Function to clear terminal through the game.
@@ -48,8 +49,7 @@ def welcome_screen():
             else:
                 print("Please enter a key and hit enter to proceed.")
         except ValueError:
-            print("That is not a valid reponse. Please enter any key and enter to proceed.")
-    
+            print("Not a valid reponse. Type a key and enter to proceed.")
 
 
 def menu_screen():
@@ -60,10 +60,10 @@ def menu_screen():
     print("** Mortgage Calculator Tool **\n")
     print("You have the following options:\n ")
     table = [
-        [1,"Add a mortgage",5,"View Amortization Schedules"],
-        [2,"View a Mortgage",6,"Exit Program"],
-        [3,"Display Mortgage Comparison",7,"Mortgage Metrics"],
-        [4,"Calculate Overpayments", 0,"Return to Main Menu"],
+        [1, "Add a mortgage", 5, "View Amortization Schedules"],
+        [2, "View a Mortgage", 6, "Exit Program"],
+        [3, "Display Mortgage Comparison", 7, "Mortgage Metrics"],
+        [4, "Calculate Overpayments", 0, "Return to Main Menu"],
     ]
     print(tabulate(table))
     print("\n*******************************************************")
@@ -81,10 +81,9 @@ def validate_value(prompt_text):
             if value > 0:
                 is_valid = True
             else:
-                cprint("Value must be a whole number greater than 0. Please enter a valid number.", "red")
+                cprint("Invalid. Enter a whole number greater than 0", "red")
         except ValueError:
-            cprint("That is not a whole number. Please enter a valid number.", "red")
-        
+            cprint("Invalid. Please enter a valid number.", "red")
     return value
 
 
@@ -103,9 +102,7 @@ def validate_apr():
                 cprint("APR must be greater than 0 but less than 100. Please enter a valid number.", "red")
         except ValueError:
             cprint("That is not a number. Please enter a valid number.", "red")
-        
     return apr
-
 
 
 class Mortgage:
@@ -118,7 +115,7 @@ class Mortgage:
     updated_total_payments = 0
 
     def __init__(self, principal, apr, length_of_mortgage):
-        #instance attribute
+        # instance attribute
         self.principal = principal
         self.apr = apr
         self.length_of_mortgage = length_of_mortgage
@@ -130,7 +127,7 @@ class Mortgage:
 
     def details(self):
         return f"\nMORTGAGE {self.mortgage_ID}: \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
-    
+
     def calculate_monthly_payment(self):
         monthly_payment = round(((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12)))), 2)
         return monthly_payment
@@ -141,14 +138,13 @@ class Mortgage:
 
     def get_table_values(self):
         # Creates mortgage values for comparison table
-        row = [self.mortgage_ID, 
+        row = [self.mortgage_ID,
             "€{:,.2f}".format(self.principal), 
             self.apr, 
             self.length_of_mortgage, 
             "€{:,.2f}".format(self.calculate_monthly_payment()), 
             "€{:,.2f}".format(self.calculate_lifetime_interest())
         ]
-        
         return row
 
     def extra_principal_payments(self):
@@ -167,17 +163,15 @@ class Mortgage:
             if balance > 0:
                 updated_schedule.append({
                         'Month #' : Month,
-                        'Payments Left' : total_payments ,
-                        'Payment' : "€{:,.2f}".format(monthly_payment) ,
-                        'Principal' : "€{:,.2f}".format(principal_payment) ,
-                        'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal) ,
-                        'Interest' : "€{:,.2f}".format(interest_payment) ,
+                        'Payments Left' : total_payments,
+                        'Payment' : "€{:,.2f}".format(monthly_payment),
+                        'Principal' : "€{:,.2f}".format(principal_payment),
+                        'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal),
+                        'Interest' : "€{:,.2f}".format(interest_payment),
                         'Balance' : "€{:,.2f}".format(balance)     
                 })
-
         return pd.DataFrame(updated_schedule, index=None)
-    
-    
+
     def calculate_amortization_schedule(self):
         schedule = []
         balance = self.principal
@@ -197,9 +191,7 @@ class Mortgage:
                     'Interest' : " €{:,.2f}".format(interest_payment),
                     'Balance' : " €{:,.2f}".format(balance)     
                 })
-
         return pd.DataFrame(schedule, index=None)
-    
 
     def create_mortgage_data(self):
         monthly_payment = self.calculate_monthly_payment()
@@ -232,8 +224,6 @@ class Mortgage:
             avg = math.ceil(avg)
             mortgage_data.append(avg)
         return mortgage_data
-
-
 
 # def update_mortgage_data(Mortgage):
 #     data = Mortgage.create_mortgage_data()
@@ -307,8 +297,6 @@ def view_mortgage():
             except ValueError:
                 cprint("Please enter a valid number", "red")
 
-        
-
 
 def compare_mortgages():
     """
@@ -328,7 +316,6 @@ def compare_mortgages():
         print(tabulate(mortgage_table, tablefmt="simple"))
 
     print("\n******************************************************* \n")
-    
 
 
 def extra_monthly_principal():
@@ -364,10 +351,7 @@ def extra_monthly_principal():
     print(schedule.to_string(index=False))
     #6print(schedule.loc[[122]])
 
-
     print("\n*******************************************************\n")
-
-
     #interest = (monthly+extra amount) * totalpayments - principal
 
 
@@ -408,7 +392,6 @@ def lump_payment():
     print("\n*******************************************************\n")
 
 
-
 def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
@@ -432,7 +415,6 @@ def overpayments():
                cprint("That is not a valid option. Please choose one from the list above.", "red")
         except ValueError:
             cprint("Please enter a valid mortgage number", "red")
-
 
 
 def amortization():
@@ -523,7 +505,6 @@ def run_mortgage_tool():
                 print("That is a not a valid option. Please type in a number between 1 - 7 or 0.")
         except ValueError:
             print("That is not a valid input. Please type in a number between 1 - 7 or 0.")    
-
 
 
 if __name__ == '__main__':
