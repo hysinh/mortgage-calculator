@@ -349,7 +349,7 @@ def extra_monthly_principal():
     schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
     #print(mortgage_dict[mortgage.mortgage_ID].details())
     print(schedule.to_string(index=False))
-    #6print(schedule.loc[[122]])
+    #print(schedule.loc[[122]])
 
     print("\n*******************************************************\n")
     #interest = (monthly+extra amount) * totalpayments - principal
