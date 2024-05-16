@@ -531,7 +531,7 @@ def run_mortgage_tool():
 
 if __name__ == '__main__':
     welcome_screen()
-    #menu_screen()
+    menu_screen()
     run_mortgage_tool()
     
 
