@@ -3,12 +3,13 @@ from google.oauth2.service_account import Credentials
 import math
 import sys
 from colorama import init
-init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
 from termcolor import cprint
 import pyfiglet
 from tabulate import tabulate
 import os
 import pandas as pd
+
+init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -39,34 +40,49 @@ def welcome_screen():
     clear()
     logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
     print(logo_text)
-    print("Welcome to my Mortgage Comparison Tool")
-    is_valid = False
-    while is_valid != True:
-        try:
-            proceed = input("Enter a key to proceed \n").lower()
-            if proceed != "":
-                is_valid = True
-            else:
-                print("Please enter a key and hit enter to proceed.")
-        except ValueError:
-            print("Not a valid reponse. Type a key and enter to proceed.")
+    print("Welcome to my Mortgage Comparison Tool\n")
+    proceed = input("Press the enter key to proceed \n").lower()
+
+    # is_valid = False
+    # while is_valid != True:
+    #     try:
+    #         proceed = input("Enter a key to proceed \n").lower()
+    #         if proceed != "":
+    #             is_valid = True
+    #         else:
+    #             print("Please enter a key and hit enter to proceed.")
+    #     except ValueError:
+    #         print("Not a valid reponse. Type a key and enter to proceed.")
 
 
+MENU_OPTIONS = """
+** Mortgage Calculator Tool **
+You have the following options:
+--------------------------------------------------------------
+1. Add a mortgage               5. View Amortization Schedules
+2. View a mortgage              6. Exit Program
+3. Display Mortgage Comparison  7. Mortgage Metrics
+4. Calculate Overpayments
+--------------------------------------------------------------
+
+"""
 def menu_screen():
     """
-    Menu Screen with options displayed in a table
+    Display Menu options
     """
     clear()
-    print("** Mortgage Calculator Tool **\n")
-    print("You have the following options:\n ")
-    table = [
-        [1, "Add a mortgage", 5, "View Amortization Schedules"],
-        [2, "View a Mortgage", 6, "Exit Program"],
-        [3, "Display Mortgage Comparison", 7, "Mortgage Metrics"],
-        [4, "Calculate Overpayments", 0, "Return to Main Menu"],
-    ]
-    print(tabulate(table))
-    print("\n*******************************************************")
+    print(MENU_OPTIONS)
+    # clear()
+    # print("** Mortgage Calculator Tool **\n")
+    # print("You have the following options:\n ")
+    # table = [
+    #     [1, "Add a mortgage", 5, "View Amortization Schedules"],
+    #     [2, "View a Mortgage", 6, "Exit Program"],
+    #     [3, "Display Mortgage Comparison", 7, "Mortgage Metrics"],
+    #     [4, "Calculate Overpayments", 0, "Return to Main Menu"],
+    # ]
+    # print(tabulate(table))
+    # print("\n*******************************************************")
 
 
 def validate_value(prompt_text):
@@ -297,6 +313,8 @@ def view_mortgage():
             except ValueError:
                 cprint("Please enter a valid number", "red")
 
+        print("\n*******************************************************\n")
+
 
 def compare_mortgages():
     """
@@ -406,14 +424,18 @@ def overpayments():
             if selection == 0:
                 menu_screen()
             elif selection == 1:
+                menu_screen()
                 extra_monthly_principal()
                 is_valid = True
             elif selection == 2:
+                menu_screen()
                 lump_payment()
                 is_valid = True
             else:
+               menu_screen()
                cprint("That is not a valid option. Please choose one from the list above.", "red")
         except ValueError:
+            menu_screen()
             cprint("Please enter a valid mortgage number", "red")
 
 
@@ -466,7 +488,7 @@ def print_mortgage_avg():
         cprint("The Mortgage Averages collected:\n", "green")
         table = [
             ['Principal', 'APR', 'Loan Length', 'Monthly Payment', 'Total Interest'],
-            ['350000', '4.3', '19', '2249.22', '162822.16'],
+            ['350000', '4.3', '19', '2249.22', '162826.16'],
             ['350000', '4.3', '19', '2249.22', '162822.16'],
             ['350000', '4.3', '19', '2249.22', '162822.16']
             ]
@@ -479,6 +501,7 @@ def run_mortgage_tool():
     """
     Allows the user to select from various menu options for the Mortgage Comparison Tool
     """
+    menu_screen()
     is_valid = False
     while is_valid != True:
         try:
@@ -487,7 +510,6 @@ def run_mortgage_tool():
                 create_mortgage()
             elif selection == 2:
                 view_mortgage()
-                print("\n")
             elif selection == 3:
                 compare_mortgages()
             elif selection == 4:
@@ -509,7 +531,7 @@ def run_mortgage_tool():
 
 if __name__ == '__main__':
     welcome_screen()
-    menu_screen()
+    #menu_screen()
     run_mortgage_tool()
     
 
