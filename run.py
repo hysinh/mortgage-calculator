@@ -253,9 +253,10 @@ def display_mortgage_details(mortgage):
     print(mortgage.details())
     print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     print("Cost of this loan: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
+    print("\n")
 
 
-def display_selected_mortgage(mortgage):
+def display_selected_mortgage(selection):
     for x in mortgage_dict:
         if selection == x:
                 display_mortgage_details(mortgage_dict[x])
@@ -323,15 +324,8 @@ def view_mortgage():
                     menu_screen()
                     is_valid = True
                 else:
-                    for x in mortgage_dict:
-                        if selection == x:
-                            print(mortgage_dict[x].details())
-                            print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
-                            print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
-                            is_valid = True
-                        else:
-                            #cprint("That is not an available mortgage. Please enter a mortgage number from the list.", "red")
-                            continue
+                    display_selected_mortgage(selection)
+                    cprint("(Enter 0 to view the Main menu)", "green")
             except ValueError:
                 cprint("Please enter a valid number", "red")
 
@@ -575,7 +569,6 @@ def run_mortgage_tool():
 
 if __name__ == '__main__':
     welcome_screen()
-    #menu_screen()
     run_mortgage_tool()
     
 
