@@ -272,6 +272,23 @@ def display_selected_mortgage(selection):
             continue
 
 
+def adds_mortgage_instance_to_dict(mortgage):
+    is_valid = False
+    while is_valid != True:
+        try:
+            answer = str(input("\nWould you like to save this mortgage? Type Y or N \n")).lower()
+            if answer == "y":
+                mortgage_dict[mortgage.mortgage_ID] = mortgage
+                cprint("Thanks. Your mortgage has been saved to your mortgages in this session.", "light_yellow")
+                is_valid = True
+            elif answer == "n":
+                break
+            else:
+                cprint("Please enter Y or N to proceed", "red")
+        except ValueError:
+            cprint("Please enter the number of the mortgage you want to select.", "red")
+
+
 def create_mortgage():
     """
     Creates each Class Instance of a Mortgage - requires user input
@@ -290,7 +307,7 @@ def create_mortgage():
 
     # Creates a Mortgage Class Instance and adds it to the mortgage dictionary
     mortgage = Mortgage(principal, apr, length_of_mortgage, mortgage_name)
-    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    #mortgage_dict[mortgage.mortgage_ID] = mortgage
 
     # Creates a string of the mortgage data to append to Google Sheets for future analysis
     #print(mortgage.create_mortgage_data())
@@ -299,6 +316,7 @@ def create_mortgage():
     cprint("\nYou created a Mortgage with the following details:", "yellow")
     display_mortgage_details(mortgage)
     
+    adds_mortgage_instance_to_dict(mortgage)
 
     print("\n*******************************************************\n")
     
@@ -373,16 +391,12 @@ def extra_monthly_principal():
     extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
-    #mortgage_dict[mortgage.mortgage_ID] = mortgage #adds instance to dictionary
     #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
     #updated_total_payments = mortgage.updated_total_payments
 
     cprint("\nCurrent Mortgage: ", "light_yellow")
     display_mortgage_details(mortgage)
-    # print('old data')
-    # print(mortgage.details())
-    # print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     
     print("\n**********************************************\n")
     cprint("UPDATED MORTGAGE AMORTIZATION SCHEDULE:", "light_yellow")
@@ -393,6 +407,8 @@ def extra_monthly_principal():
     #print(mortgage_dict[mortgage.mortgage_ID].details())
     print(schedule.to_string(index=False))
     #print(schedule.loc[[122]])
+
+    adds_mortgage_instance_to_dict(mortgage)
 
     print("\n*******************************************************\n")
 
@@ -428,6 +444,8 @@ def lump_payment():
     #new_mortgage.update_mortgage_data()
     display_mortgage_details(new_mortgage)
     print(f"Principal Lump Overpayment: €{lump_payment}")
+
+    adds_mortgage_instance_to_dict(new_mortgage)
 
     print("\n*******************************************************\n")
 
