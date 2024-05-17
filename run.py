@@ -72,17 +72,6 @@ def menu_screen():
     """
     clear()
     print(MENU_OPTIONS)
-    # clear()
-    # print("** Mortgage Calculator Tool **\n")
-    # print("You have the following options:\n ")
-    # table = [
-    #     [1, "Add a mortgage", 5, "View Amortization Schedules"],
-    #     [2, "View a Mortgage", 6, "Exit Program"],
-    #     [3, "Display Mortgage Comparison", 7, "Mortgage Metrics"],
-    #     [4, "Calculate Overpayments", 0, "Return to Main Menu"],
-    # ]
-    # print(tabulate(table))
-    # print("\n*******************************************************")
 
 
 def validate_value(prompt_text):
@@ -121,6 +110,23 @@ def validate_apr():
     return apr
 
 
+def validate_name(prompt_text):
+    """
+    Prompts user for input and validates that the input is a string of 10 characters or less
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            name = str(input(prompt_text))
+            if len(name) > 0 and len(name) < 11:
+                is_valid = True
+            else:
+                cprint("There is a maximum of 10 characters. Enter a valid name.", "red")
+        except ValueError:
+            cprint("That is not a valid entry. Enter a valid name.", "red")
+    return name
+
+
 class Mortgage:
     """
     Base Class for Mortgages - creates a mortgage class instance
@@ -130,11 +136,12 @@ class Mortgage:
     extra_monthly_principal = 0
     updated_total_payments = 0
 
-    def __init__(self, principal, apr, length_of_mortgage):
+    def __init__(self, principal, apr, length_of_mortgage, mortgage_name):
         # instance attribute
         self.principal = principal
         self.apr = apr
         self.length_of_mortgage = length_of_mortgage
+        self.mortgage_name = mortgage_name
         Mortgage.mortgage_ID += 1
         self.mortgage_ID = Mortgage.mortgage_ID
         self.start_year = Mortgage.start_year
@@ -142,7 +149,7 @@ class Mortgage:
         self.updated_total_payments = Mortgage.updated_total_payments
 
     def details(self):
-        return f"\nMORTGAGE {self.mortgage_ID}: \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
+        return f"\nMORTGAGE: {self.mortgage_name} \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
 
     def calculate_monthly_payment(self):
         monthly_payment = round(((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12)))), 2)
@@ -249,7 +256,6 @@ class Mortgage:
     #print(mortgage_worksheet)
 
 
-
 def display_mortgage_details(mortgage):
     print(mortgage.details())
     print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
@@ -274,15 +280,16 @@ def create_mortgage():
     """
     clear()
     menu_screen()
-    cprint("\nEnter Your Mortgage details in below:\n", "green")
+    cprint("Enter Your Mortgage details in below:\n", "green")
 
     # Request input from the user
+    mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the principal or loan amount in Euro: \n')
     apr = validate_apr()
     length_of_mortgage = validate_value("Enter the length of the mortgage in years (e.g. 30): \n")
 
-    # Creates a Mortgage Class Instance
-    mortgage = Mortgage(principal, apr, length_of_mortgage)
+    # Creates a Mortgage Class Instance and adds it to the mortgage dictionary
+    mortgage = Mortgage(principal, apr, length_of_mortgage, mortgage_name)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
 
     # Creates a string of the mortgage data to append to Google Sheets for future analysis
@@ -309,7 +316,7 @@ def view_mortgage():
     else:
         cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
-            print(f"Mortgage: {x}")
+            print(f"Mortgage: #{x}, {mortgage_dict[x].mortgage_name}")
 
         # Prompts user to select a mortgage to view or user can select to return to main menu
         print("\n")
@@ -324,7 +331,7 @@ def view_mortgage():
                     display_selected_mortgage(selection)
                     cprint("(Enter 0 to view the Main menu)", "green")
             except ValueError:
-                cprint("Please enter a valid number", "red")
+                cprint("Please enter the number of the mortgage you want to select.", "red")
 
     print("\n*******************************************************\n")
 
@@ -358,13 +365,14 @@ def extra_monthly_principal():
     menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
 
+    mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your existing loan in Euro: \n')
     apr = validate_apr()
     remaining_length_of_mortgage = validate_value('How many years are left on your mortgage?  (e.g. 30) \n')
 
     extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
-    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
+    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
     #mortgage_dict[mortgage.mortgage_ID] = mortgage #adds instance to dictionary
     #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
@@ -397,6 +405,7 @@ def lump_payment():
     menu_screen()
     cprint("Calculate Mortgage Overpayments:\n", "green")
 
+    mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
     apr = validate_apr()
     remaining_length_of_mortgage = validate_value("Enter the remaining length of your mortgage in years: \n")
@@ -404,7 +413,7 @@ def lump_payment():
     lump_payment = validate_value('How much of a lump payment do you want to make? \n')
     
     # Creates Mortgage Instance with Current Mortgage inputs
-    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
+    mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
     
     # Prints Current Mortgage Details
