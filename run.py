@@ -99,7 +99,7 @@ def validate_value(prompt_text):
             else:
                 cprint("Invalid. Enter a whole number greater than 0", "red")
         except ValueError:
-            cprint("Invalid. Please enter a valid number.", "red")
+            cprint("Invalid. Please enter a whole number.", "red")
     return value
 
 
