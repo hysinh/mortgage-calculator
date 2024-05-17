@@ -249,6 +249,25 @@ class Mortgage:
     #print(mortgage_worksheet)
 
 
+def display_mortgage_details(mortgage):
+    print(mortgage.details())
+    print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
+    print("Cost of this loan: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
+
+
+def display_selected_mortgage(mortgage):
+    for x in mortgage_dict:
+        if selection == x:
+                display_mortgage_details(mortgage_dict[x])
+                #print(mortgage_dict[x].details())
+                #print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
+                #print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
+                is_valid = True
+        else:
+            #cprint("That is not an available mortgage. Please enter a mortgage number from the list.", "red")
+            continue
+
+
 def create_mortgage():
     """
     Creates each Class Instance of a Mortgage - requires user input
@@ -267,13 +286,14 @@ def create_mortgage():
     # Creates a Mortgage Class Instance
     mortgage = Mortgage(principal, apr, length_of_mortgage)
     mortgage_dict[mortgage.mortgage_ID] = mortgage
-    #mortgage.create_mortgage_data()
-    print(mortgage.create_mortgage_data())
+
+    # Creates a string of the mortgage data to append to Google Sheets for future analysis
+    #print(mortgage.create_mortgage_data())
 
     # Prints the Mortgage details just entered
     cprint("\nYou created a Mortgage with the following details:", "yellow")
-    print(mortgage.details())
-    print("Your monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment())) 
+    display_mortgage_details(mortgage)
+    
 
     print("\n*******************************************************\n")
     
@@ -354,7 +374,7 @@ def extra_monthly_principal():
     extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage)
-    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    #mortgage_dict[mortgage.mortgage_ID] = mortgage #adds instance to dictionary
     #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
     updated_total_payments = mortgage.updated_total_payments
@@ -404,7 +424,7 @@ def lump_payment():
     # Prints Updated Mortgaged details after Lump Payment applied
     cprint("\nUpdated Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
-    mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage
+    #mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage #adds instance to dictionary
     #new_mortgage.update_mortgage_data()
     print(new_mortgage.details())
     print("Your new monthly payment is: €{:,.2f}".format(new_mortgage.calculate_monthly_payment()))
