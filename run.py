@@ -196,7 +196,7 @@ class Mortgage:
         return pd.DataFrame(updated_schedule, index=None)
 
     def calculate_amortization_schedule(self):
-        schedule =  [["Month","Pay","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest"]]
+        schedule = []
         balance = self.principal
         rate = self.apr/100/12
         total_payments = self.length_of_mortgage*12
