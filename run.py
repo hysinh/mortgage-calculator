@@ -307,7 +307,6 @@ def create_mortgage():
 
     # Creates a Mortgage Class Instance and adds it to the mortgage dictionary
     mortgage = Mortgage(principal, apr, length_of_mortgage, mortgage_name)
-    #mortgage_dict[mortgage.mortgage_ID] = mortgage
 
     # Creates a string of the mortgage data to append to Google Sheets for future analysis
     #print(mortgage.create_mortgage_data())
@@ -316,6 +315,7 @@ def create_mortgage():
     cprint("\nYou created a Mortgage with the following details:", "yellow")
     display_mortgage_details(mortgage)
     
+    # Asks for user input to save Mortgage
     adds_mortgage_instance_to_dict(mortgage)
 
     print("\n*******************************************************\n")
@@ -334,7 +334,7 @@ def view_mortgage():
     else:
         cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
-            print(f"Mortgage: #{x}, {mortgage_dict[x].mortgage_name}")
+            print(f"Mortgage: # {x}, {mortgage_dict[x].mortgage_name}")
 
         # Prompts user to select a mortgage to view or user can select to return to main menu
         print("\n")
@@ -403,10 +403,7 @@ def extra_monthly_principal():
 
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal), "\n")
     schedule = mortgage.extra_principal_payments()
-    #schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
-    #print(mortgage_dict[mortgage.mortgage_ID].details())
     print(schedule.to_string(index=False))
-    #print(schedule.loc[[122]])
 
     adds_mortgage_instance_to_dict(mortgage)
 
@@ -430,8 +427,7 @@ def lump_payment():
     
     # Creates Mortgage Instance with Current Mortgage inputs
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
-    #mortgage_dict[mortgage.mortgage_ID] = mortgage
-    
+
     # Prints Current Mortgage Details
     cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
     display_mortgage_details(mortgage)
@@ -463,27 +459,23 @@ def overpayments():
         try:
             selection = int(input("Enter 1 for monthly overpayments,  2 for a lump overpayment \nor enter '0' to exit this menu: \n"))
             if selection == 0:
-                clear()
-                menu_screen()
                 is_valid = True
             elif selection == 1:
-                clear()
                 menu_screen()
                 extra_monthly_principal()
                 is_valid = True
             elif selection == 2:
-                clear()
                 menu_screen()
                 lump_payment()
                 is_valid = True
             else:
-               clear()
                menu_screen()
                cprint("That is not a valid option. Please choose one from the list above.", "red")
         except ValueError:
-            clear()
             menu_screen()
             cprint("Please enter a valid mortgage number", "red")
+    
+    menu_screen()
 
     #print("\n*******************************************************")
 
@@ -492,7 +484,6 @@ def amortization():
     """
     Allows user to view an amoritization for individual Mortgage details one at a time
     """
-    clear()
     menu_screen()
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
@@ -507,7 +498,6 @@ def amortization():
             try:
                 selection = int(input("Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"))
                 if selection == 0:
-                    clear()
                     menu_screen()
                     is_valid = True
                 else:
