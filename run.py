@@ -249,6 +249,7 @@ class Mortgage:
     #print(mortgage_worksheet)
 
 
+
 def display_mortgage_details(mortgage):
     print(mortgage.details())
     print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
@@ -260,12 +261,8 @@ def display_selected_mortgage(selection):
     for x in mortgage_dict:
         if selection == x:
                 display_mortgage_details(mortgage_dict[x])
-                #print(mortgage_dict[x].details())
-                #print("Monthly Payment: €{:,.2f}".format(mortgage_dict[x].calculate_monthly_payment()))
-                #print("Cost of this loan: €{:,.2f}".format(mortgage_dict[x].calculate_lifetime_interest()))
                 is_valid = True
         else:
-            #cprint("That is not an available mortgage. Please enter a mortgage number from the list.", "red")
             continue
 
 
@@ -371,18 +368,20 @@ def extra_monthly_principal():
     #mortgage_dict[mortgage.mortgage_ID] = mortgage #adds instance to dictionary
     #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
-    updated_total_payments = mortgage.updated_total_payments
+    #updated_total_payments = mortgage.updated_total_payments
 
     cprint("\nCurrent Mortgage: ", "light_yellow")
-    print(mortgage.details())
-    print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
+    display_mortgage_details(mortgage)
+    # print('old data')
+    # print(mortgage.details())
+    # print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     
     print("\n**********************************************\n")
     cprint("UPDATED MORTGAGE AMORTIZATION SCHEDULE:", "light_yellow")
-    
+
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal))
-    #print(f"Updated Total payments: {updated_total_payments}")
-    schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
+    schedule = mortgage.extra_principal_payments()
+    #schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
     #print(mortgage_dict[mortgage.mortgage_ID].details())
     print(schedule.to_string(index=False))
     #print(schedule.loc[[122]])
@@ -410,20 +409,16 @@ def lump_payment():
     
     # Prints Current Mortgage Details
     cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
-    print(mortgage.details())
-    print("Your current monthly payment is: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
-    print("The current cost of the remainder of this mortgage is: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
+    display_mortgage_details(mortgage)
     
     # Creates a new Mortgage Class Instance with the updated information and 
     # Prints Updated Mortgaged details after Lump Payment applied
-    cprint("\nUpdated Mortgage: ----------------------------------------", "light_yellow")
+    cprint("\nUPDATED Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
     #mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage #adds instance to dictionary
     #new_mortgage.update_mortgage_data()
-    print(new_mortgage.details())
-    print("Your new monthly payment is: €{:,.2f}".format(new_mortgage.calculate_monthly_payment()))
-    print("The updated cost of the remainder of this mortgage is: €{:,.2f}".format(new_mortgage.calculate_lifetime_interest()))
-    print(f"Extra principal: €{lump_payment}")
+    display_mortgage_details(new_mortgage)
+    print(f"Principal Lump Overpayment: €{lump_payment}")
 
     print("\n*******************************************************\n")
 
