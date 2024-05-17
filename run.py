@@ -387,7 +387,7 @@ def extra_monthly_principal():
     print("\n**********************************************\n")
     cprint("UPDATED MORTGAGE AMORTIZATION SCHEDULE:", "light_yellow")
 
-    print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal))
+    print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal), "\n")
     schedule = mortgage.extra_principal_payments()
     #schedule = mortgage_dict[mortgage.mortgage_ID].extra_principal_payments()
     #print(mortgage_dict[mortgage.mortgage_ID].details())
@@ -414,7 +414,7 @@ def lump_payment():
     
     # Creates Mortgage Instance with Current Mortgage inputs
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
-    mortgage_dict[mortgage.mortgage_ID] = mortgage
+    #mortgage_dict[mortgage.mortgage_ID] = mortgage
     
     # Prints Current Mortgage Details
     cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
@@ -423,7 +423,7 @@ def lump_payment():
     # Creates a new Mortgage Class Instance with the updated information and 
     # Prints Updated Mortgaged details after Lump Payment applied
     cprint("\nUPDATED Mortgage: ----------------------------------------", "light_yellow")
-    new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage)
+    new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage, mortgage_name)
     #mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage #adds instance to dictionary
     #new_mortgage.update_mortgage_data()
     display_mortgage_details(new_mortgage)
