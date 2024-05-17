@@ -70,6 +70,7 @@ def menu_screen():
     """
     Display Menu options
     """
+    clear()
     print(MENU_OPTIONS)
     # clear()
     # print("** Mortgage Calculator Tool **\n")
@@ -525,21 +526,26 @@ def run_mortgage_tool():
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
                 create_mortgage()
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 2:
                 view_mortgage()
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 3:
                 compare_mortgages()
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 4:
                 overpayments()
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 5:
                 amortization()
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 6:
                 print("Option 6: Exit the program.")
                 is_valid = True
             elif selection ==7:
                 print("Mortgage Metrics Table")
+                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 0:
-                clear()
                 menu_screen()
             else:
                 cprint("That is not a menu option. Type in a number between 1 - 7 or 0 for the main menu.", "red")
@@ -549,8 +555,7 @@ def run_mortgage_tool():
 
 if __name__ == '__main__':
     welcome_screen()
-    clear()
-    menu_screen()
+    #menu_screen()
     run_mortgage_tool()
     
 
