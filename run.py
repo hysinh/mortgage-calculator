@@ -196,7 +196,7 @@ class Mortgage:
         return pd.DataFrame(updated_schedule, index=None)
 
     def calculate_amortization_schedule(self):
-        schedule = []
+        schedule =  [["Month","Pay","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest"]]
         balance = self.principal
         rate = self.apr/100/12
         total_payments = self.length_of_mortgage*12
@@ -247,13 +247,6 @@ class Mortgage:
             avg = math.ceil(avg)
             mortgage_data.append(avg)
         return mortgage_data
-
-# def update_mortgage_data(Mortgage):
-#     data = Mortgage.create_mortgage_data()
-#     print(data)
-    #mortgage_worksheet = SHEET.worksheet("mortgage_data")
-    #mortgage_worksheet.append_row(data)
-    #print(mortgage_worksheet)
 
 
 def display_mortgage_details(mortgage):
@@ -315,7 +308,7 @@ def create_mortgage():
     cprint("\nYou created a Mortgage with the following details:", "yellow")
     display_mortgage_details(mortgage)
     
-    # Asks for user input to save Mortgage
+    # Allows user to save mortgage for the session
     adds_mortgage_instance_to_dict(mortgage)
 
     print("\n*******************************************************\n")
@@ -393,7 +386,6 @@ def extra_monthly_principal():
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
     #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
-    #updated_total_payments = mortgage.updated_total_payments
 
     cprint("\nCurrent Mortgage: ", "light_yellow")
     display_mortgage_details(mortgage)
@@ -432,12 +424,10 @@ def lump_payment():
     cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
     display_mortgage_details(mortgage)
     
-    # Creates a new Mortgage Class Instance with the updated information and 
-    # Prints Updated Mortgaged details after Lump Payment applied
+    # Creates a new Mortgage Class Instance with the updated information
     cprint("\nUPDATED Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage, mortgage_name)
-    #mortgage_dict[new_mortgage.mortgage_ID] = new_mortgage #adds instance to dictionary
-    #new_mortgage.update_mortgage_data()
+    #new_mortgage.update_mortgage_data() # Adds data to google sheets
     display_mortgage_details(new_mortgage)
     print(f"Principal Lump Overpayment: €{lump_payment}")
 
