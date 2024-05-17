@@ -489,7 +489,7 @@ def amortization():
                             clear()
                             cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
-                            print(mortgage_dict[x].details())
+                            display_mortgage_details(mortgage_dict[x])
                             print(schedule.to_string(index=False))
                             print("\n")
                             is_valid = True
