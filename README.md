@@ -272,10 +272,10 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | View Mortgage  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
   | View Mortgage  | Is the user able to select a Mortgage Profile to view? | Pass |
   | View Mortgage  | Does an error message display if the user enters an invalid Mortgage option? | Pass |
+  | View Mortgage  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
   | View Mortgage  | When the user enters a valid Mortgage option, is the Mortgage profile displayed on the terminal? | Pass |
   | View Mortgage  | Is the user able to view another Mortgage and is given the option to exit this page and return to Main Menu? | Pass |
   | Compare Mortgages  | Does the page display an error message if there are less than 2 Mortgage profiles saved and directed back to the Main Menu? | Pass |
-  | Compare Mortgages  | Does the page display an error message if there are less than 2 Mortgage profiles saved and the user is directed back to the Main menu? | Pass |
   | Compare Mortgages  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
   | Compare Mortgages  | If there are 2 or more saved Mortgage profiles saved, does a comparison table print to the terminal? | Pass |
   | Compare Mortgages  | Is the user directed back to the Main Menu after the comparison table display is completed? | Pass |
@@ -285,44 +285,67 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | Extra Monthly Principal Overpayments  | Is the user able to enter Mortgage profile with extra monthly principal payments? | Pass |
   | Extra Monthly Principal Overpayments  | Are all user inputs validated with an error message printed? | Pass |
   | Extra Monthly Principal Overpayments  | Once the data is accepted, is the Mortgage profile displayed with an updated Amortization schedule? | Pass |
-  | Extra Monthly Principal Overpayments  | Is the user able to save their Mortgage profile if desired? | Pass |
-  | Extra Monthly Principal Overpayments  | Is the user redirected to the  | Pass |
+  | Extra Monthly Principal Overpayments  | Is the user able to save their Mortgage profile if desired? Does a confirmation display | Pass |
+  | Extra Monthly Principal Overpayments  | Is the user redirected to the Main menu? | Pass |
+  | Extra Lump Overpayments  | Is the user able to enter Mortgage profile with extra monthly principal payments? | Pass |
+  | Extra Lump Overpayments | Are all user inputs validated with an error message printed? | Pass |
+  | Extra Lump Overpayments | Once the data is accepted, is the Mortgage profile displayed with an updated Amortization schedule? | Pass |
+  | Extra Lump Overpayments | Is the user able to save their Mortgage profile if desired? Does a confirmation display| Pass |
+  | Extra Lump Overpayments  | Is the user redirected to the Main menu? | Pass |
+  | Amortization Schedule  | Does the page display an error message if there are no saved Mortgage profiles and directed back to the Main Menu? | Pass |
+  | Amortization Schedule  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
+  | Amortization Schedule  | Is the user able to select a Mortgage Profile to amortize? | Pass |
+  | Amortization Schedule  | Does an error message display if the user enters an invalid Mortgage option? | Pass |
+  | Amortization Schedule  | Does an amortization schedule print for the selected Mortgage Profile | Pass |
+  | Amortization Schedule  | Is the user able to view another Mortgage and is given the option to exit this page and return to Main Menu? | Pass |
+  | Exit Program  | Does the terminal clear and an exit message print when this option is selected? | Pass |
+  | 0 Menu Option  | Does the terminal clear and the Main menu print with a prompted to input a Menu option? | Pass |
+
+
+  
 
 
   #### Bugs and Fixes
   | Bug | Page | Fix |
   | --- | ---- | --- |
-  | Can still click on cards after lose game | Index page | Added a lockBoard function in JS file to resolve. |
-  | Can still click on a third card when two first cards are being compared | Index page | Change < 2 in checkCards function to === 2 to prevent a third card from being flipped | 
-  | When the user completes a game but lost, user can click several times on a card and it will eventually flip over | Index page | Added a lockBoard function to the checkLose function in JS file to resolve. |
-  | Missing h2 close tag | Index page | Had changed an H1 tag to a H2 tag but did not update the close tag. Resolved by updating close tag. |
-  | Section element | Index page | HTML validator suggested changing section element to div to eliminate issues with lack of heading. I changed the section element to a div element. |
-  | Accessibility | Index page | Document doesn't use legible font sizes at the mobile size in the footer. The footer text size was adjusted to ensure better readability |
-  | Invalid 'align' property | style.css | Removed align property  |
-  | Unnecessary ; tags | script.js | I had put ; at the end of every function that was unncessary. Resolved by removing them. |
-  | Missing ; tags | Script.js | Missing ; at the end of console.log in js file in two places. Added the ; as necessary. |
+  | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Monthly Principal Payments | Removed code that ends loop to resolve. |
+  | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Lump Principal Payments | Removed code that ends loop to resolve. |
+  | Unclear for users what to do if Main Menu is no longer visible. | All Pages | Add text above menu prompt that instructs user to enter 0 to go to the Main menu. |
+
+  
   
 
   ### Unfixed Bugs
-  - At this time, because the cards all are added as elements to the DOM, it is possible to cheat by viewing the html source. You are able to see each image and it's names and it's location. I do not have enough programming knowledge at this time to avoid this.
+  - Although I have included a function that clears the terminal, I noticed that anything above the terminal screen does not clear and is still available to view if you scroll up. This is potentially confusing but I was not able to resolve it. My mentor said that it is common for older terminals to push content upward and not truly clear the screen.
+  - During testing, it was revealed that when users save Mortgage profiles after applying Extra Monthly Principal payments, the mortgage profile that is saved is based on the original Mortgage inputs and is not updated with the new loan length and lifetime interest on the loan. I would like to resolve this but due to time constraints, I'm not sure I will have the time to work out the new calculations before submission.
   
 
 ## Credits
 ### Content
-- Content for website was writing by myself
-- Jason Holt Smith, https://github.com/bicarbon8, was available for copious amounts of assistance debugging and helping to steer me in the correct direction for writing the code.
-- Grid layout https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
-- Modal code https://codepen.io/dantewebmaster/pen/Yabpmr
-- W3C CSS Validator: https://jigsaw.w3.org/css-validator/
-- How to randomize the array: The de-facto unbiased shuffle algorithm is the Fisher–Yates (aka Knuth) Shuffle. https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-- How to Make a Modal https://www.w3schools.com/howto/howto_css_modals.asp
-- How to use docstrings in Javascript https://stackoverflow.com/questions/34205666/utilizing-docstrings
-- Build Your Own Memory Card Game with HTML, CSS, and JavaScript - Beginner-Friendly Tutorial https://www.youtube.com/watch?v=xWdkt6KSirw
-- Awesome Vanilla JavaScript Memory Card Game Tutorial https://www.youtube.com/watch?v=-tlb4tv4mC4
-- How to toggle https://developer.mozilla.org/en-US/docs/Web/API/Element/classList & https://www.w3schools.com/howto/howto_js_toggle_class.asp
-- How to stack div elements vertically https://stackoverflow.com/questions/19284923/how-do-i-automatically-stack-divs-vertically-inside-a-parent
-- How to remove a class from an element https://www.w3schools.com/howto/howto_js_remove_class.asp
-- How to set multiple conditions in an if statement in JavaScript https://www.shecodes.io/athena/132703-how-to-set-multiple-conditions-in-an-if-statement-in-javascript#:~:text=In%20JavaScript%2C%20you%20can%20set
+- ASCII Art https://stackoverflow.com/questions/9632995/how-to-easily-print-ascii-art-text
+- https://pypi.org/project/pyfiglet/
+- http://www.figlet.org/examples.html
+- Clearing the console https://stackoverflow.com/questions/517970/how-can-i-clear-the-interpreter-console
+- Input validation
+https://www.copahost.com/blog/input-python/#:~:text=For%20example%2C%20if%20you%20want,%22)
+- Mortgage calculator formulas https://en.wikipedia.org/wiki/Mortgage_calculator,
+- Mortgage calculator https://www.ccpc.ie/consumers/money-tools/extra-mortgage-payments-calculator/
+- Mortgage calculator https://www.ccpc.ie/consumers/money-tools/mortgage-calculator/
+- https://automatetheboringstuff.com/2e/chapter8/
+- Python dictionaries https://www.codecademy.com/learn/dscp-python-fundamentals/modules/dscp-python-dictionaries/cheatsheet
+- Python dictionaries https://www.freecodecamp.org/news/add-to-dict-in-python/
+- Python dictionaries https://www.w3schools.com/python/python_dictionaries_nested.asp
+- Python dictionaries https://www.digitalocean.com/community/tutorials/python-add-to-dictionary
+- Tabulate https://pypi.org/project/tabulate/
+- Amoritization https://www.investopedia.com/terms/a/amortization.asp
+- Amoritization https://discuss.python.org/t/calculation-of-mortgage-amortization/20687/3
+- Amoritization https://sidhanthk9.medium.com/how-to-code-an-amortization-schedule-in-python-e2d2b417c61a
+- Color https://pypi.org/project/termcolor/
+https://sparkbyexamples.com/pandas/print-pandas-dataframe-without-index/#:~:text=Use%20hide_index(),Python%203.7%20or%20the%20latest.
+- https://stackoverflow.com/questions/517970/how-can-i-clear-the-interpreter-console
+- https://www.geeksforgeeks.org/clear-screen-python/
+- W3Schools Python https://www.w3schools.com/python
+- https://www.python.org/
 
 
 
