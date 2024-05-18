@@ -124,9 +124,19 @@ When the user has saved a minimum of two Mortgages, they can view a mortgage com
 <details >
 <summary></summary>  
 
-![screenshot favicon](docs/documentation/Screenshot_favicon.png)
+![screenshot overpayments](docs/documentation/screenshot_overpayments.png)
 </details>  
-A favicon was added to provide further visual support of the Happy Cake Friends brand.
+There are two options in the Overpayments feature: 1) Additional Monthly Principal overpayments and 2) A Lump Principal Payment. Once this feature is selected, the user is required to choose which type of Overpayment they would like to calculate.
+
+- ### Additional Monthly Principal Overpayment
+  <details >
+  <summary></summary>  
+
+  ![screenshot favicon](docs/documentation/Screenshot_favicon.png)
+  </details>  
+  There are two options in the Overpayments feature: 1) Additional Monthly Principal overpayments and 2) A Lump Principal Payment. Once this feature is selected, the user is required to choose which type of Overpayment they would like to calculate.
+
+
 
 ### Amortization Schedule
 <details >

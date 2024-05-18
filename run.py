@@ -185,11 +185,11 @@ class Mortgage:
             total_payments -= 1
             if balance > 0:
                 updated_schedule.append({
-                        'Month #' : Month,
-                        'Payments Left' : total_payments,
+                        'Month' : Month,
+                        'Pmts Left' : total_payments,
                         'Payment' : "€{:,.2f}".format(monthly_payment),
                         'Principal' : "€{:,.2f}".format(principal_payment),
-                        'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal),
+                        'Extra\nPrincipal' : "€{:,.2f}".format(extra_monthly_principal),
                         'Interest' : "€{:,.2f}".format(interest_payment),
                         'Balance' : "€{:,.2f}".format(balance)     
                 })
