@@ -444,17 +444,17 @@ def overpayments():
     is_valid = False
     while is_valid != True:
         try:
-            selection = int(input("Enter 1 for monthly overpayments,  2 for a lump overpayment \nor enter '0' to exit this menu: \n"))
+            selection = int(input("Enter 1 for Extra Monthly Principal overpayments, 2 for a Lump Principal overpayment, \nor enter '0' to exit this menu: \n"))
             if selection == 0:
                 is_valid = True
             elif selection == 1:
                 menu_screen()
                 extra_monthly_principal()
-                is_valid = True
+                #is_valid = True
             elif selection == 2:
                 menu_screen()
                 lump_payment()
-                is_valid = True
+                #is_valid = True
             else:
                menu_screen()
                cprint("That is not a valid option. Please choose one from the list above.", "red")

@@ -265,10 +265,29 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | Main Menu  | If the user selects an option from the Main Menu, does it direct the user to that option correctly? | Pass |
   | Add Mortgage  | On the Add Mortgage page, does it allow the user to create a Mortgage profile? | Pass |
   | Add Mortgage  | Is the input validation on the Add Mortgage page working? | Pass |
-  | Add Mortgage  | If the user exhausts their player tries before finding all the matches, the board is locked and the user receives a Lose message. | Pass |
-  | Home  | If the user receives a Lose or Win message, when they click on the screen, the modal closes and they can reset the game if they choose. | Pass |
-  | 404  | Page displays when user attempts to go to a non-existing page | Pass |
-  | 404  | Link on the page bring user back to the home page | Pass |
+  | Add Mortgage  | Is a Mortgage profile added correctly if the user selects this option? | Pass |
+  | Add Mortgage  | Is the Google Sheet updated with the data of the new Mortgage profile created regardless of whether the Mortgage profile is saved for the session? | Pass |
+  | Add Mortgage  | Once Add Mortgage options are completed, is the user directed back to the Main Menu options? | Pass |
+  | View Mortgage  | Does the page display an error message if there are no saved Mortgage profiles and directed back to the Main Menu? | Pass |
+  | View Mortgage  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
+  | View Mortgage  | Is the user able to select a Mortgage Profile to view? | Pass |
+  | View Mortgage  | Does an error message display if the user enters an invalid Mortgage option? | Pass |
+  | View Mortgage  | When the user enters a valid Mortgage option, is the Mortgage profile displayed on the terminal? | Pass |
+  | View Mortgage  | Is the user able to view another Mortgage and is given the option to exit this page and return to Main Menu? | Pass |
+  | Compare Mortgages  | Does the page display an error message if there are less than 2 Mortgage profiles saved and directed back to the Main Menu? | Pass |
+  | Compare Mortgages  | Does the page display an error message if there are less than 2 Mortgage profiles saved and the user is directed back to the Main menu? | Pass |
+  | Compare Mortgages  | Does the page display all of the saved Mortgage Profiles and their name to the user? | Pass |
+  | Compare Mortgages  | If there are 2 or more saved Mortgage profiles saved, does a comparison table print to the terminal? | Pass |
+  | Compare Mortgages  | Is the user directed back to the Main Menu after the comparison table display is completed? | Pass |
+  | Overpayments  | Is the user given an option to explore Extra Monthly Principal payments or Lump Principal Payments? | Pass |
+  | Overpayments  | Is the user given an error message if they choose an invalid option? | Pass |
+  | Overpayments  | Is the user able to exit the menu and return to the Main Menu? | Pass |
+  | Extra Monthly Principal Overpayments  | Is the user able to enter Mortgage profile with extra monthly principal payments? | Pass |
+  | Extra Monthly Principal Overpayments  | Are all user inputs validated with an error message printed? | Pass |
+  | Extra Monthly Principal Overpayments  | Once the data is accepted, is the Mortgage profile displayed with an updated Amortization schedule? | Pass |
+  | Extra Monthly Principal Overpayments  | Is the user able to save their Mortgage profile if desired? | Pass |
+  | Extra Monthly Principal Overpayments  | Is the user redirected to the  | Pass |
+
 
   #### Bugs and Fixes
   | Bug | Page | Fix |
