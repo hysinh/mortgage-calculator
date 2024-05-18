@@ -99,7 +99,7 @@ When user input is required, input is validated to ensure that the input is with
 <details>
 <summary></summary>
 
-![screenshot of player tries](docs/documentation/Screenshot_features_playerTries.png)
+![screenshot of player tries](docs/documentation/screenshot_add_mortgage.png)
 </details>
 The user is allowed to add as many mortgages as they choose. Each mortgage is asked for user input for the name (or label) for the mortgage, principal amount, APR, and mortgage length. The monthly payment and lifetime interest is then calculated and printed on the terminal along with the mortgage inputs provided by the user. The user is then prompted to decide if they want to save this mortgage for their session. If the user chooses Yes, the mortgage is saved and the user is redirected back to the Main Menu options. If the user chooses not to save the mortgage, the user is redirected back to the Main Menu.
 
