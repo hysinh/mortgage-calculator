@@ -1,36 +1,36 @@
-# Happy Cake Friends Memory Game
-  ![screenshot of landing page](docs/documentation/Screenshot_amiresponsive.png)
+# Mortgage Comparison Tool
+  ![screenshot of landing page](docs/documentation/screenshot_amiresponsive.png)
 
   [View Live Project Here](https://mortgage-comparison-tool-c884f78efc79.herokuapp.com/)
 
 ## Introduction
-The Happy Cake Friends Memory Game is a simple, fun online game for all ages.
+The Mortgage Comparison Tool is an interactive CL python application that allows user to calculate mortgage information such as monthly payments, lifetime interest on a loan, amortization schedules, and the effect of overpayments after inputing some basic mortgage information. User are allowed to save mortgages that they create for the session. 
 
 ## CONTENTS  
   
 * [User Experience)](#user-experience)
   * [User Stories](#user-stories) 
 * [Design](#design)
-  * [Site Design](#site-design)
-  * [Wireframes](#wireframes)
-  * [Colour Scheme](#colour)
-  * [Typography](#typography)
+  * [Design](#design)
+  * [Flowchart](#flowchart)
 * [Features](#features)
-  * [Card Grid](#card-grid)
-  * [Play Button](#play-button)
-  * [Player Tries Remaining](#player-tries-remaining)
-  * [Win Game and Lose Game Modals](#win-game-and-lose-game-modals)
-  * [Footer](#footer)  
-  * [Favicon](#favicon)  
+  * [Logo](#logo)
+  * [Menu](#menu)
+  * [Input Validation](#input-validation)
+  * [Add Mortgages](#add-mortgages)
+  * [View Mortgages](#view-mortgages)
+  * [Compare Mortgages](#compare-mortgages)  
+  * [Overpayments](#overpayments)
+  * [Amortization Schedule](#amortization-schedule)
+  * [Mortgage-Data](#mortgage-data)
+  * [Exit Program](#exit-program)
 * [Future Features](#future-features)
 * [Technologies](#technologies)
   * [Languages Used](#languages-used)
   * [Technologies and Programs Used](#technologies-and-programs-used)
   * [Deployment](#deployment)
 * [Testing](#testing)
-  * [HTML Validation](#html-validation)
-  * [CSS Validationn](#css-validation)
-  * [Javascript Validationn](#javascript-validation)
+  * [Python Validation](#python-validation)
   * [Lighthouse Performance Audits via Chrome Dev Tools](#lighthouse-performace-audit-via-chrome-dev-tools)
   * [Manual Testing](#manual-testing)
   * [Bugs and Fixes](#bugs-and-fixes)
@@ -41,99 +41,61 @@ The Happy Cake Friends Memory Game is a simple, fun online game for all ages.
 ---   
 
 ## User Experience
-The Happy Cake Friends Memory Game is a fun, online, memory matching game for all ages and genders. It is a simple game designed to entertain it's user with a brief, challenging game of memory. The game can be played to entertain oneself at any time! The User Interface features bright and attractive colors and happy illustrated characters on each of the cards.
+The goal of this Mortgage Comparison tool is to allow the user an easy way to compare mortgages whether they are looking to purchase a home, refinance a home, or want to make overpayments on an existing loan. 
 - ### Visitor Goal
-  Happy Cake Friends visitors can range in age and genger but they are all generally looking for a simple, online game to entertain them featuring the Happy Cake Friends characters. The website offers a short reprieve from the cares of daily life and offers entertainment via a mentally challenging memory exercise.
+  As a user, I want an easy way to view, compare, and manipulate potential mortgage scenarios to inform future financial decisions or goals.
 - ### User stories
-  1. User looking to play a simple game while waiting for public transport.
-  2. User looking for a simple memory game to play while waiting (e.g. waiting at the GP office or riding the bus).
-  3. User is a child with a parent who needs them to be occupied with a simple, safe and entertaining memory game that can be played quietly for a period of time. 
-  4. User is a fan of the Happy Cake Friends and enjoys playing games or interacting with the Happy Cake Friends brand.
+  1. User looking to purchase a home and wants to compare different mortgages by percentage rate, loan length, lifetime interest, and monthly payment.
+  2. User looking to refinance a home and wanting to compare current loan data with new potential loans by loan length, monthly payment, and overall cost of the loan.
+  3. User wanting to add a loan for comparison.
+  4. User wanting to compare how monthly payments affects their loan.
+  5. User wanting to compare how a lump principal affects their loan.
+  6. User wanting to save loans they want to keep for comparison.
+  7. User wanting to see the amortization schedule of a loan that they have entered. 
+
 
 ## Design
+### Design 
+  As a Python Command Line Interface application, design choices were limited. However, to make it easier for the user to interact with the application, I utilized a menu to help direct the user in options as well as color coding specific messages to lend definition to certain messages, error messages and to create distinctions between different information displayed.
 
-- #### Site design 
-  For a simple, online game, the Happy Cake Friends has a colorful, illustrated look that appeals to those who enjoy a cute, illustrated aesthetic or are fans of the Happy Cake Friends characters or brand. The site design for Happy Cake Friends Memory Game is responsive and the display adjusts responsively across devices.
+### Flowchart
+  Created in draw.io, the following flowchart provides a visualization of the planning process for this application. During the development of the application, it became apparent that additional inputs, functionality, and outputs were required for the implementation for some of the calculations required and to better organise the options in a way that made sense to the user.
 
-  The Happy Cake Friends website needed to be responsive and available on a variety of screen sizes and devices to make it as accessible as possible. I focused on the following sizes:
-
-  1. Mobile Device dimensions (small): 280px x 653px
-  2. Mobile Device dimensions (larger): 375px and larger
-  3. Tablet Device dimensions: 736px and larger
-  4. Laptop Device dimensions: 992px and larger
-
-- #### Wireframes
-  The Happy Cake Friends website was designed by wireframes with pencil and paper. After sketching out what I planned, I started laying out the HTML and basic CSS for the site in a similar way that the Love Maths tutorial went. I made a list of the functions that I thought that the game would need and proceeded from there. In the end, I did not use different size cards for different levels or different numbers of lives for different levels on this version. I decided to keep it simple and stay with a single version. Difficulty levels can be implemented in a future version of the Happy Cake Friends Memory Game. I recreated the wireframes in a digital version, but an image of the original handdrawn wireframes is included below.
+  An example of this additional development is for principal overpayments. Originally, I had them as separate options. But based on initial user testing and feedback, I decided to combine them in the same menu option and allowing the user to select which type of overpayment they would make. This helped the organise the menu in a more logical way to the user.
 
   <details >
-  <summary>Mobile Wireframe</summary>  
+  <summary>Application Flowcart</summary>  
 
-  ![screenshot of mobile wireframes](docs/documentation/Screenshot_wireframe_mobile.png)
+  ![screenshot of application flowchart](docs/documentation/mortgage_flowchart.drawio.png)
   </details>
-
-  <details >
-  <summary>Mobile 375 pexels and larger Wireframe</summary>  
-
-  ![screenshot of mobile wireframes](docs/documentation/Screenshot_wireframe_mobile_lrg.png)
-  </details> 
-
-  <details >
-  <summary>Desktop Wireframe</summary>  
-
-  ![screenshot tablet wireframes](docs/documentation/Screenshot_wireframe_laptop_desktop.png)
-  </details>    
-
-  <details >
-  <summary>Original Handdrawn Wireframe</summary>  
-
-  ![screenshot desktop wireframes](docs/documentation/wireframe_memory-game.jpg)
-  </details>    
-- #### Colour 
-  ![screenshot of font family](docs/documentation/screenshot_color_palette.webp)
-  The Happy Cake Friends color palette is bright, fresh, and youthful and suits the illustractor Cake Friends characters.
-  <br>
-  <br>
-  Initially, my buttons featured white text and this, in combination with the orange background, failed the acceptable [WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) contrast ratio. Ultimately, I changed the text color to a dark gray color to ensure readability and accessibility. The Memory Game text was also tested against the blue and green background. At 14 font size and bold, the yellow color was was still readable. So, I chose to leave the colors at the top as is since they text is sufficiently large enough for readability. I used the [Adobe Color](https://color.adobe.com/create/color-contrast-analyzer) to test the colors.
-
-  <details >
-  <summary>Adobe color analysis for the button</summary>  
-
-  ![screenshot desktop wireframes](docs/documentation/Screenshot_coloranalysis_yellow-button.png)
-  </details> 
-
-  <details >
-  <summary>Adobe color analysis for the orange text at the top of the page</summary>  
-
-  ![screenshot desktop wireframes](docs/documentation/Screenshot_coloranalysis_yellow-text-on-blue-background.png)
-  </details> 
-
-- #### Typography
-  The Happy Cake Friends logo is using the Londrina Solid font family. It offers a cartoon style that works well with the illustrated, cartoon aesthetic of the Happy Cake Friends.
-
-  The remainder of the copy is in the font family is Poppins. It was chosen for it's clean look, readability, and variety of weights. Both fonts were sourced from Google Fonts.
-
-  ![screenshot of font family](docs/documentation/Screenshot_font_poppins.png)
-  ![screenshot of font family](docs/documentation/Screenshot_font_londrina-solid.png)
 
 
 ## Features
-### Card Grid
+### Logo
 <details >
 <summary></summary>  
 
-![screenshot card grid](docs/documentation/Screenshot_features_grid.png)
+![screenshot card grid](docs/documentation/screenshot_logo.png)
 </details>  
-The card grid is the main feature of the page and website. Javascript generates the cards on demand when the user presses the "Play" button. The grid is four cards wide and four cards down creating 16 cards total. There are eight matching pairs that are randomly generated each time the card grid is reset. The cards feature the bright and colorful Happy Cake Friends characters.
+The Logo of the Mortgage Calculator is diplayed using ASCII. 
 
-### Play Button
+### Menu
 <details>
 <summary></summary>
 
-![screenshot of play button](docs/documentation/Screenshot_features_play-button.png)
+![screenshot of main menu](docs/documentation/screenshot_main_menu.png)
+</details>
+A Main Menu displays to explain the options to the user. The User is given a reminder message that they can enter 0 at any juncture that prompts the user to make a main menu selection to view the menu. 
+
+### Input Validation
+<details>
+<summary></summary>
+
+![screenshot of input validation](docs/documentation/Screenshot_features_play-button.png)
 </details>
 The Play Button is used to begin the game or reset the grid at any time. When a player wins or loses the game, the player can click on the Play Button to reset the game at that time. However, the play button can reset the game at any time and is not limited to the end of the game.
 
-### Player Tries Remaining
+### Add Mortgages
 <details>
 <summary></summary>
 
@@ -141,7 +103,7 @@ The Play Button is used to begin the game or reset the grid at any time. When a 
 </details>
 The Player Tries Remaining section displays the current tries that a player has as they attempt matches. At the beginning, each player is allocated 15 Tries or attempts. Each mismatched pair decrements the Player Tries by 1 until it reaches 0. At this point, a message pops up to let the player know that they have lost the game and they can play again if they choose.
 
-### Win Game and Lose Game Modals
+### View Mortgages
 <details>
 <summary></summary>
 
@@ -150,7 +112,7 @@ The Player Tries Remaining section displays the current tries that a player has 
 The Player Tries Remaining section displays the current tries that a player has as they attempt matches. At the beginning, each player is allocated 15 Tries or attempts. Each mismatched pair decrements the Player Tries by 1 until it reaches 0. At this point, a message pops up to let the player know that they have lost the game and they can play again if they choose. Should the player find all the matches before the Player Tries reaches zero. Then, they have won the game and a Win Game message pops up at that time. They can also choose to play the game again at this point.
 
 
-### Footer
+### Compare Mortgages
 <details>
 <summary></summary>
 
@@ -158,7 +120,7 @@ The Player Tries Remaining section displays the current tries that a player has 
 </details>
 The footer section features a simple copyright message for the Happy Cake Friends. 
 
-### Favicon
+### Overpayments
 <details >
 <summary></summary>  
 
@@ -166,7 +128,7 @@ The footer section features a simple copyright message for the Happy Cake Friend
 </details>  
 A favicon was added to provide further visual support of the Happy Cake Friends brand.
 
-### 404 Page Not Found page
+### Amortization Schedule
 <details >
 <summary></summary>  
 
@@ -175,10 +137,16 @@ A favicon was added to provide further visual support of the Happy Cake Friends 
 In the event that the user navigates to non-existing page, a 404 page displays a Page not Found message and directs the user back to the main game page.
 
 
-## Future Features
+### Mortgage-Data
 - A future feature would be allow for different levels or different numbers of tries to increase or decrease difficulty.
 - A future feature would allow for different character groups to displayed depending on the level of difficulty.
 - Also for future development, additional simple games featuring the characters. 
+
+### Exit Program
+- A future feature would be allow for different levels or different numbers of tries to increase or decrease difficulty.
+- A future feature would allow for different character groups to displayed depending on the level of difficulty.
+- Also for future development, additional simple games featuring the characters. 
+
 
 ## Technologies
   ### Languages Used
