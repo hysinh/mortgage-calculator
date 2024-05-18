@@ -109,7 +109,7 @@ The user is allowed to add as many mortgages as they choose. Each mortgage is as
 
 ![screenshot of view mortgages](docs/documentation/screenshot_view_mortgage.png)
 </details>
-The user is allowed to view the details of any individual mortgage that they have saved during their session. If they selected the View Mortgage menu option, but have NOT entered in any mortgages, they will receive an error message and will be prompted to make a different choice from the main menu. If there are mortgages saved, the user is provided with a list of the available mortgages and they can enter in a mortgage number that corresponds with their saved mortgages to view the details for that individual mortgage. After the mortgage details are printed to the terminal, the user is prompted to choose a different mortgage to view or to return to the main menu and exit the View Mortgages section.
+The user is allowed to view the details of any individual Mortgage profile that they have saved during their session. If they selected the View Mortgage menu option, but have NOT entered in any mortgages, they will receive an error message and will be prompted to make a different choice from the main menu. If there are mortgages saved, the user is provided with a list of the available Mortgage profiles and they can enter in a mortgage number that corresponds with their saved mortgages to view the details for that individual mortgage. After the mortgage details are printed to the terminal, the user is prompted to choose a different mortgage to view or to return to the main menu and exit the View Mortgages section.
 
 
 ### Compare Mortgages
@@ -149,20 +149,30 @@ There are two options in the Overpayments feature: 1) Additional Monthly Princip
 <details >
 <summary></summary>  
 
-![screenshot favicon](docs/documentation/Screenshot_features_404page.png)
+![screenshot amortization](docs/documentation/screenshot_amortization.png)
 </details>  
-In the event that the user navigates to non-existing page, a 404 page displays a Page not Found message and directs the user back to the main game page.
+This option requires at least one saved Mortgage profile. If there is an insufficient number of Mortgage profiles, the user is alerted with a red error message and redirected back to the Main menu options. If there is at least one Mortgage profile, it is printed in a list and the user is asked to input a Mortgage Profile selection. Once selected, the amortization schedule is calculated and printed to the terminal. The user can either choose another Mortgage profile to view or can exit to the main menu. 
 
 
 ### Mortgage-Data
-- A future feature would be allow for different levels or different numbers of tries to increase or decrease difficulty.
-- A future feature would allow for different character groups to displayed depending on the level of difficulty.
-- Also for future development, additional simple games featuring the characters. 
+<details >
+<summary></summary>  
+
+![screenshot amortization](docs/documentation/screenshot_mortgage_data.png)
+</details>  
+At this current time, the data collected from each Mortgage Profile created (regardless of whether a user chooses to save the profile) in the Add Mortgage option is added to a Google Sheet. This data is intended to be used to provide internal and eventual published analysis of the types of mortgages that users enter into the comparison tool. 
 
 ### Exit Program
-- A future feature would be allow for different levels or different numbers of tries to increase or decrease difficulty.
-- A future feature would allow for different character groups to displayed depending on the level of difficulty.
-- Also for future development, additional simple games featuring the characters. 
+<details >
+<summary></summary>  
+
+![screenshot exit](docs/documentation/screenshot_exit.png)
+</details> 
+Should the user which to exit the Mortgage Comparison Tool, they can select option 6 from the Main menu. When this option is selected, the terminal is cleared and a Thank you message is printed before the program is terminated. 
+
+### Future Development
+- For future development, I wanted to implement a table of data analysis of the aggregate mortgage data inputed by users to provide insight into the type of mortgages that user want to compare. Examples of potential insights would be average mortgage principal amount, average length of the mortgage, and average APR. 
+- I noticed that other students implemented custom heroku terminal shell for deployment. I thought this was interesting and would like to implement this should I have more time to develop this further.
 
 
 ## Technologies
@@ -171,14 +181,11 @@ In the event that the user navigates to non-existing page, a 404 page displays a
 
   ### Technologies and Programs Used
   - GitHub - used to save and store all the files for this website
-  - GitHub Codespaces - was used as the IDE to develop and test the code for this website
+  - GitPod and VSCode - was used as the IDE to develop and test the code for this website in both the cloud and locally capacity.
   - Git - provided the version control
-  - Adobe Photoshop 2024 - used to create wireframes and edit all the images
-  - Wacom One: creative pen display and pen tablet
   - Google Docs - used for notes and documentation
-  - Google Fonts - imported fonts from this website
-  - Google Developer Tools - used to debug website and test for responsiveness
-  - Google Lighthouse - used to audit the performance and quality of the website
+  - Google Sheets - provided the spreadsheet application for storing the data generated by user inputs
+  - draw.io - used for flowchart creation.
   - WC3 HTML Validator - used to validate the HTML code
   - WC3 CSS Validator - used to validate the CSS code https://jigsaw.w3.org/css-validator/
   - JShint.com Javascript Validator - used to validate the Javascript code https://jshint.com/
