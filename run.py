@@ -186,7 +186,6 @@ class Mortgage:
             if balance > 0:
                 updated_schedule.append([
                     Month,
-                    #total_payments,
                     "€{:,.2f}".format(monthly_payment),
                     "€{:,.2f}".format(principal_payment),
                     "€{:,.2f}".format(extra_monthly_principal),
@@ -194,16 +193,7 @@ class Mortgage:
                     "€{:,.2f}".format(balance)
                 ])
         return updated_schedule
-        #         updated_schedule.append({
-        #                 'Month' : Month,
-        #                 'Left' : total_payments,
-        #                 'Payment' : "€{:,.2f}".format(monthly_payment),
-        #                 'Principal' : "€{:,.2f}".format(principal_payment),
-        #                 '+ Principal' : "€{:,.2f}".format(extra_monthly_principal),
-        #                 'Interest' : "€{:,.2f}".format(interest_payment),
-        #                 'Balance' : "€{:,.2f}".format(balance)     
-        #         })
-        # return pd.DataFrame(updated_schedule, index=None)
+    
 
     def calculate_amortization_schedule(self):
         schedule = [["Month", "Pmts Left", "Payment", "Principal", "Interest", "Balance"]]
@@ -311,7 +301,8 @@ def create_mortgage():
     # Creates a Mortgage Class Instance and adds it to the mortgage dictionary
     mortgage = Mortgage(principal, apr, length_of_mortgage, mortgage_name)
 
-    # Creates a string of the mortgage data to append to Google Sheets for future analysis
+    # Creates a string of the mortgage data that appends to Google Sheets for future analysis
+    mortgage.update_mortgage_data()
     #print(mortgage.create_mortgage_data())
 
     # Prints the Mortgage details just entered
@@ -500,11 +491,10 @@ def amortization():
                     for x in mortgage_dict:
                         if selection == x:
                             clear_screen()
-                            cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
+                            cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             display_mortgage_details(mortgage_dict[x])
                             print(tabulate(schedule, headers="firstrow", tablefmt="github"))
-                            #print(schedule.to_string(index=False))
                             print("\n")
                             is_valid = True
                         else:

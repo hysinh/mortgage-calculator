@@ -145,7 +145,6 @@ There are two options in the Overpayments feature: 1) Additional Monthly Princip
   The user is prompted to input basic mortgage details as well as an amount for the lump payment to be applied to the Principal balance. This input is then used to calculate a Mortgage profile and prints both the original profile inputed and then an updated Mortgage profile. The user is given the option to save this updated mortgage to their mortgages when the calculations are completed.
 
 
-
 ### Amortization Schedule
 <details >
 <summary></summary>  
@@ -168,9 +167,7 @@ In the event that the user navigates to non-existing page, a 404 page displays a
 
 ## Technologies
   ### Languages Used
-  - HTML5
-  - CSS
-  - Javascript
+  - Python3
 
   ### Technologies and Programs Used
   - GitHub - used to save and store all the files for this website
