@@ -171,7 +171,7 @@ class Mortgage:
         return row
 
     def extra_principal_payments(self):
-        updated_schedule = [["Month", "Left", "Pymt", "Princ", "Xtra Princ", "Intrst", "Balance"]]
+        updated_schedule = [["Mon.", "Left", "Payment", "Principal", "Xtra Princ", "Interest", "Balance"]]
         balance = self.principal
         rate = self.apr/100/12
         total_payments = self.length_of_mortgage*12
