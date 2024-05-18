@@ -91,9 +91,9 @@ A Main Menu displays to explain the options to the user. The User is given a rem
 <details>
 <summary></summary>
 
-![screenshot of input validation](docs/documentation/Screenshot_features_play-button.png)
+![screenshot of input validation](docs/documentation/screenshot_input_validation.png)
 </details>
-The Play Button is used to begin the game or reset the grid at any time. When a player wins or loses the game, the player can click on the Play Button to reset the game at that time. However, the play button can reset the game at any time and is not limited to the end of the game.
+When user input is required, input is validated to ensure that the input is within the parameters set. For example, if the user is required to input the APR (Annual Percentage Rate). The user is given an example of the format in the prompt and the input is validated as a float between 0 and 100. If the user inputs something that is not a number, a red error message is printed to the terminal stating the error and prompts the user to try again. If the user enters a number that is not within the paraments, in this case a negative numver or a number greater than 100, a red error message is printed to the terminal and the user is prompted again to input a valid input. 
 
 ### Add Mortgages
 <details>
@@ -101,7 +101,7 @@ The Play Button is used to begin the game or reset the grid at any time. When a 
 
 ![screenshot of player tries](docs/documentation/Screenshot_features_playerTries.png)
 </details>
-The Player Tries Remaining section displays the current tries that a player has as they attempt matches. At the beginning, each player is allocated 15 Tries or attempts. Each mismatched pair decrements the Player Tries by 1 until it reaches 0. At this point, a message pops up to let the player know that they have lost the game and they can play again if they choose.
+The user is allowed to add as many mortgages as they choose. Each mortgage is asked for user input for the name (or label) for the mortgage, principal amount, APR, and mortgage length. The monthly payment and lifetime interest is then calculated and printed on the terminal along with the mortgage inputs provided by the user. The user is then prompted to decide if they want to save this mortgage for their session. If the user chooses Yes, the mortgage is saved and the user is redirected back to the Main Menu options. If the user chooses not to save the mortgage, the user is redirected back to the Main Menu.
 
 ### View Mortgages
 <details>
