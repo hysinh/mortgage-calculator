@@ -276,6 +276,7 @@ def adds_mortgage_instance_to_dict(mortgage):
                 cprint("Thanks. Your mortgage has been saved to your mortgages in this session.", "light_yellow")
                 is_valid = True
             elif answer == "n":
+                cprint("This mortgage was NOT SAVED to your mortgages in this session.", "red")
                 break
             else:
                 cprint("Please enter Y or N to proceed", "red")
@@ -450,11 +451,9 @@ def overpayments():
             elif selection == 1:
                 menu_screen()
                 extra_monthly_principal()
-                #is_valid = True
             elif selection == 2:
                 menu_screen()
                 lump_payment()
-                #is_valid = True
             else:
                menu_screen()
                cprint("That is not a valid option. Please choose one from the list above.", "red")
