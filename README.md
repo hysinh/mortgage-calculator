@@ -132,9 +132,17 @@ There are two options in the Overpayments feature: 1) Additional Monthly Princip
   <details >
   <summary></summary>  
 
-  ![screenshot favicon](docs/documentation/Screenshot_favicon.png)
+  ![screenshot monthly overpayments](docs/documentation/screenshot_overpayments_monthly.png)
   </details>  
-  There are two options in the Overpayments feature: 1) Additional Monthly Principal overpayments and 2) A Lump Principal Payment. Once this feature is selected, the user is required to choose which type of Overpayment they would like to calculate.
+  The user is prompted to input basic mortgage details as well as an amount for the extra monthly payments. This input is then used to calculate a Mortgage profile and prints both the profile and an amortization schedule based on the new calculations. The user is given the option to save this mortgage to their mortgages when the calculations are completed.
+
+- ### Lump Principal Overpayment
+  <details >
+  <summary></summary>  
+
+  ![screenshot lump overpayments](docs/documentation/screenshot_overpayments_lump.png)
+  </details>  
+  The user is prompted to input basic mortgage details as well as an amount for the lump payment to be applied to the Principal balance. This input is then used to calculate a Mortgage profile and prints both the original profile inputed and then an updated Mortgage profile. The user is given the option to save this updated mortgage to their mortgages when the calculations are completed.
 
 
 
