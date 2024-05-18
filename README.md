@@ -31,7 +31,6 @@ The Mortgage Comparison Tool is an interactive CL python application that allows
   * [Deployment](#deployment)
 * [Testing](#testing)
   * [Python Validation](#python-validation)
-  * [Lighthouse Performance Audits via Chrome Dev Tools](#lighthouse-performace-audit-via-chrome-dev-tools)
   * [Manual Testing](#manual-testing)
   * [Bugs and Fixes](#bugs-and-fixes)
   * [Unfixed Bugs](#unfixed-bugs)
@@ -93,7 +92,7 @@ A Main Menu displays to explain the options to the user. The User is given a rem
 
 ![screenshot of input validation](docs/documentation/screenshot_input_validation.png)
 </details>
-When user input is required, input is validated to ensure that the input is within the parameters set. For example, if the user is required to input the APR (Annual Percentage Rate). The user is given an example of the format in the prompt and the input is validated as a float between 0 and 100. If the user inputs something that is not a number, a red error message is printed to the terminal stating the error and prompts the user to try again. If the user enters a number that is not within the paraments, in this case a negative numver or a number greater than 100, a red error message is printed to the terminal and the user is prompted again to input a valid input. 
+When user input is required, input is validated to ensure that the input is within the parameters set. For example, if the user is required to input the APR (Annual Percentage Rate). The user is given an example of the format in the prompt and the input is validated as a float between 0 and 100. If the user inputs something that is not a number, a red error message is printed to the terminal stating the error and prompts the user to try again. If the user enters a number that is not within the paraments, in this case a negative number or a number greater than 100, a red error message is printed to the terminal and the user is prompted again to input a valid input. 
 
 ### Add Mortgages
 <details>
@@ -191,8 +190,9 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
 
 
   ### Deployment
-  GitHub and Heroku was used to deploy this website. The following steps were taken:
+  GitHub and Heroku was used to deploy this website using the Gitpod Code Institute template which preloads any required dependencies. The following steps were taken:
 
+  
   1. Log into GitHub account. 
   2. Navigate to the project repository: [Memory-game]((https://github.com/hysinh/mortgage-comparison-tool)
   3. Navigate to the CODE link on the navigation across the top.
@@ -205,16 +205,15 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   9. Once your app has been created, it directs you to a new screen.
   10. Navigate across the top of the screen and click on the "Settings" tab.
   11. Navigate down the page and click on the "Reveal Config Vars" button.
-  12. Set up the creds.jason file. Google Sheets API
+  12. For the first key, type in "CREDS" and then copy and paste the entirety of the creds.json file into the value box.
+  13. For the second key, type in "PORT" and then type in "8000" in its corresponding value.
+  14. Under Buildpacks, add the <b>python</b> buildpack first. Then, add the <b>nodejs</b> buildpack. The buildpacks must be added in that order.
+  15. After this is complete, navigate to the Deploy tab from the menu across the top of the page. Click on "GitHub" under Deployment method and provide the required access when prompted.
+  16. Choose Automatic or Manual deployment.
+  17. Click "Deploy" when ready to deploy.
 
 
-  3. Click on the Settings button on the horizontal navigation across the top portion of the page.
-  4. Navigate to the Pages link under the Code and automation section on the left navigation.
-  5. Under GitHub Pages, go to Build and deployment. Then, under Source, select "Deploy from a branch". 
-  6. Next, under Branch, select "main" and "/root" and then click on the Save button.
-  7. After a few moments, the website will be made live and the link will be made visible at the top of the page. 
-
-  How to clone the Mortgage Comparison Tool & make changes:
+  #### How to clone the Mortgage Comparison Tool & make changes:
   1. Open the [Mortgage-Comparison-tool repository](https://github.com/hysinh/mortgage-comparison-tool) on GitHub.
   2. Navigate to the CODE link on the navigation across the top.
   3. Then, navigate to the green CODE button on the right side and click.
@@ -224,7 +223,6 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   7. In the next window, paste the copied link of the [Memory-game repository](https://github.com/hysinh/mortgage-comparison-tool) into the line.
   8. Then, click Begin Import to import the repository code.
   9. Make changes and/or deploy as desired.
-  10. To deploy, you will need to ensure that your IDE 
 
 
   ## Testing
@@ -239,64 +237,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
     ![screenshot of index page validation](docs/documentation/Screenshot_htmlvalidator.png)
     </details>
 
-    <details >
-    <summary>404 Page HTML Validation</summary>  
 
-    ![screenshot of index page validation](docs/documentation/Screenshot_htmlvalidator_404.png)
-    </details>
-     
-    
-  - #### CSS Validation
-    No errors were found when passing through the official W3C CSS Jigsaw validator
-    <details >
-    <summary>Index Page CSS Validation</summary>  
-
-    ![screenshot of css validation](docs/documentation/Screenshot_cssvalidator.png)
-    </details>
-
-    <details >
-    <summary>404 Page CSS Validation</summary>  
-
-    ![screenshot of css validation](docs/documentation/Screenshot_cssvalidator_404.png)
-    </details>
-
-  - #### Javascript Validation
-    No errors were found when passing through the JSHint Javascript validator
-    <details >
-    <summary>Javascript Validation</summary>  
-
-    ![screenshot of css validation](docs/documentation/Screenshot_jshint_jsvalidator.png)
-    </details>
-
-  
-  - #### Lighthouse Performace Audit via Chrome Dev Tools
-    Desktop Lighthouse Performance Audits
-    <details >
-    <summary>Index Page Lighthouse audit</summary>  
-
-    ![screenshot of index page lighthouse audit](docs/documentation/Screenshot_lighthouse_desktop.png)
-    </details>
-
-    <details >
-    <summary>404 Page Lighthouse audit</summary>  
-
-    ![screenshot of 404 page lighthouse audit](docs/documentation/Screenshot_lighthouse_desktop_404.png)
-    </details>
-    
-    <br>
-
-    Mobile Lighthouse Performance Audits
-    <details >
-    <summary>Index Page Lighthouse audit</summary>  
-
-    ![screenshot of index page lighthouse audit](docs/documentation/Screenshot_lighthouse_mobile.png)
-    </details>
-
-    <details >
-    <summary>404 Page Lighthouse audit</summary>  
-
-    ![screenshot of 404 page lighthouse audit](docs/documentation/Screenshot_lighthouse_mobile_404.png)
-    </details>
 
   ### Manual Testing
   Manual testing was performed on the website checking for broken links, content errors, and responsivity across different sizes. Testing took place during the build process using Dev Tools on Chrome and on the following real-world devices and browsers:
@@ -318,13 +259,13 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   #### The results of testing are as follows:
   | Page | Test | Pass/Fail |
   | ---- | ---- | --------- |
-  | Home  | Happy Tree Friends logo links back to the homepage | Pass |
-  | Home  | Images and sections are responsive to different device sizes | Pass |
-  | Home  | Play button works on click and sets the card grid correctly | Pass |
-  | Home  | If the user clicks on a card, it flips to display the card. The card cannot be clicked to flip it back. | Pass |
-  | Home  | If the user clicks on a second card, it flips to display the card. The two flipped cards are compared. If they match, the user is allowed to click on a new card. If they don't match, the cards will reset and the user can click on a new card (or one of the ones that didn't match). | Pass |
-  | Home  | If the user find all the matches, the matches are validated and user receives a Win message. | Pass |
-  | Home  | If the user exhausts their player tries before finding all the matches, the board is locked and the user receives a Lose message. | Pass |
+  | Intro/Logo  | Does the Logo page load and allow the user to progress to the Main Menu? | Pass |
+  | Main Menu  | Does the Main menu display correctly | Pass |
+  | Main Menu  | Is the input validation for the Main Menu working correctly? | Pass |
+  | Main Menu  | If the user selects an option from the Main Menu, does it direct the user to that option correctly? | Pass |
+  | Add Mortgage  | On the Add Mortgage page, does it allow the user to create a Mortgage profile? | Pass |
+  | Add Mortgage  | Is the input validation on the Add Mortgage page working? | Pass |
+  | Add Mortgage  | If the user exhausts their player tries before finding all the matches, the board is locked and the user receives a Lose message. | Pass |
   | Home  | If the user receives a Lose or Win message, when they click on the screen, the modal closes and they can reset the game if they choose. | Pass |
   | 404  | Page displays when user attempts to go to a non-existing page | Pass |
   | 404  | Link on the page bring user back to the home page | Pass |
