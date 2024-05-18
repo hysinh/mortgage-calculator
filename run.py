@@ -26,7 +26,7 @@ SHEET = GSPREAD_CLIENT.open('mortgage_calculator')
 mortgage_dict = {}
 
 
-def clear():
+def clear_screen():
     """
     Function to clear terminal through the game.
     """
@@ -37,7 +37,7 @@ def welcome_screen():
     """
     ASCII PIXEL ART CODE
     """
-    clear()
+    clear_screen()
     logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
     print(logo_text)
     print("Welcome to my Mortgage Comparison Tool\n")
@@ -62,7 +62,7 @@ You have the following options:
 1. Add a mortgage               5. View Amortization Schedules
 2. View a mortgage              6. Exit Program
 3. Display Mortgage Comparison  7. Mortgage Metrics
-4. Calculate Overpayments
+4. Calculate Overpayments       
 --------------------------------------------------------------
 
 """
@@ -70,7 +70,7 @@ def menu_screen():
     """
     Display Menu options
     """
-    clear()
+    clear_screen()
     print(MENU_OPTIONS)
 
 
@@ -295,7 +295,6 @@ def create_mortgage():
     for the Principal amount, APR amount, and Length of Mortgage for
     calculations.
     """
-    clear()
     menu_screen()
     cprint("Enter Your Mortgage details in below:\n", "green")
 
@@ -325,7 +324,6 @@ def view_mortgage():
     """
     Allows user to view individual Mortgage details one at a time
     """
-    clear()
     menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
@@ -358,7 +356,6 @@ def compare_mortgages():
     """
     Displays a comparison table of all the mortgages entered by the user
     """
-    clear()
     menu_screen()
 
     if len(mortgage_dict) < 2:
@@ -379,7 +376,6 @@ def extra_monthly_principal():
     """
     Calculates new payment and total interest with extra monthly principal payments
     """
-    clear()
     menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
 
@@ -414,7 +410,6 @@ def lump_payment():
     """
     Calculates new payment and total interest with an extra lump principal payments
     """
-    clear()
     menu_screen()
     cprint("Calculate Mortgage Overpayments:\n", "green")
 
@@ -450,7 +445,6 @@ def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
-    clear()
     menu_screen()
     cprint("Mortgage Overpayments:\n", "green")
 
@@ -503,7 +497,7 @@ def amortization():
                 else:
                     for x in mortgage_dict:
                         if selection == x:
-                            clear()
+                            clear_screen()
                             cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             display_mortgage_details(mortgage_dict[x])
@@ -522,7 +516,7 @@ def print_mortgage_avg():
     """
     Prints the Mortgage data averages in a table
     """
-    clear()
+
     menu_screen()
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
@@ -544,7 +538,6 @@ def run_mortgage_tool():
     """
     Allows the user to select from various menu options for the Mortgage Comparison Tool
     """
-    clear()
     menu_screen()
     is_valid = False
     while is_valid != True:
@@ -566,7 +559,8 @@ def run_mortgage_tool():
                 amortization()
                 cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 6:
-                print("Option 6: Exit the program.")
+                clear_screen()
+                print("\n\nThanks for using the Mortgage Comparison Tool.\n")
                 is_valid = True
             elif selection ==7:
                 print("Mortgage Metrics Table")
