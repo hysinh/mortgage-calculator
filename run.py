@@ -171,7 +171,7 @@ class Mortgage:
         return row
 
     def extra_principal_payments(self):
-        updated_schedule = []
+        updated_schedule = [["Month", "Pmts Left", "Payment", "Principal", "Extra Principal", "Interest", "Balance"]]
         balance = self.principal
         rate = self.apr/100/12
         total_payments = self.length_of_mortgage*12
@@ -184,19 +184,29 @@ class Mortgage:
             balance -= new_principal_payment
             total_payments -= 1
             if balance > 0:
-                updated_schedule.append({
-                        'Month' : Month,
-                        'Pmts Left' : total_payments,
-                        'Payment' : "€{:,.2f}".format(monthly_payment),
-                        'Principal' : "€{:,.2f}".format(principal_payment),
-                        'Extra\nPrincipal' : "€{:,.2f}".format(extra_monthly_principal),
-                        'Interest' : "€{:,.2f}".format(interest_payment),
-                        'Balance' : "€{:,.2f}".format(balance)     
-                })
-        return pd.DataFrame(updated_schedule, index=None)
+                updated_schedule.append([
+                    Month,
+                    total_payments,
+                    "€{:,.2f}".format(monthly_payment),
+                    "€{:,.2f}".format(principal_payment),
+                    "€{:,.2f}".format(extra_monthly_principal),
+                    "€{:,.2f}".format(interest_payment),
+                    "€{:,.2f}".format(balance)
+                ])
+        return updated_schedule
+        #         updated_schedule.append({
+        #                 'Month' : Month,
+        #                 'Pmts Left' : total_payments,
+        #                 'Payment' : "€{:,.2f}".format(monthly_payment),
+        #                 'Principal' : "€{:,.2f}".format(principal_payment),
+        #                 'Extra Principal' : "€{:,.2f}".format(extra_monthly_principal),
+        #                 'Interest' : "€{:,.2f}".format(interest_payment),
+        #                 'Balance' : "€{:,.2f}".format(balance)     
+        #         })
+        # return pd.DataFrame(updated_schedule, index=None)
 
     def calculate_amortization_schedule(self):
-        schedule = []
+        schedule = [["Month", "Pmts Left", "Payment", "Principal", "Principal", "Interest", "Balance"]]
         balance = self.principal
         rate = self.apr/100/12
         total_payments = self.length_of_mortgage*12
@@ -206,15 +216,16 @@ class Mortgage:
             principal_payment = monthly_payment - interest_payment
             balance -= principal_payment
             total_payments -= 1
-            schedule.append({
-                    'Month #' :  Month,
-                    'Payments Left' :  total_payments,
-                    'Payment' : " €{:,.2f}".format(monthly_payment),
-                    'Principal' : " €{:,.2f}".format(principal_payment),
-                    'Interest' : " €{:,.2f}".format(interest_payment),
-                    'Balance' : " €{:,.2f}".format(balance)     
-                })
-        return pd.DataFrame(schedule, index=None)
+            schedule.append([
+                Month,
+                total_payments,
+                " €{:,.2f}".format(monthly_payment),
+                " €{:,.2f}".format(principal_payment),
+                " €{:,.2f}".format(interest_payment),
+                " €{:,.2f}".format(balance)
+            ])
+        return schedule
+    
 
     def create_mortgage_data(self):
         monthly_payment = self.calculate_monthly_payment()
@@ -391,7 +402,8 @@ def extra_monthly_principal():
 
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal), "\n")
     schedule = mortgage.extra_principal_payments()
-    print(schedule.to_string(index=False))
+    print(tabulate(schedule))
+    #print(schedule.to_string(index=False))
 
     adds_mortgage_instance_to_dict(mortgage)
 
@@ -491,7 +503,8 @@ def amortization():
                             cprint(f"AMORTIZATION SCHEDULE FOR:", "yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             display_mortgage_details(mortgage_dict[x])
-                            print(schedule.to_string(index=False))
+                            print(tabulate(schedule, headers="firstrow", tablefmt="github"))
+                            #print(schedule.to_string(index=False))
                             print("\n")
                             is_valid = True
                         else:
