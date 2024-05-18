@@ -172,6 +172,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
 ### Future Development
 - For future development, I wanted to implement a table of data analysis of the aggregate mortgage data inputed by users to provide insight into the type of mortgages that user want to compare. Examples of potential insights would be average mortgage principal amount, average length of the mortgage, and average APR. 
 - I noticed that other students implemented custom heroku terminal shell for deployment. I thought this was interesting and would like to implement this should I have more time to develop this further.
+- At the moment, the user is limited to 10 characters when naming their mortgage. This limit could be raised, but I would need additional time to ensure that that the printed output would be limited to a certain character length so that it doesn't not disrupt the layout of the comparison table.
 
 
 ## Technologies
@@ -240,7 +241,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
 
 
   ### Manual Testing
-  Manual testing was performed on the website checking for broken links, content errors, and responsivity across different sizes. Testing took place during the build process using Dev Tools on Chrome and on the following real-world devices and browsers:
+  Manual testing was performed on the website checking for print errors, content errors, and any errors in the flow of the application or in it's calculations.
 
   #### Devices 
   1. Pixel 4XL
@@ -311,6 +312,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Monthly Principal Payments | Removed code that ends loop to resolve. |
   | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Lump Principal Payments | Removed code that ends loop to resolve. |
   | Unclear for users what to do if Main Menu is no longer visible. | All Pages | Add text above menu prompt that instructs user to enter 0 to go to the Main menu. |
+   | Table needs to display Mortgage name rather than Mortgage key | Compare Mortgages | unresolved atm |
 
   
   
@@ -318,6 +320,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   ### Unfixed Bugs
   - Although I have included a function that clears the terminal, I noticed that anything above the terminal screen does not clear and is still available to view if you scroll up. This is potentially confusing but I was not able to resolve it. My mentor said that it is common for older terminals to push content upward and not truly clear the screen.
   - During testing, it was revealed that when users save Mortgage profiles after applying Extra Monthly Principal payments, the mortgage profile that is saved is based on the original Mortgage inputs and is not updated with the new loan length and lifetime interest on the loan. I would like to resolve this but due to time constraints, I'm not sure I will have the time to work out the new calculations before submission.
+  - When viewed through a mobile device, the terminal goes off screen. I will need to research this to see if this is something that is resolvable.
   
 
 ## Credits
