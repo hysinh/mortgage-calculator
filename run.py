@@ -402,7 +402,7 @@ def extra_monthly_principal():
 
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal), "\n")
     schedule = mortgage.extra_principal_payments()
-    print(tabulate(schedule))
+    print(tabulate(schedule, headers="firstrow", tablefmt="github"))
     #print(schedule.to_string(index=False))
 
     adds_mortgage_instance_to_dict(mortgage)
