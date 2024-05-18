@@ -116,9 +116,9 @@ The user is allowed to view the details of any individual mortgage that they hav
 <details>
 <summary></summary>
 
-![screenshot of footer](docs/documentation/Screenshot_features_footer.png)
+![screenshot of footer](docs/documentation/screenshot_compare_mortgages.png)
 </details>
-The footer section features a simple copyright message for the Happy Cake Friends. 
+When the user has saved a minimum of two Mortgages, they can view a mortgage comparison table that displays the morgage name, principal amounts, APR, loan length, monthly payments, and lifetime interest. If the user has saved a minimum of two Mortgages, a red error message displays alerting them of the problem. The user can then select an option that allows them to create and save a Mortgage in the session. 
 
 ### Overpayments
 <details >
