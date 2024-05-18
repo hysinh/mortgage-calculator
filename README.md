@@ -99,7 +99,7 @@ When user input is required, input is validated to ensure that the input is with
 <details>
 <summary></summary>
 
-![screenshot of player tries](docs/documentation/screenshot_add_mortgage.png)
+![screenshot of add mortgages](docs/documentation/screenshot_add_mortgage.png)
 </details>
 The user is allowed to add as many mortgages as they choose. Each mortgage is asked for user input for the name (or label) for the mortgage, principal amount, APR, and mortgage length. The monthly payment and lifetime interest is then calculated and printed on the terminal along with the mortgage inputs provided by the user. The user is then prompted to decide if they want to save this mortgage for their session. If the user chooses Yes, the mortgage is saved and the user is redirected back to the Main Menu options. If the user chooses not to save the mortgage, the user is redirected back to the Main Menu.
 
@@ -107,9 +107,9 @@ The user is allowed to add as many mortgages as they choose. Each mortgage is as
 <details>
 <summary></summary>
 
-![screenshot of win game modal](docs/documentation/Screenshot_features_modals.png)
+![screenshot of view mortgages](docs/documentation/screenshot_view_mortgage.png)
 </details>
-The Player Tries Remaining section displays the current tries that a player has as they attempt matches. At the beginning, each player is allocated 15 Tries or attempts. Each mismatched pair decrements the Player Tries by 1 until it reaches 0. At this point, a message pops up to let the player know that they have lost the game and they can play again if they choose. Should the player find all the matches before the Player Tries reaches zero. Then, they have won the game and a Win Game message pops up at that time. They can also choose to play the game again at this point.
+The user is allowed to view the details of any individual mortgage that they have saved during their session. If they selected the View Mortgage menu option, but have NOT entered in any mortgages, they will receive an error message and will be prompted to make a different choice from the main menu. If there are mortgages saved, the user is provided with a list of the available mortgages and they can enter in a mortgage number that corresponds with their saved mortgages to view the details for that individual mortgage. After the mortgage details are printed to the terminal, the user is prompted to choose a different mortgage to view or to return to the main menu and exit the View Mortgages section.
 
 
 ### Compare Mortgages
