@@ -476,7 +476,7 @@ def amortization():
     else:
         cprint("You have entered the following mortgages:\n", "green")
         for x in mortgage_dict:
-            print(f"Mortgage: {x}")
+            print(f"Mortgage: # {x}, {mortgage_dict[x].mortgage_name}")
         
         print("\n")
         is_valid = False

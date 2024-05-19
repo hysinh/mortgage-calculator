@@ -312,7 +312,8 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Monthly Principal Payments | Removed code that ends loop to resolve. |
   | Confirmation message for saved mortgage option not printing to terminal after saving a mortgage | Extra Lump Principal Payments | Removed code that ends loop to resolve. |
   | Unclear for users what to do if Main Menu is no longer visible. | All Pages | Add text above menu prompt that instructs user to enter 0 to go to the Main menu. |
-   | Table needs to display Mortgage name rather than Mortgage key | Compare Mortgages | unresolved atm |
+  | Table needs to display Mortgage name rather than Mortgage key | Compare Mortgages | unresolved atm |
+  | Table needs to display Mortgage name rather than Mortgage key | Amortization Schedule | Replace print statement with mortgage name variable rather than Mortgage key |
 
   
   
