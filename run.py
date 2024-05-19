@@ -161,7 +161,7 @@ class Mortgage:
 
     def get_table_values(self):
         # Creates mortgage values for comparison table
-        row = [self.mortgage_ID,
+        row = [self.mortgage_name,
             "€{:,.2f}".format(self.principal), 
             self.apr, 
             self.length_of_mortgage, 
