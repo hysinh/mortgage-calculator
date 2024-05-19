@@ -229,12 +229,12 @@ class Mortgage:
         ]
         return data
 
+
     def update_mortgage_data(self):
         data = self.create_mortgage_data()
         mortgage_worksheet = SHEET.worksheet("mortgage_data")
         mortgage_worksheet.append_row(data)
-        #mortgage_data = SHEET.worksheet("mortgage_data").get_all_values()
-        #return mortgage_data
+
 
     def calculate_mortgage_metrics(self):
         """
@@ -323,7 +323,6 @@ def create_mortgage():
 
     # Creates a string of the mortgage data that appends to Google Sheets for future analysis
     mortgage.update_mortgage_data()
-    #print(mortgage.create_mortgage_data())
 
     # Prints the Mortgage details just entered
     cprint("\nYou created a Mortgage with the following details:", "yellow")
@@ -541,8 +540,6 @@ of the mortgages entered into this program.
     mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
     for row in mortgage_worksheet:
         mortgage_data.append(row)
-
-    #print(tabulate(mortgage_worksheet, headers="firstrow"))
 
     interest_average = calculate_average(mortgage_data)
     monthly_payment_average = calculate_average(mortgage_data)

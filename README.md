@@ -224,6 +224,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   7. In the next window, paste the copied link of the [Memory-game repository](https://github.com/hysinh/mortgage-comparison-tool) into the line.
   8. Then, click Begin Import to import the repository code.
   9. Make changes and/or deploy as desired.
+  10. This program requires the use of a Google sheets file with a Google Drive and Google Sheets API to setup as is.
 
 
   ## Testing
