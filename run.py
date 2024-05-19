@@ -588,7 +588,7 @@ def run_mortgage_tool():
                 cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 7:
                 clear_screen()
-                print("\n\nThanks for using the Mortgage Comparison Tool.\n")
+                cprint("\n\nThanks for using the Mortgage Comparison Tool.\n", "light_yellow")
                 is_valid = True
             elif selection == 0:
                 menu_screen()
