@@ -60,8 +60,8 @@ MENU_OPTIONS = """
 You have the following options:
 --------------------------------------------------------------
 1. Add a mortgage               5. View Amortization Schedules
-2. View a mortgage              6. Exit Program
-3. Display Mortgage Comparison  7. Mortgage Metrics
+2. View a mortgage              6. Mortgage Metrics
+3. Display Mortgage Comparison  7. Exit Program
 4. Calculate Overpayments       
 --------------------------------------------------------------
 
@@ -247,6 +247,7 @@ class Mortgage:
             avg = sum([int(y) for y in column])/(len(mortgage_worksheet))
             avg = math.ceil(avg)
             mortgage_data.append(avg)
+
         return mortgage_data
 
 
@@ -282,6 +283,24 @@ def adds_mortgage_instance_to_dict(mortgage):
                 cprint("Please enter Y or N to proceed", "red")
         except ValueError:
             cprint("Please enter the number of the mortgage you want to select.", "red")
+
+
+def calculate_average(data):
+    column = []
+    for x in data:
+        last_item = x.pop()
+        column.append(last_item)
+        #print(x)
+
+    column.pop(0)
+    #print(column)
+
+    total = 0
+    for x in column:
+        total += float(x)
+
+    average = total/len(column)
+    return average
 
 
 def create_mortgage():
@@ -508,20 +527,35 @@ def print_mortgage_avg():
     """
     Prints the Mortgage data averages in a table
     """
+    data_analysis_text = """
+Mortgage Comparison Tool Data analysis:
 
-    menu_screen()
-    if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
-    else:
-        cprint("The Mortgage Averages collected:\n", "green")
-        table = [
-            ['Principal', 'APR', 'Loan Length', 'Monthly Payment', 'Total Interest'],
-            ['350000', '4.3', '19', '2249.22', '162826.16'],
-            ['350000', '4.3', '19', '2249.22', '162822.16'],
-            ['350000', '4.3', '19', '2249.22', '162822.16']
-            ]
+The following are averages taken from the mortgages inputed into this
+mortgage tool. See where your mortgage needs compare against the averages
+of the mortgages entered into this program.
 
-        print(tabulate(table))
+**********************************************************
+
+    """
+    mortgage_data = []
+    mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
+    for row in mortgage_worksheet:
+        mortgage_data.append(row)
+
+    #print(tabulate(mortgage_worksheet, headers="firstrow"))
+
+    interest_average = calculate_average(mortgage_data)
+    monthly_payment_average = calculate_average(mortgage_data)
+    loan_length_average = calculate_average(mortgage_data)
+    apr_average = calculate_average(mortgage_data)
+    principal_average = calculate_average(mortgage_data)
+
+    print(data_analysis_text)
+    cprint("Average Principal: €{:,.2f}".format(principal_average), "light_yellow")
+    cprint(f"Average APR: {round(apr_average, 1)}%", "light_yellow")
+    cprint(f"Average Loan Length {math.floor(loan_length_average)} years", "light_yellow")
+    cprint("Average Monthly Payment: €{:,.2f}".format(monthly_payment_average), "light_yellow")
+    cprint("Average Lifetime Interest: €{:,.2f}".format(interest_average), "light_yellow")
     
     print("\n*******************************************************")
 
@@ -552,11 +586,13 @@ def run_mortgage_tool():
                 cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 6:
                 clear_screen()
+                cprint("Calculating Mortgage Analysis...", "green")
+                print_mortgage_avg()
+                cprint("(Enter 0 to view the Main menu)", "green")
+            elif selection == 7:
+                clear_screen()
                 print("\n\nThanks for using the Mortgage Comparison Tool.\n")
                 is_valid = True
-            elif selection ==7:
-                print("Mortgage Metrics Table")
-                cprint("(Enter 0 to view the Main menu)", "green")
             elif selection == 0:
                 menu_screen()
             else:
