@@ -325,7 +325,7 @@ def create_mortgage():
     mortgage.update_mortgage_data()
 
     # Prints the Mortgage details just entered
-    cprint("\nYou created a Mortgage with the following details:", "yellow")
+    cprint("\nYou created a Mortgage with the following details:", "light-yellow")
     display_mortgage_details(mortgage)
     
     # Allows user to save mortgage for the session
@@ -508,7 +508,7 @@ def amortization():
                     for x in mortgage_dict:
                         if selection == x:
                             clear_screen()
-                            cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "yellow")
+                            cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "light-yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             display_mortgage_details(mortgage_dict[x])
                             print(tabulate(schedule, headers="firstrow", tablefmt="github"))
