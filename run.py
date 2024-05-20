@@ -427,6 +427,7 @@ def lump_payment():
     menu_screen()
     cprint("Calculate Mortgage Overpayments:\n", "light_green")
 
+    # Requests User input to create Current Mortgage profile
     mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
     apr = validate_apr()
@@ -441,13 +442,13 @@ def lump_payment():
     cprint("\nCurrent Mortgage: ----------------------------------------", "light_yellow")
     display_mortgage_details(mortgage)
     
-    # Creates a new Mortgage Class Instance with the updated information
+    # Creates an Updated Mortgage Class Instance and prints the updated information
     cprint("\nUPDATED Mortgage: ----------------------------------------", "light_yellow")
     new_mortgage = Mortgage((principal-lump_payment), apr, remaining_length_of_mortgage, mortgage_name)
-    #new_mortgage.update_mortgage_data() # Adds data to google sheets
     display_mortgage_details(new_mortgage)
     print(f"Principal Lump Overpayment: €{lump_payment}")
 
+    # Allows user to save Updated Mortgage profile in current session
     adds_mortgage_instance_to_dict(new_mortgage)
 
     print("\n*******************************************************\n")
