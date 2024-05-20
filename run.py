@@ -274,10 +274,10 @@ def adds_mortgage_instance_to_dict(mortgage):
             answer = str(input("\nWould you like to save this mortgage? Type Y or N \n")).lower()
             if answer == "y":
                 mortgage_dict[mortgage.mortgage_ID] = mortgage
-                cprint("Thanks. Your mortgage has been saved to your mortgages in this session.", "light_yellow")
+                cprint("\nThanks. Your mortgage has been saved to your mortgages in this session.", "light_yellow")
                 is_valid = True
             elif answer == "n":
-                cprint("This mortgage was NOT SAVED to your mortgages in this session.", "red")
+                cprint("\nThis mortgage was NOT SAVED to your mortgages in this session.", "red")
                 break
             else:
                 cprint("Please enter Y or N to proceed", "red")
@@ -325,7 +325,7 @@ def create_mortgage():
     mortgage.update_mortgage_data()
 
     # Prints the Mortgage details just entered
-    cprint("\nYou created a Mortgage with the following details:", "light-yellow")
+    cprint("\nYou created a Mortgage with the following details:", "light_yellow")
     display_mortgage_details(mortgage)
     
     # Allows user to save mortgage for the session
@@ -508,7 +508,7 @@ def amortization():
                     for x in mortgage_dict:
                         if selection == x:
                             clear_screen()
-                            cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "light-yellow")
+                            cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "light_yellow")
                             schedule = mortgage_dict[x].calculate_amortization_schedule()
                             display_mortgage_details(mortgage_dict[x])
                             print(tabulate(schedule, headers="firstrow", tablefmt="github"))
