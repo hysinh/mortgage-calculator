@@ -86,9 +86,9 @@ def validate_value(prompt_text):
             if value > 0:
                 is_valid = True
             else:
-                cprint("Invalid. Enter a whole number greater than 0", "red")
+                cprint("Invalid. Enter a whole number greater than 0", "light_red")
         except ValueError:
-            cprint("That is not a number. Enter a whole number.", "red")
+            cprint("That is not a number. Enter a whole number.", "light_red")
     return value
 
 
@@ -104,9 +104,9 @@ def validate_apr():
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
-                cprint("APR must be greater than 0 but less than 100. Enter a valid APR.", "red")
+                cprint("APR must be greater than 0 but less than 100. Enter a valid APR.", "light_red")
         except ValueError:
-            cprint("That is not a number. Enter a valid number.", "red")
+            cprint("That is not a number. Enter a valid number.", "light_red")
     return apr
 
 
@@ -121,9 +121,9 @@ def validate_name(prompt_text):
             if len(name) > 0 and len(name) < 11:
                 is_valid = True
             else:
-                cprint("There is a maximum of 10 characters. Enter a valid name.", "red")
+                cprint("There is a maximum of 10 characters. Enter a valid name.", "light_red")
         except ValueError:
-            cprint("That is not a valid entry. Enter a valid name.", "red")
+            cprint("That is not a valid entry. Enter a valid name.", "light_red")
     return name
 
 
@@ -277,12 +277,12 @@ def adds_mortgage_instance_to_dict(mortgage):
                 cprint("\nThanks. Your mortgage has been saved to your mortgages in this session.", "light_yellow")
                 is_valid = True
             elif answer == "n":
-                cprint("\nThis mortgage was NOT SAVED to your mortgages in this session.", "red")
+                cprint("\nThis mortgage was NOT SAVED to your mortgages in this session.", "light_red")
                 break
             else:
-                cprint("Please enter Y or N to proceed", "red")
+                cprint("Please enter Y or N to proceed", "light_red")
         except ValueError:
-            cprint("Please enter the number of the mortgage you want to select.", "red")
+            cprint("Please enter the number of the mortgage you want to select.", "light_red")
 
 
 def calculate_average(data):
@@ -342,7 +342,7 @@ def view_mortgage():
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
+        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "light_red")
     else:
         cprint("You have entered the following mortgages:\n", "light_green")
         for x in mortgage_dict:
@@ -361,7 +361,7 @@ def view_mortgage():
                     display_selected_mortgage(selection)
                     cprint("(Enter 0 to view the Main menu)", "light_green")
             except ValueError:
-                cprint("Please enter the number of the mortgage you want to select.", "red")
+                cprint("Please enter the number of the mortgage you want to select.", "light_red")
 
     print("\n*******************************************************\n")
 
@@ -373,7 +373,7 @@ def compare_mortgages():
     menu_screen()
 
     if len(mortgage_dict) < 2:
-        cprint("This feature requires you to add at least two mortgage.\nAdd mortgages to proceed.", "red")
+        cprint("This feature requires you to add at least two mortgage.\nAdd mortgages to proceed.", "light_red")
     else:
         mortgage_table = [["Mortgage","Principal","APR %","Loan\nLength","Monthly\nPayment", "Total\nInterest"]]
 
@@ -474,10 +474,10 @@ def overpayments():
                 lump_payment()
             else:
                menu_screen()
-               cprint("That is not a valid option. Please choose one from the list above.", "red")
+               cprint("That is not a valid option. Please choose one from the list above.", "light_red")
         except ValueError:
             menu_screen()
-            cprint("Please enter a valid mortgage number", "red")
+            cprint("Please enter a valid mortgage number", "light_red")
     
     menu_screen()
 
@@ -490,7 +490,7 @@ def amortization():
     """
     menu_screen()
     if len(mortgage_dict) == 0:
-        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
+        cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "light_red")
     else:
         cprint("You have entered the following mortgages:\n", "light_green")
         for x in mortgage_dict:
@@ -593,9 +593,9 @@ def run_mortgage_tool():
             elif selection == 0:
                 menu_screen()
             else:
-                cprint("That is not a menu option. Type in a number between 1 - 7 or 0 for the main menu.", "red")
+                cprint("That is not a menu option. Type in a number between 1 - 7 or 0 for the main menu.", "light_red")
         except ValueError:
-            cprint("That is not a valid input. Please type in a number between 1 - 7 or 0.", "red")
+            cprint("That is not a valid input. Please type in a number between 1 - 7 or 0.", "light_red")
 
 
 if __name__ == '__main__':
