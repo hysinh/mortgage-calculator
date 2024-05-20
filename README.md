@@ -10,7 +10,7 @@ The Mortgage Comparison Tool is an interactive CL python application that allows
   
 * [User Experience)](#user-experience)
   * [User Stories](#user-stories) 
-* [Design](#design)
+* [Data Model](#data-model)
   * [Design](#design)
   * [Flowchart](#flowchart)
 * [Features](#features)
@@ -53,9 +53,11 @@ The goal of this Mortgage Comparison tool is to allow the user an easy way to co
   7. User wanting to see the amortization schedule of a loan that they have entered. 
 
 
-## Design
+## Data Model
 ### Design 
-  As a Python Command Line Interface application, design choices were limited. However, to make it easier for the user to interact with the application, I utilized a menu to help direct the user in options as well as color coding specific messages to lend definition to certain messages, error messages and to create distinctions between different information displayed.
+  This project utilizes Object Oriented Programming and centers around one main class, Mortgage.
+
+  The majority of the calculations are done via methods on that Mortgage class. 
 
 ### Flowchart
   Created in draw.io, the following flowchart provides a visualization of the planning process for this application. During the development of the application, it became apparent that additional inputs, functionality, and outputs were required for the implementation for some of the calculations required and to better organise the options in a way that made sense to the user.
