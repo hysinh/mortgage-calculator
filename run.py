@@ -158,8 +158,7 @@ class Mortgage:
 
     def details(self):
         """Displays the Mortgage Profile Details"""
-        return f"\nMORTGAGE: {self.mortgage_name} \nPrincipal: €{self.principal} \n\
-            Length of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
+        return f"\nMORTGAGE: {self.mortgage_name} \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
 
     def calculate_monthly_payment(self):
         """Calculates the monthly payments"""
@@ -583,8 +582,7 @@ def overpayments():
         try:
             selection = int(
                 input(
-                    "Enter 1 for Extra Monthly Principal overpayments, 2 for a Lump \
-                    Principal overpayment, \nor enter '0' to exit this menu: \n"
+                    "Enter 1 for Extra Monthly Principal overpayments, 2 for a Lump Principal overpayment, \nor enter '0' to exit this menu: \n"
                 )
             )
             if selection == 0:
@@ -631,8 +629,7 @@ def amortization():
             try:
                 selection = int(
                     input(
-                        "Enter the number of the mortgage that you'd like to amortize \n\
-                        or enter '0' to return to the main menu: \n"
+                        "Enter the number of the mortgage that you'd like to amortize \nor enter '0' to return to the main menu: \n"
                     )
                 )
                 if selection == 0:
