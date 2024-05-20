@@ -149,18 +149,21 @@ class Mortgage:
         self.updated_total_payments = Mortgage.updated_total_payments
 
     def details(self):
+        """ Displays the Mortgage Profile Details """
         return f"\nMORTGAGE: {self.mortgage_name} \nPrincipal: €{self.principal} \nLength of Mortgage: {self.length_of_mortgage} years \nAnnual Percentage Rate: {self.apr}%"
 
     def calculate_monthly_payment(self):
+        """ Calculates the monthly payments """
         monthly_payment = round(((self.apr / 100 / 12) * self.principal) / (1 - (math.pow((1 + (self.apr / 100 / 12)), (-self.length_of_mortgage * 12)))), 2)
         return monthly_payment
     
     def calculate_lifetime_interest(self):
+        """ Calculates the liftetime interest or cost of a loan """
         total_interest = round((self.length_of_mortgage * 12 * self.calculate_monthly_payment()) - self.principal, 2)
         return total_interest
 
     def get_table_values(self):
-        # Creates mortgage values for comparison table
+        """ Creates mortgage values for comparison table """
         row = [self.mortgage_name,
             "€{:,.2f}".format(self.principal), 
             self.apr, 
@@ -171,6 +174,10 @@ class Mortgage:
         return row
 
     def extra_principal_payments(self):
+        """
+        Calculates an updated Amorization Schedule when extra principal are
+        applied to a loan.
+        """
         updated_schedule = [["Mon.", "Payment", "Principal", "Xtra Princ", "Interest", "Balance"]]
         balance = self.principal
         rate = self.apr/100/12
@@ -196,6 +203,7 @@ class Mortgage:
     
 
     def calculate_amortization_schedule(self):
+        """ Calculates the amortization schedule for a loan """
         schedule = [["Month", "Pmts Left", "Payment", "Principal", "Interest", "Balance"]]
         balance = self.principal
         rate = self.apr/100/12
@@ -218,6 +226,10 @@ class Mortgage:
     
 
     def create_mortgage_data(self):
+        """
+        Creates a string of mortgage data for a Mortgage Profile to
+        export to Google Sheets
+        """
         monthly_payment = self.calculate_monthly_payment()
         interest = self.calculate_lifetime_interest()
         data = [
@@ -231,6 +243,7 @@ class Mortgage:
 
 
     def update_mortgage_data(self):
+        """ Exports the data for a mortgage to Google Sheets"""
         data = self.create_mortgage_data()
         mortgage_worksheet = SHEET.worksheet("mortgage_data")
         mortgage_worksheet.append_row(data)
@@ -239,7 +252,8 @@ class Mortgage:
     def calculate_mortgage_metrics(self):
         """
         Calculate the average principal, APR, loan length, monthly payment, and 
-        lifetime interest amount
+        lifetime interest amount from aggregate data collected from all mortgage data
+        stored in Google Sheets
         """
         mortgage_data = []
         mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
@@ -252,6 +266,7 @@ class Mortgage:
 
 
 def display_mortgage_details(mortgage):
+    """ Displays the details of a Mortgage Profile """
     print(mortgage.details())
     print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
     print("Cost of this loan: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
@@ -259,6 +274,7 @@ def display_mortgage_details(mortgage):
 
 
 def display_selected_mortgage(selection):
+    """ Creates and displays a list of user-saved Mortgage profiles """
     for x in mortgage_dict:
         if selection == x:
                 display_mortgage_details(mortgage_dict[x])
@@ -268,6 +284,7 @@ def display_selected_mortgage(selection):
 
 
 def adds_mortgage_instance_to_dict(mortgage):
+    """ Adds the Mortgage Class Instance to the global mortgage dictionary """
     is_valid = False
     while is_valid != True:
         try:
@@ -286,14 +303,17 @@ def adds_mortgage_instance_to_dict(mortgage):
 
 
 def calculate_average(data):
+    """
+    - Creates a new list from the items in the last column of Google Sheets data
+    - Removes the Header
+    - Calculates an average of values in the list
+    """
     column = []
     for x in data:
         last_item = x.pop()
         column.append(last_item)
-        #print(x)
 
     column.pop(0)
-    #print(column)
 
     total = 0
     for x in column:
@@ -305,9 +325,12 @@ def calculate_average(data):
 
 def create_mortgage():
     """
-    Creates each Class Instance of a Mortgage - requires user input
-    for the Principal amount, APR amount, and Length of Mortgage for
-    calculations.
+    Creates each Class Instance of a Mortgage
+    - Requests user input for the Name, Principal amount, APR amount, and Length of Mortgage 
+    - Creates the Mortgage class instance 
+    - Sends that data for storage in Google Sheets
+    - Prints the Mortgage Profile
+    - Requests user input to save Mortgage Profile for session
     """
     menu_screen()
     cprint("Enter Your Mortgage details in below:\n", "light_green")
@@ -321,7 +344,7 @@ def create_mortgage():
     # Creates a Mortgage Class Instance and adds it to the mortgage dictionary
     mortgage = Mortgage(principal, apr, length_of_mortgage, mortgage_name)
 
-    # Creates a string of the mortgage data that appends to Google Sheets for future analysis
+    # Creates a list of the mortgage data that appends to Google Sheets for future analysis
     mortgage.update_mortgage_data()
 
     # Prints the Mortgage details just entered
@@ -336,7 +359,7 @@ def create_mortgage():
 
 def view_mortgage():
     """
-    Allows user to view individual Mortgage details one at a time
+    Allows user to choose an individual Mortgage Profile to view
     """
     menu_screen()
 
@@ -368,7 +391,7 @@ def view_mortgage():
 
 def compare_mortgages():
     """
-    Displays a comparison table of all the mortgages entered by the user
+    Displays a comparison table of all the Mortgage Profiles saved by the user
     """
     menu_screen()
 
@@ -388,33 +411,40 @@ def compare_mortgages():
 
 def extra_monthly_principal():
     """
-    Calculates new payment and total interest with extra monthly principal payments
+    Calculates a revised Amortization Principal Payment when extra monthly payments are made
+    - Requests input from the user to create Mortgage Profile
+    - Requests input from the user for amount of extra monthly principal payments
+
     """
     menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "light_green")
 
+    # Request user input for original loan
     mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your existing loan in Euro: \n')
     apr = validate_apr()
     remaining_length_of_mortgage = validate_value('How many years are left on your mortgage?  (e.g. 30) \n')
 
+    # Request user input for extra monthly principal payment amount
     extra_principal = validate_value('Enter the extra principal you would like to pay each month: \n')
     
+    # Creates a new Mortgage Profile with the extra monthly principal payment applied
     mortgage = Mortgage(principal, apr, remaining_length_of_mortgage, mortgage_name)
-    #mortgage.update_mortgage_data()
     mortgage.extra_monthly_principal = extra_principal
 
+    # Displays the original Mortgage profile
     cprint("\nCurrent Mortgage: ", "light_yellow")
     display_mortgage_details(mortgage)
     
+    # Prints the updated amortization schedule for the revised Mortgage profile
     print("\n**********************************************\n")
     cprint("UPDATED MORTGAGE AMORTIZATION SCHEDULE:", "light_yellow")
 
     print("Extra Monthly Principal Payment: €{:,.2f}".format(extra_principal), "\n")
     schedule = mortgage.extra_principal_payments()
     print(tabulate(schedule, headers="firstrow", tablefmt="github"))
-    #print(schedule.to_string(index=False))
 
+    # Requests user input to save updated Mortgage profile to session
     adds_mortgage_instance_to_dict(mortgage)
 
     print("\n*******************************************************\n")
@@ -487,7 +517,7 @@ def overpayments():
 
 def amortization():
     """
-    Allows user to view an amoritization for individual Mortgage details one at a time
+    Allows user to view an amoritization for individual Mortgage profile
     """
     menu_screen()
     if len(mortgage_dict) == 0:
@@ -525,7 +555,7 @@ def amortization():
     
 def print_mortgage_avg():
     """
-    Prints the Mortgage data averages in a table
+    Prints averages of data stored in Google Sheets in a table
     """
     data_analysis_text = """
 Mortgage Comparison Tool Data analysis:
@@ -542,12 +572,15 @@ of the mortgages entered into this program.
     for row in mortgage_worksheet:
         mortgage_data.append(row)
 
+    # Gets the calculations for the averages of Lifetime Interest, Monthly payments
+    # Loan length, APR, and Principal amounts
     interest_average = calculate_average(mortgage_data)
     monthly_payment_average = calculate_average(mortgage_data)
     loan_length_average = calculate_average(mortgage_data)
     apr_average = calculate_average(mortgage_data)
     principal_average = calculate_average(mortgage_data)
 
+    # Prints the averages
     print(data_analysis_text)
     cprint("Average Principal: €{:,.2f}".format(principal_average), "light_yellow")
     cprint(f"Average APR: {round(apr_average, 1)}%", "light_yellow")
@@ -558,9 +591,11 @@ of the mortgages entered into this program.
     print("\n*******************************************************")
 
 
-def run_mortgage_tool():
+def main_menu():
     """
-    Allows the user to select from various menu options for the Mortgage Comparison Tool
+    Main menu:
+    - Allows the user to select from various Main Menu options for the 
+      Mortgage Comparison Tool
     """
     menu_screen()
     is_valid = False
@@ -599,9 +634,14 @@ def run_mortgage_tool():
             cprint("That is not a valid input. Please type in a number between 1 - 7 or 0.", "light_red")
 
 
-if __name__ == '__main__':
+def main():
+    """ Main function """
     welcome_screen()
-    run_mortgage_tool()
+    main_menu()
+
+
+if __name__ == '__main__':
+    main()
     
 
 
