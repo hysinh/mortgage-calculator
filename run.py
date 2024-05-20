@@ -310,7 +310,7 @@ def create_mortgage():
     calculations.
     """
     menu_screen()
-    cprint("Enter Your Mortgage details in below:\n", "green")
+    cprint("Enter Your Mortgage details in below:\n", "light_green")
 
     # Request input from the user
     mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
@@ -344,7 +344,7 @@ def view_mortgage():
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
     else:
-        cprint("You have entered the following mortgages:\n", "green")
+        cprint("You have entered the following mortgages:\n", "light_green")
         for x in mortgage_dict:
             print(f"Mortgage: # {x}, {mortgage_dict[x].mortgage_name}")
 
@@ -359,7 +359,7 @@ def view_mortgage():
                     is_valid = True
                 else:
                     display_selected_mortgage(selection)
-                    cprint("(Enter 0 to view the Main menu)", "green")
+                    cprint("(Enter 0 to view the Main menu)", "light_green")
             except ValueError:
                 cprint("Please enter the number of the mortgage you want to select.", "red")
 
@@ -391,7 +391,7 @@ def extra_monthly_principal():
     Calculates new payment and total interest with extra monthly principal payments
     """
     menu_screen()
-    cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "green")
+    cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "light_green")
 
     mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your existing loan in Euro: \n')
@@ -425,7 +425,7 @@ def lump_payment():
     Calculates new payment and total interest with an extra lump principal payments
     """
     menu_screen()
-    cprint("Calculate Mortgage Overpayments:\n", "green")
+    cprint("Calculate Mortgage Overpayments:\n", "light_green")
 
     mortgage_name = validate_name("Enter a name for this mortgage. You can use up to 10 characters. \n")
     principal = validate_value('Enter the remaining principal left on your loan in Euro: \n')
@@ -458,7 +458,7 @@ def overpayments():
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
     menu_screen()
-    cprint("Mortgage Overpayments:\n", "green")
+    cprint("Mortgage Overpayments:\n", "light_green")
 
     is_valid = False
     while is_valid != True:
@@ -492,7 +492,7 @@ def amortization():
     if len(mortgage_dict) == 0:
         cprint("This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.", "red")
     else:
-        cprint("You have entered the following mortgages:\n", "green")
+        cprint("You have entered the following mortgages:\n", "light_green")
         for x in mortgage_dict:
             print(f"Mortgage: # {x}, {mortgage_dict[x].mortgage_name}")
         
@@ -568,24 +568,24 @@ def run_mortgage_tool():
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
                 create_mortgage()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 2:
                 view_mortgage()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 3:
                 compare_mortgages()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 4:
                 overpayments()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 5:
                 amortization()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 6:
                 clear_screen()
-                cprint("Calculating Mortgage Analysis...", "green")
+                cprint("Calculating Mortgage Analysis...", "light_green")
                 print_mortgage_avg()
-                cprint("(Enter 0 to view the Main menu)", "green")
+                cprint("(Enter 0 to view the Main menu)", "light_green")
             elif selection == 7:
                 clear_screen()
                 cprint("\n\nThanks for using the Mortgage Comparison Tool.\n", "light_yellow")
