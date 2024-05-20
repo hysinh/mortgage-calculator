@@ -84,7 +84,7 @@ def validate_value(prompt_text):
     while is_valid != True:
         try:
             value = int(input(prompt_text))
-            if value > 0:
+            if value > 0 or type(value) != int:
                 is_valid = True
             else:
                 cprint("Invalid. Enter a whole number greater than 0", "light_red")
