@@ -24,6 +24,17 @@ SHEET = GSPREAD_CLIENT.open("mortgage_calculator")
 
 mortgage_dict = {}
 
+MENU_OPTIONS = """
+You have the following options:
+--------------------------------------------------------------
+1. Add a mortgage               5. View Amortization Schedules
+2. View a mortgage              6. Mortgage Metrics
+3. Display Mortgage Comparison  7. Exit Program
+4. Calculate Overpayments       
+--------------------------------------------------------------
+
+"""
+
 
 def clear_screen():
     """
@@ -41,29 +52,6 @@ def welcome_screen():
     cprint(logo_text, "light_cyan")
     print("Welcome to my Mortgage Comparison Tool\n")
     proceed = input("Press the enter key to proceed \n").lower()
-
-    # is_valid = False
-    # while is_valid != True:
-    #     try:
-    #         proceed = input("Enter a key to proceed \n").lower()
-    #         if proceed != "":
-    #             is_valid = True
-    #         else:
-    #             print("Please enter a key and hit enter to proceed.")
-    #     except ValueError:
-    #         print("Not a valid reponse. Type a key and enter to proceed.")
-
-
-MENU_OPTIONS = """
-You have the following options:
---------------------------------------------------------------
-1. Add a mortgage               5. View Amortization Schedules
-2. View a mortgage              6. Mortgage Metrics
-3. Display Mortgage Comparison  7. Exit Program
-4. Calculate Overpayments       
---------------------------------------------------------------
-
-"""
 
 
 def menu_screen():
