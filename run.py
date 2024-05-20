@@ -39,7 +39,7 @@ def welcome_screen():
     """
     clear_screen()
     logo_text = pyfiglet.figlet_format("Mortgage\nCalculator")
-    print(logo_text)
+    cprint(logo_text, "light_cyan")
     print("Welcome to my Mortgage Comparison Tool\n")
     proceed = input("Press the enter key to proceed \n").lower()
 
@@ -56,7 +56,6 @@ def welcome_screen():
 
 
 MENU_OPTIONS = """
-** Mortgage Calculator Tool **
 You have the following options:
 --------------------------------------------------------------
 1. Add a mortgage               5. View Amortization Schedules
@@ -71,6 +70,7 @@ def menu_screen():
     Display Menu options
     """
     clear_screen()
+    cprint("** Mortgage Calculator Tool **", "light_cyan")
     print(MENU_OPTIONS)
 
 
