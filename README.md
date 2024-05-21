@@ -22,7 +22,7 @@ The Mortgage Comparison Tool is an interactive CL python application that allows
   * [Compare Mortgages](#compare-mortgages)  
   * [Overpayments](#overpayments)
   * [Amortization Schedule](#amortization-schedule)
-  * [Mortgage-Data](#mortgage-data)
+  * [Mortgage Data Analysis](#mortgage-data-analysis)
   * [Exit Program](#exit-program)
 * [Future Features](#future-features)
 * [Technologies](#technologies)
@@ -155,13 +155,18 @@ There are two options in the Overpayments feature: 1) Additional Monthly Princip
 This option requires at least one saved Mortgage profile. If there is an insufficient number of Mortgage profiles, the user is alerted with a red error message and redirected back to the Main menu options. If there is at least one Mortgage profile, it is printed in a list and the user is asked to input a Mortgage Profile selection. Once selected, the amortization schedule is calculated and printed to the terminal. The user can either choose another Mortgage profile to view or can exit to the main menu. 
 
 
-### Mortgage-Data
+### Mortgage Data Analysis
 <details >
 <summary></summary>  
 
-![screenshot amortization](docs/documentation/screenshot_mortgage_data.png)
+![screenshot amortization](docs\documentation\screenshot_mortgage_data_analysis.png)
 </details>  
-At this current time, the data collected from each Mortgage Profile created (regardless of whether a user chooses to save the profile) in the Add Mortgage option is added to a Google Sheet. This data is intended to be used to provide internal and eventual published analysis of the types of mortgages that users enter into the comparison tool. 
+When this option is selected, the data stores in a Google Sheet is retrieved and the average is calculated for each of the following catergories and printed for the user to view and compare inputed averages of all users to their own mortgage needs.
+  - Average Principal Amount
+  - Average APR
+  - Average Loan Length
+  - Average Monthly Payment
+  - Average Lifetime Interest
 
 ### Exit Program
 <details >
