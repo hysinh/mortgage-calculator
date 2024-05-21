@@ -378,7 +378,6 @@ def create_mortgage():
     - Requests user input to save Mortgage Profile for session
     """
     clear_screen()
-    #menu_screen()
     cprint("*** ADD A MORTGAGE *** \n")
     cprint("Enter Your Mortgage details in below:\n", "light_green")
 
@@ -413,7 +412,6 @@ def view_mortgage():
     Allows user to choose an individual Mortgage Profile to view
     """
     clear_screen()
-    #menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
@@ -457,7 +455,6 @@ def compare_mortgages():
     Displays a comparison table of all the Mortgage Profiles saved by the user
     """
     clear_screen()
-    #menu_screen()
 
     if len(mortgage_dict) < 2:
         cprint(
@@ -493,8 +490,7 @@ def extra_monthly_principal():
 
     """
     clear_screen()
-    #menu_screen()
-    cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "light_green")
+    cprint("Calculate Mortgage Monthly Overpayments on an existing mortgage:\n", "light_green")
 
     # Request user input for original loan
     mortgage_name = validate_name(
@@ -529,9 +525,6 @@ def extra_monthly_principal():
     schedule = mortgage.extra_principal_payments()
     print(tabulate(schedule, headers="firstrow", tablefmt="github"))
 
-    # Requests user input to save updated Mortgage profile to session
-    adds_mortgage_instance_to_dict(mortgage)
-
     print("\n*******************************************************\n")
 
 
@@ -540,8 +533,7 @@ def lump_payment():
     Calculates new payment and total interest with an extra lump principal payments
     """
     clear_screen()
-    #menu_screen()
-    cprint("Calculate Mortgage Overpayments:\n", "light_green")
+    cprint("Calculate Mortgage Lump Overpayments:\n", "light_green")
 
     # Requests User input to create Current Mortgage profile
     mortgage_name = validate_name(
@@ -576,9 +568,6 @@ def lump_payment():
     display_mortgage_details(new_mortgage)
     print(f"Principal Lump Overpayment: €{lump_payment}")
 
-    # Allows user to save Updated Mortgage profile in current session
-    adds_mortgage_instance_to_dict(new_mortgage)
-
     print("\n*******************************************************\n")
 
 
@@ -587,7 +576,6 @@ def overpayments():
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
     clear_screen()
-    #menu_screen()
     cprint("Mortgage Overpayments:\n", "light_green")
 
     is_valid = False
@@ -601,19 +589,17 @@ def overpayments():
             if selection == 0:
                 is_valid = True
             elif selection == 1:
-                menu_screen()
                 extra_monthly_principal()
             elif selection == 2:
-                menu_screen()
                 lump_payment()
             else:
-                menu_screen()
+                clear_screen()
                 cprint(
                     "That is not a valid option. Please choose one from the list above.",
                     "light_red",
                 )
         except ValueError:
-            menu_screen()
+            clear_screen()
             cprint("Please enter a valid mortgage number", "light_red")
 
     menu_screen()
@@ -626,7 +612,6 @@ def amortization():
     Allows user to view an amoritization for individual Mortgage profile
     """
     clear_screen()
-    #menu_screen()
     if len(mortgage_dict) == 0:
         cprint(
             "This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.",
@@ -714,7 +699,6 @@ def main_menu():
     - Allows the user to select from various Main Menu options for the
       Mortgage Comparison Tool
     """
-    #menu_screen()
     is_valid = False
     while is_valid != True:
         try:
