@@ -1,3 +1,6 @@
+"""
+Libraries and Imports
+"""
 import gspread
 from google.oauth2.service_account import Credentials
 import math
@@ -604,8 +607,6 @@ def overpayments():
             cprint("Please enter a valid mortgage number", "light_red")
 
     menu_screen()
-
-    # print("\n*******************************************************")
 
 
 def amortization():
