@@ -30,7 +30,7 @@ The Mortgage Comparison Tool is an interactive CL python application that allows
   * [Technologies and Programs Used](#technologies-and-programs-used)
   * [Deployment](#deployment)
 * [Testing](#testing)
-  * [Python Validation](#python-validation)
+  * [Python3 Validation](#python3-validation)
   * [Manual Testing](#manual-testing)
   * [Bugs and Fixes](#bugs-and-fixes)
   * [Unfixed Bugs](#unfixed-bugs)
@@ -249,11 +249,11 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   ### Validator Testing
   This application was developed with Python3. No HTML, CSS, or Javascript was used. 
   - #### Python3 Validation
-    Results go here
+    I used the Code Institute PEP8 Python Linter for code validation.
     <details >
     <summary>Python Validation</summary>  
 
-    ![screenshot of index page validation](docs/documentation/Screenshot_htmlvalidator.png)
+    ![screenshot of PEP8 Python code validation](docs\documentation\screenshot_pep8_validation.png)
     </details>
 
 
@@ -312,8 +312,6 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | 0 Menu Option  | Does the terminal clear and the Main menu print with a prompted to input a Menu option? | Pass |
 
 
-  
-
 
   #### Bugs and Fixes
   | Bug | Page | Fix |
@@ -326,8 +324,6 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | Unexpected indentation | Main Menu Prompt| Removes backslash from string |
 
   
-  
-
   ### Unfixed Bugs
   - Although I have included a function that clears the terminal, I noticed that anything above the terminal screen does not clear and is still available to view if you scroll up. This is potentially confusing but I was not able to resolve it. My mentor said that it is common for older terminals to push content upward and not truly clear the screen.
   - When viewed through a mobile device, the terminal goes off screen. I will need to research this to see if this is something that is resolvable.
@@ -338,8 +334,6 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   | --- | ---- | --- |
   | Line length | 111 | I tried several different places to attempt to break up the lines to stay <79 but it resulted in poor print outcomes. |
   | Line length | 121 | I tried to delete the extra spaces in the formula but it caused "missing white space around operator" errors. |
-  | Line length | 156 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
-  | Line length | 185 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
 
   
 
