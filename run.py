@@ -51,7 +51,7 @@ You have the following options:
 1. Add a mortgage               5. View Amortization Schedules
 2. View a mortgage              6. Mortgage Metrics
 3. Display Mortgage Comparison  7. Exit Program
-4. Calculate Overpayments       
+4. Calculate Overpayments
 --------------------------------------------------------------
 
 """
@@ -640,7 +640,6 @@ def amortization():
                 else:
                     for x in mortgage_dict:
                         if selection == x:
-                            clear_screen()
                             cprint(f"\n\nAMORTIZATION SCHEDULE FOR:", "light_yellow")
                             schedule = mortgage_dict[
                                 x
