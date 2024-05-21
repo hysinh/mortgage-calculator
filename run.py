@@ -432,8 +432,7 @@ def view_mortgage():
             try:
                 selection = int(
                     input(
-                        "Enter the number of the mortgage that you'd like to view \n
-                        or enter '0' to return to the main menu: \n"
+                        "Enter the number of the mortgage that you'd like to view \nor enter '0' to return to the main menu: \n"
                     )
                 )
                 if selection == 0:
