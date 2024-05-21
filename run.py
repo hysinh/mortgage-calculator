@@ -67,65 +67,6 @@ def menu_screen():
     print_main_menu()
 
 
-def validate_value(prompt_text):
-    """
-    Prompts user for input and validates that input is an integer greater
-    than 0.
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            value = int(input(prompt_text))
-            if value > 0 or type(value) != int:
-                is_valid = True
-            else:
-                cprint("Invalid. Enter a whole number greater than 0", "light_red")
-        except ValueError:
-            cprint("That is not a number. Enter a whole number.", "light_red")
-    return value
-
-
-def validate_apr():
-    """
-    Prompts user for input and validates that the input is a float
-    with a value between 0 and 100.
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            apr = float(input("Enter the Annual Percentage rate or APR (e.g. 4.3): \n"))
-            if apr > 0 and apr < 100:
-                is_valid = True
-            else:
-                cprint(
-                    "APR must be greater than 0 but less than 100. Enter a valid APR.",
-                    "light_red",
-                )
-        except ValueError:
-            cprint("That is not a number. Enter a valid number.", "light_red")
-    return apr
-
-
-def validate_name(prompt_text):
-    """
-    Prompts user for input and validates that the input is a string of 10 characters or less
-    """
-    is_valid = False
-    while is_valid != True:
-        try:
-            name = str(input(prompt_text))
-            if len(name) > 0 and len(name) < 11:
-                is_valid = True
-            else:
-                cprint(
-                    "There is a maximum of 10 characters. Enter a valid name.",
-                    "light_red",
-                )
-        except ValueError:
-            cprint("That is not a valid entry. Enter a valid name.", "light_red")
-    return name
-
-
 def print_data_analysis_intro():
     data_analysis_text = """
 Mortgage Comparison Tool Data analysis:
@@ -299,6 +240,65 @@ class Mortgage:
         return mortgage_data
 
 
+def validate_value(prompt_text):
+    """
+    Prompts user for input and validates that input is an integer greater
+    than 0.
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            value = int(input(prompt_text))
+            if value > 0:
+                is_valid = True
+            else:
+                cprint("Invalid. Enter a whole number greater than 0", "light_red")
+        except ValueError:
+            cprint("That is not a valid input. Enter a whole number.", "light_red")
+    return value
+
+
+def validate_apr():
+    """
+    Prompts user for input and validates that the input is a float
+    with a value between 0 and 100.
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            apr = float(input("Enter the Annual Percentage rate or APR (e.g. 4.3): \n"))
+            if apr > 0 and apr < 100:
+                is_valid = True
+            else:
+                cprint(
+                    "APR must be greater than 0 but less than 100. Enter a valid APR.",
+                    "light_red",
+                )
+        except ValueError:
+            cprint("That is not a number. Enter a valid number.", "light_red")
+    return apr
+
+
+def validate_name(prompt_text):
+    """
+    Prompts user for input and validates that the input is a string of 10 characters or less
+    """
+    is_valid = False
+    while is_valid != True:
+        try:
+            name = str(input(prompt_text))
+            if len(name) > 0 and len(name) < 11:
+                is_valid = True
+            else:
+                cprint(
+                    "There is a maximum of 10 characters. Enter a valid name.",
+                    "light_red",
+                )
+        except ValueError:
+            cprint("That is not a valid entry. Enter a valid name.", "light_red")
+    return name
+
+
 def display_mortgage_details(mortgage):
     """Displays the details of a Mortgage Profile"""
     print(mortgage.details())
@@ -377,7 +377,9 @@ def create_mortgage():
     - Prints the Mortgage Profile
     - Requests user input to save Mortgage Profile for session
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
+    cprint("*** ADD A MORTGAGE *** \n")
     cprint("Enter Your Mortgage details in below:\n", "light_green")
 
     # Request input from the user
@@ -410,7 +412,8 @@ def view_mortgage():
     """
     Allows user to choose an individual Mortgage Profile to view
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
@@ -453,7 +456,8 @@ def compare_mortgages():
     """
     Displays a comparison table of all the Mortgage Profiles saved by the user
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
 
     if len(mortgage_dict) < 2:
         cprint(
@@ -488,7 +492,8 @@ def extra_monthly_principal():
     - Requests input from the user for amount of extra monthly principal payments
 
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
     cprint("Calculate Mortgage Overpayments on an existing mortgage:\n", "light_green")
 
     # Request user input for original loan
@@ -534,7 +539,8 @@ def lump_payment():
     """
     Calculates new payment and total interest with an extra lump principal payments
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
     cprint("Calculate Mortgage Overpayments:\n", "light_green")
 
     # Requests User input to create Current Mortgage profile
@@ -580,7 +586,8 @@ def overpayments():
     """
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
     cprint("Mortgage Overpayments:\n", "light_green")
 
     is_valid = False
@@ -618,7 +625,8 @@ def amortization():
     """
     Allows user to view an amoritization for individual Mortgage profile
     """
-    menu_screen()
+    clear_screen()
+    #menu_screen()
     if len(mortgage_dict) == 0:
         cprint(
             "This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.",
@@ -706,7 +714,7 @@ def main_menu():
     - Allows the user to select from various Main Menu options for the
       Mortgage Comparison Tool
     """
-    menu_screen()
+    #menu_screen()
     is_valid = False
     while is_valid != True:
         try:
@@ -755,6 +763,7 @@ def main_menu():
 def main():
     """Main function"""
     welcome_screen()
+    menu_screen()
     main_menu()
 
 
