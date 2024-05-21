@@ -153,7 +153,14 @@ class Mortgage:
         applied to a loan.
         """
         updated_schedule = [
-            ["Mon.", "Payment", "Principal", "Xtra Princ", "Interest", "Balance"]
+            [
+                "Mon.",
+                "Payment",
+                "Principal",
+                "Xtra Princ",
+                "Interest",
+                "Balance"
+                ]
         ]
         balance = self.principal
         rate = self.apr / 100 / 12
@@ -182,7 +189,14 @@ class Mortgage:
     def calculate_amortization_schedule(self):
         """Calculates the amortization schedule for a loan"""
         schedule = [
-            ["Month", "Pmts Left", "Payment", "Principal", "Interest", "Balance"]
+            [
+                "Month",
+                "Pmts Left",
+                "Payment",
+                "Principal",
+                "Interest",
+                "Balance"
+                ]
         ]
         balance = self.principal
         rate = self.apr / 100 / 12
@@ -459,8 +473,8 @@ def view_mortgage():
                     cprint("(Enter 0 to view the Main menu)", "light_green")
             except ValueError:
                 cprint(
-                    "Invalid input. Please enter the number "
-                    "of the mortgage you want to select.",
+                    "Please enter the number of the mortgage you want to "
+                    "select.",
                     "light_red",
                 )
 

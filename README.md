@@ -336,7 +336,7 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
 
   | Bug | Line | Unresolved Reason |
   | --- | ---- | --- |
-  | Line length | 111 | I tried several different places to attempt to break up the lines to stay <79 but it resulted on poor print outcomes. |
+  | Line length | 111 | I tried several different places to attempt to break up the lines to stay <79 but it resulted in poor print outcomes. |
   | Line length | 121 | I tried to delete the extra spaces in the formula but it caused "missing white space around operator" errors. |
   | Line length | 156 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
   | Line length | 185 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
@@ -370,8 +370,3 @@ https://sparkbyexamples.com/pandas/print-pandas-dataframe-without-index/#:~:text
 - W3Schools Python https://www.w3schools.com/python
 - https://www.python.org/
 
-
-
-### Media
-- Artwork was created by myself on Adope Photoshop
-- The Happy Cake Friends characters were created by my daughter, Liloux Smith. They were redrawn in Adobe Photoshop for the purposes of this project.
