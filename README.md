@@ -200,10 +200,11 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   ### Python Libraries
   The following libraries in this program.
   - Colorama -  producing colored terminal text
-  - numpy==1.26.4
-  - pyfiglet==1.0.2
+  - pyfiglet -  takes ASCII text and renders it in ASCII art fonts
   - Tabulate - displays lists in a table
   - Termcolor - Allows printing in color
+  - gspread - Python API for Google Sheets.
+  - googleauth - Google authentication library for Python
 
 
   ### Deployment
