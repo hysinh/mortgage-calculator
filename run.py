@@ -577,7 +577,7 @@ def overpayments():
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
     clear_screen()
-    cprint("MORTGAGE OVERPAYMENTS:\n", "light_green")
+    cprint("*** MORTGAGE OVERPAYMENTS *** \n", "light_green")
 
     is_valid = False
     while is_valid != True:
