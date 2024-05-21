@@ -332,6 +332,16 @@ Should the user which to exit the Mortgage Comparison Tool, they can select opti
   - Although I have included a function that clears the terminal, I noticed that anything above the terminal screen does not clear and is still available to view if you scroll up. This is potentially confusing but I was not able to resolve it. My mentor said that it is common for older terminals to push content upward and not truly clear the screen.
   - When viewed through a mobile device, the terminal goes off screen. I will need to research this to see if this is something that is resolvable.
   
+  ### Unresolved Linter Code Errors
+
+  | Bug | Line | Unresolved Reason |
+  | --- | ---- | --- |
+  | Line length | 111 | I tried several different places to attempt to break up the lines to stay <79 but it resulted on poor print outcomes. |
+  | Line length | 121 | I tried to delete the extra spaces in the formula but it caused "missing white space around operator" errors. |
+  | Line length | 156 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
+  | Line length | 185 | I tried to format the list in different ways but it causes "continuation line under-indented for visual indent". |
+
+  
 
 ## Credits
 ### Content

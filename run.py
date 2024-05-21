@@ -230,8 +230,8 @@ class Mortgage:
     def calculate_mortgage_metrics(self):
         """
         Calculate the average principal, APR, loan length, monthly payment, and
-        lifetime interest amount from aggregate data collected from all mortgage data
-        stored in Google Sheets
+        lifetime interest amount from aggregate data collected from all
+        mortgage data stored in Google Sheets
         """
         mortgage_data = []
         mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
@@ -255,9 +255,11 @@ def validate_value(prompt_text):
             if value > 0:
                 is_valid = True
             else:
-                cprint("Invalid. Enter a whole number greater than 0", "light_red")
+                cprint("Invalid. "
+                       "Enter a whole number greater than 0", "light_red")
         except ValueError:
-            cprint("That is not a valid input. Enter a whole number.", "light_red")
+            cprint("That is not a valid input. "
+                   "Enter a whole number.", "light_red")
     return value
 
 
@@ -269,12 +271,14 @@ def validate_apr():
     is_valid = False
     while is_valid != True:
         try:
-            apr = float(input("Enter the Annual Percentage rate or APR (e.g. 4.3): \n"))
+            apr = float(input("Enter the Annual Percentage "
+                              "rate or APR (e.g. 4.3): \n"))
             if apr > 0 and apr < 100:
                 is_valid = True
             else:
                 cprint(
-                    "APR must be greater than 0 but less than 100. Enter a valid APR.",
+                    "APR must be greater than 0 but less than 100. "
+                    "Enter a valid APR.",
                     "light_red",
                 )
         except ValueError:
@@ -284,7 +288,8 @@ def validate_apr():
 
 def validate_name(prompt_text):
     """
-    Prompts user for input and validates that the input is a string of 10 characters or less
+    Prompts user for input and validates that the input is a string of
+    10 characters or less
     """
     is_valid = False
     while is_valid != True:
@@ -298,15 +303,18 @@ def validate_name(prompt_text):
                     "light_red",
                 )
         except ValueError:
-            cprint("That is not a valid entry. Enter a valid name.", "light_red")
+            cprint("That is not a valid entry. "
+                   "Enter a valid name.", "light_red")
     return name
 
 
 def display_mortgage_details(mortgage):
     """Displays the details of a Mortgage Profile"""
     print(mortgage.details())
-    print("Monthly Payment: €{:,.2f}".format(mortgage.calculate_monthly_payment()))
-    print("Cost of this loan: €{:,.2f}".format(mortgage.calculate_lifetime_interest()))
+    print("Monthly Payment: €{:,."
+          "2f}".format(mortgage.calculate_monthly_payment()))
+    print("Cost of this loan: €{:,."
+          "2f}".format(mortgage.calculate_lifetime_interest()))
     print("\n")
 
 
