@@ -24,20 +24,6 @@ SHEET = GSPREAD_CLIENT.open("mortgage_calculator")
 
 mortgage_dict = {}
 
-def print_main_menu():
-    """ Prints the Main Menu """
-    MENU_OPTIONS = """
-You have the following options:
---------------------------------------------------------------
-1. Add a mortgage               5. View Amortization Schedules
-2. View a mortgage              6. Mortgage Metrics
-3. Display Mortgage Comparison  7. Exit Program
-4. Calculate Overpayments       
---------------------------------------------------------------
-
-"""
-    print(MENU_OPTIONS)
-
 
 def clear_screen():
     """
@@ -55,6 +41,21 @@ def welcome_screen():
     cprint(logo_text, "light_cyan")
     print("Welcome to my Mortgage Comparison Tool\n")
     proceed = input("Press the enter key to proceed \n").lower()
+
+
+def print_main_menu():
+    """ Prints the Main Menu """
+    MENU_OPTIONS = """
+You have the following options:
+--------------------------------------------------------------
+1. Add a mortgage               5. View Amortization Schedules
+2. View a mortgage              6. Mortgage Metrics
+3. Display Mortgage Comparison  7. Exit Program
+4. Calculate Overpayments       
+--------------------------------------------------------------
+
+"""
+    print(MENU_OPTIONS)
 
 
 def menu_screen():
@@ -123,6 +124,20 @@ def validate_name(prompt_text):
         except ValueError:
             cprint("That is not a valid entry. Enter a valid name.", "light_red")
     return name
+
+
+def print_data_analysis_intro():
+    data_analysis_text = """
+Mortgage Comparison Tool Data analysis:
+
+The following are averages taken from the mortgages inputed into this
+mortgage tool. See where your mortgage needs compare against the averages
+of the mortgages entered into this program.
+
+**********************************************************
+
+    """
+    print(data_analysis_text)
 
 
 class Mortgage:
@@ -654,16 +669,6 @@ def print_mortgage_avg():
     """
     Prints averages of data stored in Google Sheets in a table
     """
-    data_analysis_text = """
-Mortgage Comparison Tool Data analysis:
-
-The following are averages taken from the mortgages inputed into this
-mortgage tool. See where your mortgage needs compare against the averages
-of the mortgages entered into this program.
-
-**********************************************************
-
-    """
     mortgage_data = []
     mortgage_worksheet = SHEET.worksheet("mortgage_data").get_all_values()
     for row in mortgage_worksheet:
@@ -678,7 +683,7 @@ of the mortgages entered into this program.
     principal_average = calculate_average(mortgage_data)
 
     # Prints the averages
-    print(data_analysis_text)
+    print_data_analysis_intro()
     cprint("Average Principal: €{:,.2f}".format(principal_average), "light_yellow")
     cprint(f"Average APR: {round(apr_average, 1)}%", "light_yellow")
     cprint(
