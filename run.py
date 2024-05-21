@@ -248,12 +248,11 @@ def validate_value(prompt_text):
     Prompts user for input and validates that input is an integer greater
     than 0.
     """
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             value = int(input(prompt_text))
             if value > 0:
-                is_valid = True
+                break
             else:
                 cprint("Invalid. "
                        "Enter a whole number greater than 0", "light_red")
@@ -268,13 +267,12 @@ def validate_apr():
     Prompts user for input and validates that the input is a float
     with a value between 0 and 100.
     """
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             apr = float(input("Enter the Annual Percentage "
                               "rate or APR (e.g. 4.3): \n"))
             if apr > 0 and apr < 100:
-                is_valid = True
+                break
             else:
                 cprint(
                     "APR must be greater than 0 but less than 100. "
@@ -291,12 +289,11 @@ def validate_name(prompt_text):
     Prompts user for input and validates that the input is a string of
     10 characters or less
     """
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             name = str(input(prompt_text))
             if len(name) > 0 and len(name) < 11:
-                is_valid = True
+                break
             else:
                 cprint(
                     "There is a maximum of 10 characters. Enter a valid name.",
@@ -323,15 +320,14 @@ def display_selected_mortgage(selection):
     for x in mortgage_dict:
         if selection == x:
             display_mortgage_details(mortgage_dict[x])
-            is_valid = True
+            break
         else:
-            continue
+            cprint("Please enter a mortgage in the list above.", "light_red")
 
 
 def adds_mortgage_instance_to_dict(mortgage):
     """Adds the Mortgage Class Instance to the global mortgage dictionary"""
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             answer = str(
                 input("\nWould you like to save this mortgage? Type Y or N \n")
@@ -343,7 +339,7 @@ def adds_mortgage_instance_to_dict(mortgage):
                     "in this session.",
                     "light_yellow",
                 )
-                is_valid = True
+                break
             elif answer == "n":
                 cprint(
                     "\nThis mortgage was NOT SAVED to your mortgages "
@@ -447,8 +443,7 @@ def view_mortgage():
         # Prompts user to select a mortgage to view or user can select to
         # return to main menu
         print("\n")
-        is_valid = False
-        while is_valid != True:
+        while True:
             try:
                 selection = int(
                     input(
@@ -458,14 +453,14 @@ def view_mortgage():
                 )
                 if selection == 0:
                     menu_screen()
-                    is_valid = True
+                    break
                 else:
                     display_selected_mortgage(selection)
                     cprint("(Enter 0 to view the Main menu)", "light_green")
             except ValueError:
                 cprint(
-                    "Please enter the number of the mortgage you want to "
-                    "select.",
+                    "Invalid input. Please enter the number "
+                    "of the mortgage you want to select.",
                     "light_red",
                 )
 
@@ -615,8 +610,7 @@ def overpayments():
     clear_screen()
     cprint("*** MORTGAGE OVERPAYMENTS *** \n", "light_green")
 
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             selection = int(
                 input(
@@ -626,7 +620,7 @@ def overpayments():
                 )
             )
             if selection == 0:
-                is_valid = True
+                break
             elif selection == 1:
                 extra_monthly_principal()
             elif selection == 2:
@@ -664,8 +658,7 @@ def amortization():
             print(f"Mortgage: # {x}, {mortgage_dict[x].mortgage_name}")
 
         print("\n")
-        is_valid = False
-        while is_valid != True:
+        while True:
             try:
                 selection = int(
                     input(
@@ -676,7 +669,7 @@ def amortization():
                 )
                 if selection == 0:
                     menu_screen()
-                    is_valid = True
+                    break
                 else:
                     for x in mortgage_dict:
                         if selection == x:
@@ -747,8 +740,7 @@ def main_menu():
     - Allows the user to select from various Main Menu options for the
       Mortgage Comparison Tool
     """
-    is_valid = False
-    while is_valid != True:
+    while True:
         try:
             selection = int(input("Enter a selection from the Main Menu: \n"))
             if selection == 1:
@@ -777,7 +769,7 @@ def main_menu():
                     "\n\nThanks for using the Mortgage Comparison Tool.\n",
                     "light_yellow",
                 )
-                is_valid = True
+                break
             elif selection == 0:
                 menu_screen()
             else:
