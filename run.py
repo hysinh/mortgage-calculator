@@ -24,7 +24,9 @@ SHEET = GSPREAD_CLIENT.open("mortgage_calculator")
 
 mortgage_dict = {}
 
-MENU_OPTIONS = """
+def print_main_menu():
+    """ Prints the Main Menu """
+    MENU_OPTIONS = """
 You have the following options:
 --------------------------------------------------------------
 1. Add a mortgage               5. View Amortization Schedules
@@ -34,6 +36,7 @@ You have the following options:
 --------------------------------------------------------------
 
 """
+    print(MENU_OPTIONS)
 
 
 def clear_screen():
@@ -60,7 +63,7 @@ def menu_screen():
     """
     clear_screen()
     cprint("** Mortgage Calculator Tool **", "light_cyan")
-    print(MENU_OPTIONS)
+    print_main_menu()
 
 
 def validate_value(prompt_text):
@@ -332,7 +335,7 @@ def adds_mortgage_instance_to_dict(mortgage):
 def calculate_average(data):
     """
     - Creates a new list from the items in the last column of Google Sheets data
-    - Removes the Header
+    - Removes the Header from the list
     - Calculates an average of values in the list
     """
     column = []
