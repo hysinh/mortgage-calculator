@@ -378,7 +378,7 @@ def create_mortgage():
     - Requests user input to save Mortgage Profile for session
     """
     clear_screen()
-    cprint("*** ADD A MORTGAGE *** \n")
+    cprint("*** ADD A MORTGAGE *** \n", "light_green")
     cprint("Enter Your Mortgage details in below:\n", "light_green")
 
     # Request input from the user
@@ -412,6 +412,7 @@ def view_mortgage():
     Allows user to choose an individual Mortgage Profile to view
     """
     clear_screen()
+    cprint("*** VIEW A MORTGAGE *** \n", "light_green")
 
     # Prints a column of the available Mortgage Class Instances
     if len(mortgage_dict) == 0:
@@ -455,6 +456,7 @@ def compare_mortgages():
     Displays a comparison table of all the Mortgage Profiles saved by the user
     """
     clear_screen()
+    cprint("*** COMPARE MORTGAGES *** \n", "light_green")
 
     if len(mortgage_dict) < 2:
         cprint(
@@ -576,7 +578,7 @@ def overpayments():
     Gives User the selection of making monthly overpayments or a lump sum overpayment
     """
     clear_screen()
-    cprint("Mortgage Overpayments:\n", "light_green")
+    cprint("MORTGAGE OVERPAYMENTS:\n", "light_green")
 
     is_valid = False
     while is_valid != True:
@@ -612,6 +614,8 @@ def amortization():
     Allows user to view an amoritization for individual Mortgage profile
     """
     clear_screen()
+    cprint("*** VIEW AN AMORTIZATION FOR A MORTGAGE *** \n", "light_green")
+
     if len(mortgage_dict) == 0:
         cprint(
             "This feature requires you to add at least one mortgage.\nAdd a mortgage to proceed.",
